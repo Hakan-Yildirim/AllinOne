@@ -167,6 +167,10 @@
         }
         .nav-item.active { color: var(--text-color); }
         .nav-icon { font-size: 18px; }
+
+        .badge-book { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ff99cc; color: var(--border-color); font-weight: 900; text-transform: uppercase; }
+        .badge-movie { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #66ccff; color: var(--border-color); font-weight: 900; text-transform: uppercase; }
+        .badge-series { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ffcc00; color: var(--border-color); font-weight: 900; text-transform: uppercase; }
     </style>
 <script src="./Kişisel Asistanım_files/analytics.js.indir" defer=""></script></head>
 <body>
@@ -188,6 +192,11 @@
         <div class="home-card" onclick="switchPage('page-challenge', 'nav-challenge')">
             <h2>🎯 // CHALLENGER</h2>
             <p>PERİYODİK HEDEF KİLİTLEME</p>
+        </div>
+
+        <div class="home-card" onclick="switchPage('page-media', 'nav-media')">
+            <h2>📚 // KİTAP &amp; MEDYA LİSTESİ</h2>
+            <p>OKUNACAK KİTAPLAR, İZLENECEK DİZİ VE FİLMLER</p>
         </div>
 
         <div class="backup-section">
@@ -266,6 +275,29 @@
         <div id="goalsContainer"><p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HEDEF TANIMLANMADI ]</p></div>
     </div>
 
+        <div id="page-media" class="page">
+        <h1>KİTAP &amp; MEDYA LİSTESİ</h1>
+        
+        <div class="input-group">
+            <input type="text" id="mediaInput" placeholder="KİTAP, DİZİ VEYA FİLM ADI..." onkeypress="handleEnter(event, addMediaItem)">
+            <select id="mediaType">
+                <option value="book">KİTAP</option>
+                <option value="movie">FİLM</option>
+                <option value="series">DİZİ</option>
+            </select>
+            <button onclick="addMediaItem()">EKLE</button>
+        </div>
+
+        <div style="display: flex; gap: 6px; margin-bottom: 15px; flex-wrap: wrap;">
+            <button class="filter-btn active" onclick="setMediaFilter('all', this)" style="flex:1; padding:8px; background:var(--primary-color); border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">TÜMÜ</button>
+            <button class="filter-btn" onclick="setMediaFilter('book', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">KİTAPLAR</button>
+            <button class="filter-btn" onclick="setMediaFilter('movie', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">FİLMLER</button>
+            <button class="filter-btn" onclick="setMediaFilter('series', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">DİZİLER</button>
+        </div>
+
+        <div id="mediaContainer"><p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ LİSTE BOŞ ]</p></div>
+    </div>
+
     <nav class="bottom-nav">
         <button id="nav-home" class="nav-item active" onclick="switchPage('page-home', 'nav-home')">
             <span class="nav-icon">⬛</span><span>MENÜ</span>
@@ -278,6 +310,9 @@
         </button>
         <button id="nav-challenge" class="nav-item" onclick="switchPage('page-challenge', 'nav-challenge')">
             <span class="nav-icon">🎯</span><span>HEDEF</span>
+        </button>
+        <button id="nav-media" class="nav-item" onclick="switchPage('page-media', 'nav-media')">
+            <span class="nav-icon">📚</span><span>MEDYA</span>
         </button>
     </nav>
 
@@ -324,12 +359,15 @@
         let habits = JSON.parse(localStorage.getItem('habits')) || [];
         let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
         let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
+        let mediaData = JSON.parse(localStorage.getItem('mediaList')) || [];
+        let currentMediaFilter = 'all';
         let webhookUrl = localStorage.getItem('sheet_webhook') || '';
 
         function saveData() {
             localStorage.setItem('habits', JSON.stringify(habits));
             localStorage.setItem('goals', JSON.stringify(goalsData));
             localStorage.setItem('agenda', JSON.stringify(agendaData));
+            localStorage.setItem('mediaList', JSON.stringify(mediaData));
             
             if (webhookUrl) {
                 syncToCloudQuiet();
@@ -358,14 +396,17 @@
                     habits = cloudData.habits;
                     goalsData = cloudData.goalsData || {};
                     agendaData = cloudData.agendaData || {};
+                    mediaData = cloudData.mediaData || [];
                     
                     localStorage.setItem('habits', JSON.stringify(habits));
                     localStorage.setItem('goals', JSON.stringify(goalsData));
                     localStorage.setItem('agenda', JSON.stringify(agendaData));
+                    localStorage.setItem('mediaList', JSON.stringify(mediaData));
                     
                     renderAgenda();
                     renderHabits();
                     renderGoals();
+                    renderMedia();
                     renderCalendar();
                     alert("BULUTTAN VERİLER BAŞARIYLA ÇEKİLDİ!");
                 } else {
@@ -380,7 +421,7 @@
         async function syncToCloudQuiet() {
             if (!webhookUrl) return;
             try {
-                const payload = { habits, goalsData, agendaData };
+                const payload = { habits, goalsData, agendaData, mediaData };
                 await fetch(webhookUrl, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -675,7 +716,7 @@
         }
 
         function exportData() {
-            const backup = { habits, goalsData, agendaData };
+            const backup = { habits, goalsData, agendaData, mediaData };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
@@ -696,10 +737,12 @@
                             habits = parsed.habits;
                             goalsData = parsed.goalsData;
                             agendaData = parsed.agendaData;
+                            mediaData = parsed.mediaData || [];
                             saveData();
                             renderAgenda();
                             renderHabits();
                             renderGoals();
+                            renderMedia();
                             renderCalendar();
                             alert("SİSTEM YEDEĞİ BAŞARIYLA YÜKLENDİ.");
                         } else {
@@ -715,6 +758,80 @@
         renderAgenda();
         renderHabits();
         renderGoals();
+        renderMedia();
         renderCalendar();
+
+        function setMediaFilter(filter, btn) {
+            currentMediaFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.style.background = 'white';
+                b.classList.remove('active');
+            });
+            btn.style.background = 'var(--primary-color)';
+            btn.classList.add('active');
+            renderMedia();
+        }
+
+        function renderMedia() {
+            const container = document.getElementById('mediaContainer');
+            container.innerHTML = '';
+
+            const filtered = mediaData.filter(item => {
+                if (currentMediaFilter === 'all') return true;
+                return item.type === currentMediaFilter;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ LİSTE BOŞ ]</p>';
+                return;
+            }
+
+            filtered.forEach((item, index) => {
+                // Find actual index in mediaData
+                const realIndex = mediaData.findIndex(m => m.id === item.id);
+                const typeLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ' };
+                const badgeClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series' };
+                
+                const div = document.createElement('div');
+                div.className = `list-item ${item.done ? 'done-bg' : ''}`;
+                div.innerHTML = `
+                    <div class="list-content" onclick="toggleMediaItem(${realIndex})">
+                        <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
+                        <span class="text-content ${item.done ? 'crossed' : ''}">
+                            <span class="${badgeClasses[item.type]}">${typeLabels[item.type]}</span>
+                            ${item.text}
+                        </span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteMediaItem(${realIndex})">×</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addMediaItem() {
+            const input = document.getElementById('mediaInput');
+            const type = document.getElementById('mediaType').value;
+            if (input.value.trim() === '') return;
+
+            mediaData.unshift({ id: Date.now() + Math.random(), text: input.value.trim(), type: type, done: false });
+            saveData();
+            renderMedia();
+            input.value = '';
+        }
+
+        function toggleMediaItem(index) {
+            mediaData[index].done = !mediaData[index].done;
+            saveData();
+            renderMedia();
+        }
+
+        function deleteMediaItem(index) {
+            mediaData.splice(index, 1);
+            saveData();
+            renderMedia();
+        }
+
+        renderMedia();
+
     </script>
 </body></html>
