@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://cbxdaws4.vibedrop.site/ -->
+<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kişisel Asistanım</title>
+    
+    <!-- iOS Web App (PWA) Ayarları - Tam Ekran Görünüm İçin -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Asistanım">
+    
+    <!-- iOS ve Tarayıcı İçin Endüstriyel Terminal Özel Uygulama İkonu (>_) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23ffcc00'/%3E%3Crect x='48' y='48' width='416' height='416' fill='none' stroke='%231a1a1a' stroke-width='40'/%3E%3Cpath d='M150 180 L250 256 L150 332' fill='none' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square' stroke-linejoin='miter'/%3E%3Cline x1='280' y1='340' x2='380' y2='340' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23ffcc00'/%3E%3Crect x='48' y='48' width='416' height='416' fill='none' stroke='%231a1a1a' stroke-width='40'/%3E%3Cpath d='M150 180 L250 256 L150 332' fill='none' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square' stroke-linejoin='miter'/%3E%3Cline x1='280' y1='340' x2='380' y2='340' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square'/%3E%3C/svg%3E">
+
+    <style>
+        :root {
+            --bg-color: #e5e5e0;
+            --text-color: #1a1a1a;
+            --primary-color: #ffcc00;
+            --primary-light: #fff3cc;
+            --danger-color: #ff3333;
+            --nav-bg: #f2f2ed;
+            --border-color: #1a1a1a;
+            --card-bg: #ffffff;
+            --dark-gray: #666;
+            --sync-color: #00cc66;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 90px;
+        }
+
+        .page { display: none; padding: 20px; animation: fadeIn 0.15s ease-in-out; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 22px; margin-bottom: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; border-bottom: 3px solid var(--border-color); padding-bottom: 8px; }
+
+        .home-card {
+            background: var(--card-bg); padding: 20px; border-radius: 0px;
+            margin-bottom: 15px; text-align: left;
+            box-shadow: 4px 4px 0px var(--border-color);
+            border: 3px solid var(--border-color); transition: 0.1s; cursor: pointer;
+        }
+        .home-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--border-color); }
+        .home-card h2 { font-size: 16px; margin-bottom: 5px; font-weight: 900; text-transform: uppercase; }
+        .home-card p { font-size: 12px; color: var(--dark-gray); }
+
+        .input-group { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .input-group input, .input-group select {
+            flex: 1; padding: 12px; border: 3px solid var(--border-color);
+            border-radius: 0px; outline: none; font-size: 13px; background: white;
+            box-shadow: 3px 3px 0px var(--border-color);
+        }
+        .input-group select { flex: 0 0 120px; font-weight: 900; cursor: pointer; }
+        .input-group input:focus, .input-group select:focus { background-color: var(--primary-light); }
+        .input-group button {
+            padding: 0 20px; background: var(--primary-color); color: var(--border-color);
+            border: 3px solid var(--border-color); border-radius: 0px; font-weight: 900; font-size: 13px; cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-color); text-transform: uppercase;
+        }
+        .input-group button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--border-color); }
+
+        .habit-card {
+            background: var(--card-bg); padding: 15px; border: 3px solid var(--border-color); 
+            margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color); position: relative;
+        }
+        .habit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .habit-title { font-size: 14px; font-weight: 900; text-transform: uppercase; }
+        .habit-stats { font-size: 11px; font-weight: 900; color: var(--dark-gray); margin-bottom: 12px; background: var(--bg-color); padding: 4px 8px; border: 2px solid var(--border-color); display: inline-block; }
+        
+        .delete-btn { background: none; border: 2px solid var(--border-color); color: var(--danger-color); font-size: 14px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; background: #fff;}
+        .delete-btn:active { background: var(--danger-color); color: white; }
+        
+        .days-container { display: flex; flex-wrap: wrap; gap: 6px; }
+        .day-circle {
+            width: 30px; height: 30px;
+            background-color: white; border: 2px solid var(--border-color); border-radius: 0px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 900; color: var(--text-color); cursor: pointer;
+        }
+        .day-circle.done { background-color: var(--primary-color); border-color: var(--border-color); }
+        .day-circle.add-day-btn { background-color: var(--border-color); color: var(--primary-color); font-size: 16px; }
+
+        .time-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--card-bg); padding: 10px 15px; border: 3px solid var(--border-color); 
+            margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color);
+        }
+        .time-nav button {
+            background: white; border: 2px solid var(--border-color); font-size: 16px; color: var(--text-color);
+            cursor: pointer; padding: 4px 10px; font-weight: 900; box-shadow: 2px 2px 0px var(--border-color);
+        }
+        .time-nav button:active { transform: translate(1px, 1px); box-shadow: none; }
+        .time-nav h2 { margin: 0; font-size: 14px; font-weight: 900; text-transform: uppercase; }
+
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;
+            background: var(--card-bg); padding: 8px; border: 3px solid var(--border-color);
+            box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px;
+            max-width: 380px; margin-left: auto; margin-right: auto;
+        }
+        .cal-header-cell {
+            text-align: center; font-size: 10px; font-weight: 900; padding: 4px 0; color: var(--dark-gray);
+        }
+        .cal-day-cell {
+            height: 34px; background: white; border: 1.5px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 900; cursor: pointer; position: relative;
+        }
+        .cal-day-cell:hover { background-color: var(--primary-light); }
+        .cal-day-cell.selected { background-color: var(--primary-color); border: 2px solid var(--border-color); }
+        .cal-day-cell.has-tasks::after {
+            content: ''; width: 4px; height: 4px; background-color: var(--danger-color);
+            border-radius: 50%; position: absolute; bottom: 2px;
+        }
+        .cal-day-cell.other-month { opacity: 0.25; background: #f0f0f0; }
+
+        .list-item {
+            background: var(--card-bg); padding: 12px 15px; border: 3px solid var(--border-color); 
+            margin-bottom: 10px; box-shadow: 4px 4px 0px var(--border-color); display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px;
+        }
+        .list-item.done-bg { background-color: var(--primary-light); }
+        .list-item.priority-high { border-left: 8px solid var(--danger-color); }
+        
+        .list-content { display: flex; align-items: center; gap: 12px; flex: 1; cursor: pointer; }
+        
+        .check-circle {
+            width: 22px; height: 22px; min-width: 22px;
+            border: 2px solid var(--border-color); border-radius: 0px; background: white;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--border-color); font-size: 12px; font-weight: 900;
+        }
+        .check-circle.checked { background-color: var(--primary-color); }
+        
+        .text-content { font-weight: 700; color: var(--text-color); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .text-content.crossed { text-decoration: line-through; color: var(--dark-gray); }
+        .badge-priority { font-size: 9px; padding: 1px 4px; border: 1.5px solid var(--border-color); background: var(--danger-color); color: white; font-weight: 900; text-transform: uppercase; }
+
+        .backup-section {
+            background: var(--card-bg); border: 3px solid var(--border-color); padding: 15px;
+            box-shadow: 4px 4px 0px var(--border-color); margin-top: 30px;
+        }
+        .backup-section h3 { font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
+        .backup-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+        .backup-btns button {
+            flex: 1; padding: 10px; background: white; border: 2px solid var(--border-color);
+            font-weight: 900; font-size: 11px; cursor: pointer; text-transform: uppercase; box-shadow: 2px 2px 0px var(--border-color);
+        }
+        .backup-btns button:active { transform: translate(1px, 1px); box-shadow: none; }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background-color: var(--nav-bg);
+            display: flex; justify-content: space-around; padding: 12px 0;
+            border-top: 3px solid var(--border-color); z-index: 1000;
+        }
+        .nav-item {
+            background: none; border: none; font-size: 10px; color: var(--dark-gray);
+            display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase;
+        }
+        .nav-item.active { color: var(--text-color); }
+        .nav-icon { font-size: 18px; }
+    </style>
+<script src="./Kişisel Asistanım_files/analytics.js.indir" defer=""></script></head>
+<body>
+
+    <div id="page-home" class="page active">
+        <h1>[ SİSTEM ANA MENÜ ]</h1>
+        <p style="margin-bottom: 20px; color: var(--dark-gray); font-size: 12px; font-weight: bold;">LÜTFEN BİR MODÜL SEÇİN:</p>
+        
+        <div class="home-card" onclick="switchPage('page-agenda', 'nav-agenda')">
+            <h2>📅 // AJANDA &amp; TAKVİM</h2>
+            <p>GÜNLÜK GÖREV VE TAKVİM OPERASYONLARI</p>
+        </div>
+
+        <div class="home-card" onclick="switchPage('page-habit', 'nav-habit')">
+            <h2>🔗 // ZİNCİRİ KIRMA</h2>
+            <p>ALIŞKANLIK VE DEVAMLILIK MATRİSİ</p>
+        </div>
+
+        <div class="home-card" onclick="switchPage('page-challenge', 'nav-challenge')">
+            <h2>🎯 // CHALLENGER</h2>
+            <p>PERİYODİK HEDEF KİLİTLEME</p>
+        </div>
+
+        <div class="backup-section">
+            <h3>GOOGLE SHEETS &amp; VERİ YÖNETİMİ</h3>
+            <div class="backup-btns" style="margin-bottom: 10px;">
+                <button onclick="setWebhookUrl()" style="background: var(--primary-color);">WEBHOOK URL AYARLA</button>
+                <button onclick="syncWithCloud()" style="background: var(--sync-color); color: white;">BULUTTAN VERİ ÇEK</button>
+            </div>
+            <div class="backup-btns">
+                <button onclick="exportData()">YEDEĞİ İNDİR</button>
+                <button onclick="document.getElementById('importFile').click()">YEDEKTEN YÜKLE</button>
+                <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+            </div>
+        </div>
+    </div>
+
+    <div id="page-agenda" class="page">
+        <h1>AJANDA &amp; TAKVİM</h1>
+        
+        <div class="time-nav">
+            <button onclick="changeCalendarMonth(-1)">←</button>
+            <h2 id="calendarMonthLabel">Ağustos 2026</h2>
+            <button onclick="changeCalendarMonth(1)">→</button>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid"><div class="cal-header-cell">Pzt</div><div class="cal-header-cell">Sal</div><div class="cal-header-cell">Çar</div><div class="cal-header-cell">Per</div><div class="cal-header-cell">Cum</div><div class="cal-header-cell">Cmt</div><div class="cal-header-cell">Paz</div><div class="cal-day-cell other-month">27</div><div class="cal-day-cell other-month">28</div><div class="cal-day-cell other-month">29</div><div class="cal-day-cell other-month">30</div><div class="cal-day-cell other-month">31</div><div class="cal-day-cell">1</div><div class="cal-day-cell">2</div><div class="cal-day-cell">3</div><div class="cal-day-cell">4</div><div class="cal-day-cell">5</div><div class="cal-day-cell">6</div><div class="cal-day-cell">7</div><div class="cal-day-cell">8</div><div class="cal-day-cell">9</div><div class="cal-day-cell">10</div><div class="cal-day-cell">11</div><div class="cal-day-cell">12</div><div class="cal-day-cell">13</div><div class="cal-day-cell">14</div><div class="cal-day-cell">15</div><div class="cal-day-cell">16</div><div class="cal-day-cell">17</div><div class="cal-day-cell">18</div><div class="cal-day-cell">19</div><div class="cal-day-cell">20</div><div class="cal-day-cell">21</div><div class="cal-day-cell">22</div><div class="cal-day-cell">23</div><div class="cal-day-cell">24</div><div class="cal-day-cell">25</div><div class="cal-day-cell">26</div><div class="cal-day-cell">27</div><div class="cal-day-cell">28</div><div class="cal-day-cell">29</div><div class="cal-day-cell selected">30</div><div class="cal-day-cell">31</div></div>
+
+        <div class="time-nav" style="background: var(--border-color); color: white;">
+            <button onclick="changeDay(-1)" style="background: white;">←</button>
+            <h2 id="currentDayLabel" style="color: white;">BUGÜN</h2>
+            <button onclick="changeDay(1)" style="background: white;">→</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="agendaInput" placeholder="YENİ GÖREV / NOT EKLE..." onkeypress="handleEnter(event, addAgendaItem)">
+            <select id="agendaPriority">
+                <option value="normal">NORMAL</option>
+                <option value="high">KRİTİK (!)</option>
+            </select>
+            <button onclick="addAgendaItem()">EKLE</button>
+        </div>
+        
+        <div id="agendaContainer"><p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ GÖREV BULUNAMADI ]</p></div>
+    </div>
+
+    <div id="page-habit" class="page">
+        <h1>ZİNCİRİ KIRMA</h1>
+        <div class="input-group">
+            <input type="text" id="habitInput" placeholder="YENİ ALIŞKANLIK (21 GÜN)" onkeypress="handleEnter(event, addHabit)">
+            <button onclick="addHabit()">EKLE</button>
+        </div>
+        <div id="habitsContainer"><div class="habit-card"><div class="habit-header">
+                    <div class="habit-title">deneme</div>
+                    <button class="delete-btn" onclick="deleteHabit(1788119196107)">×</button>
+                </div><div class="habit-stats">BAŞARI: %59 (13/22 GÜN)</div><div class="days-container"><div class="day-circle done">1</div><div class="day-circle done">2</div><div class="day-circle done">3</div><div class="day-circle done">4</div><div class="day-circle">5</div><div class="day-circle done">6</div><div class="day-circle done">7</div><div class="day-circle done">8</div><div class="day-circle done">9</div><div class="day-circle done">10</div><div class="day-circle">11</div><div class="day-circle">12</div><div class="day-circle done">13</div><div class="day-circle">14</div><div class="day-circle done">15</div><div class="day-circle done">16</div><div class="day-circle done">17</div><div class="day-circle">18</div><div class="day-circle">19</div><div class="day-circle">20</div><div class="day-circle">21</div><div class="day-circle">22</div><div class="day-circle add-day-btn">+</div></div></div></div>
+    </div>
+
+    <div id="page-challenge" class="page">
+        <h1>CHALLENGER</h1>
+        
+        <div class="time-nav">
+            <button onclick="changeMonth(-1)">←</button>
+            <h2 id="currentMonthLabel">Ağustos 2026</h2>
+            <button onclick="changeMonth(1)">→</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="goalInput" placeholder="AYLIK HEDEF TANIMLA..." onkeypress="handleEnter(event, addGoal)">
+            <select id="goalPriority">
+                <option value="normal">NORMAL</option>
+                <option value="high">KRİTİK (!)</option>
+            </select>
+            <button onclick="addGoal()">EKLE</button>
+        </div>
+        
+        <div id="goalsContainer"><p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HEDEF TANIMLANMADI ]</p></div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button id="nav-home" class="nav-item active" onclick="switchPage('page-home', 'nav-home')">
+            <span class="nav-icon">⬛</span><span>MENÜ</span>
+        </button>
+        <button id="nav-agenda" class="nav-item" onclick="switchPage('page-agenda', 'nav-agenda')">
+            <span class="nav-icon">📅</span><span>AJANDA</span>
+        </button>
+        <button id="nav-habit" class="nav-item" onclick="switchPage('page-habit', 'nav-habit')">
+            <span class="nav-icon">🔗</span><span>ZİNCİR</span>
+        </button>
+        <button id="nav-challenge" class="nav-item" onclick="switchPage('page-challenge', 'nav-challenge')">
+            <span class="nav-icon">🎯</span><span>HEDEF</span>
+        </button>
+    </nav>
+
+    <script>
+        function switchPage(pageId, navId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById(navId).classList.add('active');
+            if(pageId === 'page-agenda') renderCalendar();
+        }
+
+        function handleEnter(event, callback) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                callback();
+            }
+        }
+
+        const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+        let displayedMonthDate = new Date(); 
+        let displayedAgendaDate = new Date(); 
+        let displayedCalendarDate = new Date();
+
+        function getMonthKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0'); }
+        function getMonthLabel(date) { return monthNames[date.getMonth()] + " " + date.getFullYear(); }
+        
+        function getDayKey(date) { 
+            return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0'); 
+        }
+        function getDayLabel(date) {
+            const today = new Date();
+            if (date.toDateString() === today.toDateString()) return "BUGÜN";
+            
+            const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+            if (date.toDateString() === tomorrow.toDateString()) return "YARIN";
+            
+            const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
+            if (date.toDateString() === yesterday.toDateString()) return "DÜN";
+
+            return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+        }
+
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
+        let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
+        let webhookUrl = localStorage.getItem('sheet_webhook') || '';
+
+        function saveData() {
+            localStorage.setItem('habits', JSON.stringify(habits));
+            localStorage.setItem('goals', JSON.stringify(goalsData));
+            localStorage.setItem('agenda', JSON.stringify(agendaData));
+            
+            if (webhookUrl) {
+                syncToCloudQuiet();
+            }
+        }
+
+        function setWebhookUrl() {
+            const url = prompt("Google Apps Script Web App URL adresini girin:", webhookUrl);
+            if (url !== null) {
+                webhookUrl = url.trim();
+                localStorage.setItem('sheet_webhook', webhookUrl);
+                alert("WEBHOOK URL KAYDEDİLDİ.");
+                syncWithCloud();
+            }
+        }
+
+        async function syncWithCloud() {
+            if (!webhookUrl) {
+                alert("Lütfen önce 'Webhook URL Ayarla' butonuna tıklayarak Google E-Tablo adresinizi girin!");
+                return;
+            }
+            try {
+                const res = await fetch(webhookUrl);
+                const cloudData = await res.json();
+                if (cloudData && cloudData.habits) {
+                    habits = cloudData.habits;
+                    goalsData = cloudData.goalsData || {};
+                    agendaData = cloudData.agendaData || {};
+                    
+                    localStorage.setItem('habits', JSON.stringify(habits));
+                    localStorage.setItem('goals', JSON.stringify(goalsData));
+                    localStorage.setItem('agenda', JSON.stringify(agendaData));
+                    
+                    renderAgenda();
+                    renderHabits();
+                    renderGoals();
+                    renderCalendar();
+                    alert("BULUTTAN VERİLER BAŞARIYLA ÇEKİLDİ!");
+                } else {
+                    await syncToCloudQuiet();
+                    alert("BULUT TABLOSU İLK KEZ SENKRONİZE EDİLDİ.");
+                }
+            } catch (err) {
+                alert("BAĞLANTI HATASI: URL'yi kontrol edin.");
+            }
+        }
+
+        async function syncToCloudQuiet() {
+            if (!webhookUrl) return;
+            try {
+                const payload = { habits, goalsData, agendaData };
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) { console.error("Bulut kayıt hatası", e); }
+        }
+
+        function changeCalendarMonth(offset) {
+            displayedCalendarDate.setMonth(displayedCalendarDate.getMonth() + offset);
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            document.getElementById('calendarMonthLabel').textContent = getMonthLabel(displayedCalendarDate);
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const daysOfWeek = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            daysOfWeek.forEach(d => {
+                const headerCell = document.createElement('div');
+                headerCell.className = 'cal-header-cell';
+                headerCell.textContent = d;
+                grid.appendChild(headerCell);
+            });
+
+            const year = displayedCalendarDate.getFullYear();
+            const month = displayedCalendarDate.getMonth();
+            
+            const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7; 
+            const totalDays = new Date(year, month + 1, 0).getDate();
+            const prevTotalDays = new Date(year, month, 0).getDate();
+
+            for (let i = firstDayIndex; i > 0; i--) {
+                const dayNum = prevTotalDays - i + 1;
+                const cell = document.createElement('div');
+                cell.className = 'cal-day-cell other-month';
+                cell.textContent = dayNum;
+                grid.appendChild(cell);
+            }
+
+            for (let i = 1; i <= totalDays; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-day-cell';
+                cell.textContent = i;
+
+                const cellDate = new Date(year, month, i);
+                const dayKey = getDayKey(cellDate);
+
+                if (dayKey === getDayKey(displayedAgendaDate)) {
+                    cell.classList.add('selected');
+                }
+
+                if (agendaData[dayKey] && agendaData[dayKey].length > 0) {
+                    cell.classList.add('has-tasks');
+                }
+
+                cell.onclick = () => {
+                    displayedAgendaDate = new Date(year, month, i);
+                    renderAgenda();
+                    renderCalendar();
+                };
+
+                grid.appendChild(cell);
+            }
+        }
+
+        function changeDay(offset) {
+            displayedAgendaDate.setDate(displayedAgendaDate.getDate() + offset);
+            displayedCalendarDate = new Date(displayedAgendaDate);
+            renderAgenda();
+            renderCalendar();
+        }
+
+        function renderAgenda() {
+            document.getElementById('currentDayLabel').textContent = getDayLabel(displayedAgendaDate);
+            const container = document.getElementById('agendaContainer');
+            container.innerHTML = '';
+
+            const dayKey = getDayKey(displayedAgendaDate);
+            const currentDayItems = agendaData[dayKey] || [];
+
+            if (currentDayItems.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ GÖREV BULUNAMADI ]</p>';
+                return;
+            }
+
+            currentDayItems.forEach((item, index) => {
+                const isHigh = item.priority === 'high';
+                const div = document.createElement('div');
+                div.className = `list-item ${item.done ? 'done-bg' : ''} ${isHigh ? 'priority-high' : ''}`;
+                div.innerHTML = `
+                    <div class="list-content" onclick="toggleAgendaItem(${index})">
+                        <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
+                        <span class="text-content ${item.done ? 'crossed' : ''}">
+                            ${isHigh ? '<span class="badge-priority">Kritik</span>' : ''}
+                            ${item.text}
+                        </span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteAgendaItem(${index})">×</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addAgendaItem() {
+            const input = document.getElementById('agendaInput');
+            const priority = document.getElementById('agendaPriority').value;
+            if (input.value.trim() === '') return;
+            
+            const dayKey = getDayKey(displayedAgendaDate);
+            if (!agendaData[dayKey]) agendaData[dayKey] = [];
+            
+            agendaData[dayKey].push({ text: input.value, done: false, priority: priority });
+            saveData();
+            renderAgenda();
+            renderCalendar();
+            input.value = '';
+        }
+
+        function toggleAgendaItem(index) {
+            const dayKey = getDayKey(displayedAgendaDate);
+            agendaData[dayKey][index].done = !agendaData[dayKey][index].done;
+            saveData();
+            renderAgenda();
+        }
+
+        function deleteAgendaItem(index) {
+            const dayKey = getDayKey(displayedAgendaDate);
+            agendaData[dayKey].splice(index, 1);
+            saveData();
+            renderAgenda();
+            renderCalendar();
+        }
+
+        function changeMonth(offset) {
+            displayedMonthDate.setMonth(displayedMonthDate.getMonth() + offset);
+            renderGoals();
+        }
+
+        function renderGoals() {
+            document.getElementById('currentMonthLabel').textContent = getMonthLabel(displayedMonthDate);
+            const container = document.getElementById('goalsContainer');
+            container.innerHTML = '';
+
+            const monthKey = getMonthKey(displayedMonthDate);
+            const currentMonthGoals = goalsData[monthKey] || [];
+
+            if (currentMonthGoals.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HEDEF TANIMLANMADI ]</p>';
+                return;
+            }
+
+            currentMonthGoals.forEach((goal, index) => {
+                if (typeof goal === 'string') {
+                    goal = { text: goal, done: false, priority: 'normal' };
+                    goalsData[monthKey][index] = goal;
+                    saveData();
+                }
+
+                const isHigh = goal.priority === 'high';
+                const item = document.createElement('div');
+                item.className = `list-item ${goal.done ? 'done-bg' : ''} ${isHigh ? 'priority-high' : ''}`;
+                item.innerHTML = `
+                    <div class="list-content" onclick="toggleGoal(${index})">
+                        <div class="check-circle ${goal.done ? 'checked' : ''}">${goal.done ? 'X' : ''}</div>
+                        <span class="text-content ${goal.done ? 'crossed' : ''}">
+                            ${isHigh ? '<span class="badge-priority">Kritik</span>' : ''}
+                            ${goal.text}
+                        </span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteGoal(${index})">×</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function addGoal() {
+            const input = document.getElementById('goalInput');
+            const priority = document.getElementById('goalPriority').value;
+            if (input.value.trim() === '') return;
+            
+            const monthKey = getMonthKey(displayedMonthDate);
+            if (!goalsData[monthKey]) goalsData[monthKey] = [];
+            
+            goalsData[monthKey].push({ text: input.value, done: false, priority: priority });
+            saveData();
+            renderGoals();
+            input.value = '';
+        }
+
+        function toggleGoal(index) {
+            const monthKey = getMonthKey(displayedMonthDate);
+            goalsData[monthKey][index].done = !goalsData[monthKey][index].done;
+            saveData();
+            renderGoals();
+        }
+
+        function deleteGoal(index) {
+            const monthKey = getMonthKey(displayedMonthDate);
+            goalsData[monthKey].splice(index, 1);
+            saveData();
+            renderGoals();
+        }
+
+        function renderHabits() {
+            const container = document.getElementById('habitsContainer');
+            container.innerHTML = '';
+            
+            if (habits.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ AKTİF ZİNCİR YOK ]</p>';
+                return;
+            }
+
+            habits.forEach(habit => {
+                const daysCount = habit.totalDays || 21;
+                const doneCount = habit.doneDays.length;
+                const percentage = Math.round((doneCount / daysCount) * 100);
+
+                const card = document.createElement('div');
+                card.className = 'habit-card';
+
+                const header = document.createElement('div');
+                header.className = 'habit-header';
+                header.innerHTML = `
+                    <div class="habit-title">${habit.title}</div>
+                    <button class="delete-btn" onclick="deleteHabit(${habit.id})">×</button>
+                `;
+                card.appendChild(header);
+
+                const stats = document.createElement('div');
+                stats.className = 'habit-stats';
+                stats.textContent = `BAŞARI: %${percentage} (${doneCount}/${daysCount} GÜN)`;
+                card.appendChild(stats);
+
+                const daysContainer = document.createElement('div');
+                daysContainer.className = 'days-container';
+
+                for (let i = 1; i <= daysCount; i++) {
+                    const circle = document.createElement('div');
+                    circle.className = 'day-circle';
+                    circle.textContent = i;
+                    if (habit.doneDays.includes(i)) circle.classList.add('done');
+                    circle.onclick = () => toggleDay(habit.id, i, circle);
+                    daysContainer.appendChild(circle);
+                }
+
+                const addBtn = document.createElement('div');
+                addBtn.className = 'day-circle add-day-btn';
+                addBtn.textContent = '+';
+                addBtn.onclick = () => addDayToHabit(habit.id);
+                daysContainer.appendChild(addBtn);
+
+                card.appendChild(daysContainer);
+                container.appendChild(card);
+            });
+        }
+
+        function addHabit() {
+            const input = document.getElementById('habitInput');
+            if (input.value.trim() === '') return;
+            habits.push({ id: Date.now(), title: input.value, doneDays: [], totalDays: 21 });
+            saveData();
+            renderHabits();
+            input.value = '';
+        }
+
+        function deleteHabit(id) {
+            habits = habits.filter(h => h.id !== id);
+            saveData();
+            renderHabits();
+        }
+
+        function toggleDay(habitId, day, element) {
+            const habit = habits.find(h => h.id === habitId);
+            if (habit.doneDays.includes(day)) {
+                habit.doneDays = habit.doneDays.filter(d => d !== day);
+            } else {
+                habit.doneDays.push(day);
+            }
+            saveData();
+            renderHabits();
+        }
+
+        function addDayToHabit(habitId) {
+            const habit = habits.find(h => h.id === habitId);
+            if (!habit.totalDays) habit.totalDays = 21; 
+            habit.totalDays++; 
+            saveData();
+            renderHabits();
+        }
+
+        function exportData() {
+            const backup = { habits, goalsData, agendaData };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `asistan_yedek_${getDayKey(new Date())}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importData(event) {
+            const fileReader = new FileReader();
+            if (event.target.files[0]) {
+                fileReader.readAsText(event.target.files[0], "UTF-8");
+                fileReader.onload = (e) => {
+                    try {
+                        const parsed = JSON.parse(e.target.result);
+                        if (parsed.habits && parsed.goalsData && parsed.agendaData) {
+                            habits = parsed.habits;
+                            goalsData = parsed.goalsData;
+                            agendaData = parsed.agendaData;
+                            saveData();
+                            renderAgenda();
+                            renderHabits();
+                            renderGoals();
+                            renderCalendar();
+                            alert("SİSTEM YEDEĞİ BAŞARIYLA YÜKLENDİ.");
+                        } else {
+                            alert("GEÇERSİZ YEDEK DOSYASI FORMATI!");
+                        }
+                    } catch (err) {
+                        alert("DOSYA OKUNAMADI!");
+                    }
+                };
+            }
+        }
+
+        renderAgenda();
+        renderHabits();
+        renderGoals();
+        renderCalendar();
+    </script>
+</body></html>
