@@ -53,13 +53,13 @@
         .home-card p { font-size: 12px; color: var(--dark-gray); }
 
         .input-group { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .input-group input, .input-group select {
+        .input-group input, .input-group select, .input-group textarea {
             flex: 1; padding: 12px; border: 3px solid var(--border-color);
             border-radius: 0px; outline: none; font-size: 13px; background: white;
             box-shadow: 3px 3px 0px var(--border-color);
         }
         .input-group select { flex: 0 0 120px; font-weight: 900; cursor: pointer; }
-        .input-group input:focus, .input-group select:focus { background-color: var(--primary-light); }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { background-color: var(--primary-light); }
         .input-group button {
             padding: 0 20px; background: var(--primary-color); color: var(--border-color);
             border: 3px solid var(--border-color); border-radius: 0px; font-weight: 900; font-size: 13px; cursor: pointer;
@@ -162,11 +162,11 @@
             border-top: 3px solid var(--border-color); z-index: 1000;
         }
         .nav-item {
-            background: none; border: none; font-size: 10px; color: var(--dark-gray);
+            background: none; border: none; font-size: 9px; color: var(--dark-gray);
             display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase;
         }
         .nav-item.active { color: var(--text-color); }
-        .nav-icon { font-size: 18px; }
+        .nav-icon { font-size: 16px; }
 
         .badge-book { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ff99cc; color: var(--border-color); font-weight: 900; text-transform: uppercase; }
         .badge-movie { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #66ccff; color: var(--border-color); font-weight: 900; text-transform: uppercase; }
@@ -182,6 +182,11 @@
         <div class="home-card" onclick="switchPage('page-agenda', 'nav-agenda')">
             <h2>📅 // AJANDA &amp; TAKVİM</h2>
             <p>GÜNLÜK GÖREV VE TAKVİM OPERASYONLARI</p>
+        </div>
+
+        <div class="home-card" onclick="switchPage('page-notebooks', 'nav-notebooks')">
+            <h2>📓 // NOTLAR &amp; DEFTERLER</h2>
+            <p>FARKLI KONULAR İÇİN AYRI AYRI NOT DEFTERLERİ</p>
         </div>
 
         <div class="home-card" onclick="switchPage('page-habit', 'nav-habit')">
@@ -216,13 +221,19 @@
     <div id="page-agenda" class="page">
         <h1>AJANDA &amp; TAKVİM</h1>
         
+        <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+            <button id="agendaTabDaily" onclick="switchAgendaSubTab('daily')" style="flex:1; padding:10px; background:var(--primary-color); border:3px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:3px 3px 0px var(--border-color); text-transform:uppercase;">📅 GÜNLÜK GÖREVLER</button>
+            <button id="agendaTabWeekly" onclick="switchAgendaSubTab('weekly')" style="flex:1; padding:10px; background:white; border:3px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:3px 3px 0px var(--border-color); text-transform:uppercase;">📝 HAFTALIK NOTLAR</button>
+        </div>
+        
+        <div id="agendaDailySection">
         <div class="time-nav">
             <button onclick="changeCalendarMonth(-1)">←</button>
             <h2 id="calendarMonthLabel">Ağustos 2026</h2>
             <button onclick="changeCalendarMonth(1)">→</button>
         </div>
 
-        <div class="calendar-grid" id="calendarGrid"><div class="cal-header-cell">Pzt</div><div class="cal-header-cell">Sal</div><div class="cal-header-cell">Çar</div><div class="cal-header-cell">Per</div><div class="cal-header-cell">Cum</div><div class="cal-header-cell">Cmt</div><div class="cal-header-cell">Paz</div><div class="cal-day-cell other-month">27</div><div class="cal-day-cell other-month">28</div><div class="cal-day-cell other-month">29</div><div class="cal-day-cell other-month">30</div><div class="cal-day-cell other-month">31</div><div class="cal-day-cell">1</div><div class="cal-day-cell">2</div><div class="cal-day-cell">3</div><div class="cal-day-cell">4</div><div class="cal-day-cell">5</div><div class="cal-day-cell">6</div><div class="cal-day-cell">7</div><div class="cal-day-cell">8</div><div class="cal-day-cell">9</div><div class="cal-day-cell">10</div><div class="cal-day-cell">11</div><div class="cal-day-cell">12</div><div class="cal-day-cell">13</div><div class="cal-day-cell">14</div><div class="cal-day-cell">15</div><div class="cal-day-cell">16</div><div class="cal-day-cell">17</div><div class="cal-day-cell">18</div><div class="cal-day-cell">19</div><div class="cal-day-cell">20</div><div class="cal-day-cell">21</div><div class="cal-day-cell">22</div><div class="cal-day-cell">23</div><div class="cal-day-cell">24</div><div class="cal-day-cell">25</div><div class="cal-day-cell">26</div><div class="cal-day-cell">27</div><div class="cal-day-cell">28</div><div class="cal-day-cell">29</div><div class="cal-day-cell selected">30</div><div class="cal-day-cell">31</div></div>
+        <div class="calendar-grid" id="calendarGrid"></div>
 
         <div class="time-nav" style="background: var(--border-color); color: white;">
             <button onclick="changeDay(-1)" style="background: white;">←</button>
@@ -240,18 +251,65 @@
         </div>
         
         <div id="agendaContainer"><p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ GÖREV BULUNAMADI ]</p></div>
+        </div>
+
+        <div id="agendaWeeklySection" style="display:none;">
+            <div class="time-nav">
+                <button onclick="changeWeek(-1)">←</button>
+                <h2 id="currentWeekLabel">HAFTA</h2>
+                <button onclick="changeWeek(1)">→</button>
+            </div>
+            <div class="input-group" style="flex-direction: column; gap: 8px;">
+                <textarea id="weeklyNoteInput" rows="6" placeholder="BU HAFTAYA ÖZEL NOTLAR, PLANLAR VEYA DEĞERLENDİRMELER..." style="resize: vertical;"></textarea>
+                <button onclick="saveWeeklyNote()" style="width: 100%;">HAFTALIK NOTU KAYDET</button>
+            </div>
+            <div id="weeklyNoteStatus" style="font-size: 11px; font-weight: 900; color: var(--dark-gray); text-align: center; margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <!-- NOTLAR & DEFTERLER MODÜLÜ -->
+    <div id="page-notebooks" class="page">
+        <h1>NOTLAR &amp; DEFTERLER</h1>
+        
+        <!-- Defter Listesi Görünümü -->
+        <div id="notebooksMainView">
+            <div class="input-group">
+                <input type="text" id="newNotebookInput" placeholder="YENİ DEFTER ADI (Ör: Yazılım, Fikirler)..." onkeypress="handleEnter(event, addNotebook)">
+                <button onclick="addNotebook()">DEFTER AÇ</button>
+            </div>
+            <div id="notebooksContainer">
+                <p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HENÜZ DEFTER OLUŞTURULMADI ]</p>
+            </div>
+        </div>
+
+        <!-- Seçilen Defterin Notları Görünümü -->
+        <div id="notebookDetailView" style="display: none;">
+            <div style="margin-bottom: 15px;">
+                <button onclick="closeNotebook()" style="background: white; border: 2px solid var(--border-color); padding: 8px 14px; font-weight: 900; font-size: 11px; cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); text-transform: uppercase;">← DEFTERLERE DÖN</button>
+            </div>
+            <h2 id="currentNotebookTitle" style="font-size: 16px; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; background: var(--primary-color); padding: 10px; border: 3px solid var(--border-color); box-shadow: 3px 3px 0px var(--border-color);">DEFTER</h2>
+            
+            <div class="input-group" style="flex-direction: column; gap: 8px;">
+                <input type="text" id="noteTitleInput" placeholder="NOT BAŞLIĞI..." onkeypress="handleEnter(event, addNote)">
+                <textarea id="noteContentInput" rows="4" placeholder="NOT İÇERİĞİ..." style="resize: vertical;"></textarea>
+                <button onclick="addNote()">NOT EKLE</button>
+            </div>
+
+            <div id="notesContainer">
+                <p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ BU DEFTERDE HENÜZ NOT YOK ]</p>
+            </div>
+        </div>
     </div>
 
     <div id="page-habit" class="page">
         <h1>ZİNCİRİ KIRMA</h1>
+        
         <div class="input-group">
-            <input type="text" id="habitInput" placeholder="YENİ ALIŞKANLIK (21 GÜN)" onkeypress="handleEnter(event, addHabit)">
+            <input type="text" id="habitInput" placeholder="YENİ ALIŞKANLIK (Ör: Kitap Oku)..." onkeypress="handleEnter(event, addHabit)">
             <button onclick="addHabit()">EKLE</button>
         </div>
-        <div id="habitsContainer"><div class="habit-card"><div class="habit-header">
-                    <div class="habit-title">deneme</div>
-                    <button class="delete-btn" onclick="deleteHabit(1788119196107)">×</button>
-                </div><div class="habit-stats">BAŞARI: %59 (13/22 GÜN)</div><div class="days-container"><div class="day-circle done">1</div><div class="day-circle done">2</div><div class="day-circle done">3</div><div class="day-circle done">4</div><div class="day-circle">5</div><div class="day-circle done">6</div><div class="day-circle done">7</div><div class="day-circle done">8</div><div class="day-circle done">9</div><div class="day-circle done">10</div><div class="day-circle">11</div><div class="day-circle">12</div><div class="day-circle done">13</div><div class="day-circle">14</div><div class="day-circle done">15</div><div class="day-circle done">16</div><div class="day-circle done">17</div><div class="day-circle">18</div><div class="day-circle">19</div><div class="day-circle">20</div><div class="day-circle">21</div><div class="day-circle">22</div><div class="day-circle add-day-btn">+</div></div></div></div>
+
+        <div id="habitsContainer"></div>
     </div>
 
     <div id="page-challenge" class="page">
@@ -275,7 +333,7 @@
         <div id="goalsContainer"><p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HEDEF TANIMLANMADI ]</p></div>
     </div>
 
-        <div id="page-media" class="page">
+    <div id="page-media" class="page">
         <h1>KİTAP &amp; MEDYA LİSTESİ</h1>
         
         <div class="input-group">
@@ -305,6 +363,9 @@
         <button id="nav-agenda" class="nav-item" onclick="switchPage('page-agenda', 'nav-agenda')">
             <span class="nav-icon">📅</span><span>AJANDA</span>
         </button>
+        <button id="nav-notebooks" class="nav-item" onclick="switchPage('page-notebooks', 'nav-notebooks')">
+            <span class="nav-icon">📓</span><span>NOTLAR</span>
+        </button>
         <button id="nav-habit" class="nav-item" onclick="switchPage('page-habit', 'nav-habit')">
             <span class="nav-icon">🔗</span><span>ZİNCİR</span>
         </button>
@@ -322,11 +383,12 @@
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.getElementById(navId).classList.add('active');
-            if(pageId === 'page-agenda') renderCalendar();
+            if(pageId === 'page-agenda') { renderCalendar(); renderWeeklyNotes(); }
+            if(pageId === 'page-notebooks') { renderNotebooks(); }
         }
 
         function handleEnter(event, callback) {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
                 event.preventDefault();
                 callback();
             }
@@ -336,6 +398,59 @@
         let displayedMonthDate = new Date(); 
         let displayedAgendaDate = new Date(); 
         let displayedCalendarDate = new Date();
+        let displayedWeekDate = new Date();
+        let activeAgendaSubTab = 'daily';
+        
+        // Notebooks state
+        let notebooksData = JSON.parse(localStorage.getItem('notebooksData')) || [];
+        let activeNotebookId = null;
+
+        function switchAgendaSubTab(tab) {
+            activeAgendaSubTab = tab;
+            const btnDaily = document.getElementById('agendaTabDaily');
+            const btnWeekly = document.getElementById('agendaTabWeekly');
+            const secDaily = document.getElementById('agendaDailySection');
+            const secWeekly = document.getElementById('agendaWeeklySection');
+
+            if (tab === 'daily') {
+                btnDaily.style.background = 'var(--primary-color)';
+                btnWeekly.style.background = 'white';
+                secDaily.style.display = 'block';
+                secWeekly.style.display = 'none';
+            } else {
+                btnWeekly.style.background = 'var(--primary-color)';
+                btnDaily.style.background = 'white';
+                secDaily.style.display = 'none';
+                secWeekly.style.display = 'block';
+                renderWeeklyNotes();
+            }
+        }
+
+        function getMonday(d) {
+            const date = new Date(d);
+            const day = date.getDay();
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(date.setDate(diff));
+        }
+
+        function getSunday(monday) {
+            const sunday = new Date(monday);
+            sunday.setDate(sunday.getDate() + 6);
+            return sunday;
+        }
+
+        function getWeekKey(date) {
+            const monday = getMonday(date);
+            return monday.getFullYear() + "-" + String(monday.getMonth() + 1).padStart(2, '0') + "-" + String(monday.getDate()).padStart(2, '0');
+        }
+
+        function getWeekLabel(date) {
+            const monday = getMonday(date);
+            const sunday = getSunday(monday);
+            const mStr = monday.getDate() + " " + monthNames[monday.getMonth()];
+            const sStr = sunday.getDate() + " " + monthNames[sunday.getMonth()] + " " + sunday.getFullYear();
+            return mStr + " - " + sStr;
+        }
 
         function getMonthKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0'); }
         function getMonthLabel(date) { return monthNames[date.getMonth()] + " " + date.getFullYear(); }
@@ -360,6 +475,7 @@
         let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
         let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
         let mediaData = JSON.parse(localStorage.getItem('mediaList')) || [];
+        let weeklyData = JSON.parse(localStorage.getItem('weeklyNotes')) || {};
         let currentMediaFilter = 'all';
         let webhookUrl = localStorage.getItem('sheet_webhook') || '';
 
@@ -368,6 +484,8 @@
             localStorage.setItem('goals', JSON.stringify(goalsData));
             localStorage.setItem('agenda', JSON.stringify(agendaData));
             localStorage.setItem('mediaList', JSON.stringify(mediaData));
+            localStorage.setItem('weeklyNotes', JSON.stringify(weeklyData));
+            localStorage.setItem('notebooksData', JSON.stringify(notebooksData));
             
             if (webhookUrl) {
                 syncToCloudQuiet();
@@ -392,22 +510,28 @@
             try {
                 const res = await fetch(webhookUrl);
                 const cloudData = await res.json();
-                if (cloudData && cloudData.habits) {
-                    habits = cloudData.habits;
+                if (cloudData && (cloudData.habits || cloudData.notebooksData)) {
+                    habits = cloudData.habits || [];
                     goalsData = cloudData.goalsData || {};
                     agendaData = cloudData.agendaData || {};
                     mediaData = cloudData.mediaData || [];
+                    weeklyData = cloudData.weeklyData || {};
+                    notebooksData = cloudData.notebooksData || [];
                     
                     localStorage.setItem('habits', JSON.stringify(habits));
                     localStorage.setItem('goals', JSON.stringify(goalsData));
                     localStorage.setItem('agenda', JSON.stringify(agendaData));
                     localStorage.setItem('mediaList', JSON.stringify(mediaData));
+                    localStorage.setItem('weeklyNotes', JSON.stringify(weeklyData));
+                    localStorage.setItem('notebooksData', JSON.stringify(notebooksData));
                     
                     renderAgenda();
                     renderHabits();
                     renderGoals();
                     renderMedia();
+                    renderWeeklyNotes();
                     renderCalendar();
+                    renderNotebooks();
                     alert("BULUTTAN VERİLER BAŞARIYLA ÇEKİLDİ!");
                 } else {
                     await syncToCloudQuiet();
@@ -421,7 +545,7 @@
         async function syncToCloudQuiet() {
             if (!webhookUrl) return;
             try {
-                const payload = { habits, goalsData, agendaData, mediaData };
+                const payload = { habits, goalsData, agendaData, mediaData, weeklyData, notebooksData };
                 await fetch(webhookUrl, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -437,46 +561,49 @@
         }
 
         function renderCalendar() {
-            document.getElementById('calendarMonthLabel').textContent = getMonthLabel(displayedCalendarDate);
             const grid = document.getElementById('calendarGrid');
+            const label = document.getElementById('calendarMonthLabel');
             grid.innerHTML = '';
-
-            const daysOfWeek = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-            daysOfWeek.forEach(d => {
-                const headerCell = document.createElement('div');
-                headerCell.className = 'cal-header-cell';
-                headerCell.textContent = d;
-                grid.appendChild(headerCell);
-            });
-
+            
             const year = displayedCalendarDate.getFullYear();
             const month = displayedCalendarDate.getMonth();
-            
-            const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7; 
+            label.textContent = monthNames[month] + " " + year;
+
+            const days = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+            days.forEach(d => {
+                const cell = document.createElement('div');
+                cell.className = 'cal-header-cell';
+                cell.textContent = d;
+                grid.appendChild(cell);
+            });
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
             const totalDays = new Date(year, month + 1, 0).getDate();
             const prevTotalDays = new Date(year, month, 0).getDate();
 
-            for (let i = firstDayIndex; i > 0; i--) {
-                const dayNum = prevTotalDays - i + 1;
+            for (let i = adjustedFirstDay - 1; i >= 0; i--) {
+                const dayNum = prevTotalDays - i;
                 const cell = document.createElement('div');
                 cell.className = 'cal-day-cell other-month';
                 cell.textContent = dayNum;
                 grid.appendChild(cell);
             }
 
+            const todayKey = getDayKey(new Date());
+            const selectedKey = getDayKey(displayedAgendaDate);
+
             for (let i = 1; i <= totalDays; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'cal-day-cell';
                 cell.textContent = i;
-
+                
                 const cellDate = new Date(year, month, i);
-                const dayKey = getDayKey(cellDate);
+                const cellKey = getDayKey(cellDate);
 
-                if (dayKey === getDayKey(displayedAgendaDate)) {
-                    cell.classList.add('selected');
-                }
-
-                if (agendaData[dayKey] && agendaData[dayKey].length > 0) {
+                if (cellKey === selectedKey) cell.classList.add('selected');
+                
+                if (agendaData[cellKey] && agendaData[cellKey].length > 0) {
                     cell.classList.add('has-tasks');
                 }
 
@@ -486,6 +613,15 @@
                     renderCalendar();
                 };
 
+                grid.appendChild(cell);
+            }
+
+            const totalCellsSoFar = adjustedFirstDay + totalDays;
+            const nextMonthDays = totalCellsSoFar % 7 === 0 ? 0 : 7 - (totalCellsSoFar % 7);
+            for (let i = 1; i <= nextMonthDays; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-day-cell other-month';
+                cell.textContent = i;
                 grid.appendChild(cell);
             }
         }
@@ -503,22 +639,21 @@
             container.innerHTML = '';
 
             const dayKey = getDayKey(displayedAgendaDate);
-            const currentDayItems = agendaData[dayKey] || [];
+            const items = agendaData[dayKey] || [];
 
-            if (currentDayItems.length === 0) {
+            if (items.length === 0) {
                 container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ GÖREV BULUNAMADI ]</p>';
                 return;
             }
 
-            currentDayItems.forEach((item, index) => {
-                const isHigh = item.priority === 'high';
+            items.forEach((item, index) => {
                 const div = document.createElement('div');
-                div.className = `list-item ${item.done ? 'done-bg' : ''} ${isHigh ? 'priority-high' : ''}`;
+                div.className = `list-item ${item.done ? 'done-bg' : ''} ${item.priority === 'high' ? 'priority-high' : ''}`;
                 div.innerHTML = `
                     <div class="list-content" onclick="toggleAgendaItem(${index})">
                         <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
                         <span class="text-content ${item.done ? 'crossed' : ''}">
-                            ${isHigh ? '<span class="badge-priority">Kritik</span>' : ''}
+                            ${item.priority === 'high' ? '<span class="badge-priority">KRİTİK</span>' : ''}
                             ${item.text}
                         </span>
                     </div>
@@ -532,11 +667,11 @@
             const input = document.getElementById('agendaInput');
             const priority = document.getElementById('agendaPriority').value;
             if (input.value.trim() === '') return;
-            
+
             const dayKey = getDayKey(displayedAgendaDate);
             if (!agendaData[dayKey]) agendaData[dayKey] = [];
-            
-            agendaData[dayKey].push({ text: input.value, done: false, priority: priority });
+
+            agendaData[dayKey].push({ text: input.value.trim(), done: false, priority: priority });
             saveData();
             renderAgenda();
             renderCalendar();
@@ -553,10 +688,159 @@
         function deleteAgendaItem(index) {
             const dayKey = getDayKey(displayedAgendaDate);
             agendaData[dayKey].splice(index, 1);
+            if (agendaData[dayKey].length === 0) delete agendaData[dayKey];
             saveData();
             renderAgenda();
             renderCalendar();
         }
+
+        function changeWeek(offset) {
+            displayedWeekDate.setDate(displayedWeekDate.getDate() + (offset * 7));
+            renderWeeklyNotes();
+        }
+
+        function renderWeeklyNotes() {
+            const weekKey = getWeekKey(displayedWeekDate);
+            document.getElementById('currentWeekLabel').textContent = getWeekLabel(displayedWeekDate);
+            const textarea = document.getElementById('weeklyNoteInput');
+            textarea.value = weeklyData[weekKey] || '';
+            document.getElementById('weeklyNoteStatus').textContent = "";
+        }
+
+        function saveWeeklyNote() {
+            const weekKey = getWeekKey(displayedWeekDate);
+            const textarea = document.getElementById('weeklyNoteInput');
+            weeklyData[weekKey] = textarea.value;
+            saveData();
+            document.getElementById('weeklyNoteStatus').textContent = "✓ HAFTALIK NOT KAYDEDİLDİ.";
+            setTimeout(() => {
+                document.getElementById('weeklyNoteStatus').textContent = "";
+            }, 2000);
+        }
+
+        // ================= DEFTERLER & NOTLAR MANTIĞI =================
+        function renderNotebooks() {
+            const container = document.getElementById('notebooksContainer');
+            container.innerHTML = '';
+
+            if (notebooksData.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HENÜZ DEFTER OLUŞTURULMADI ]</p>';
+                return;
+            }
+
+            notebooksData.forEach((nb) => {
+                const noteCount = nb.notes ? nb.notes.length : 0;
+                const card = document.createElement('div');
+                card.className = 'home-card';
+                card.style.display = 'flex';
+                card.style.justifyContent = 'space-between';
+                card.style.alignItems = 'center';
+                card.innerHTML = `
+                    <div style="flex: 1; cursor: pointer;" onclick="openNotebook('${nb.id}')">
+                        <h2>📓 // ${nb.title}</h2>
+                        <p>${noteCount} ADET NOT BULUNUYOR</p>
+                    </div>
+                    <button class="delete-btn" onclick="deleteNotebook(event, '${nb.id}')">×</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addNotebook() {
+            const input = document.getElementById('newNotebookInput');
+            if (input.value.trim() === '') return;
+
+            notebooksData.push({
+                id: 'nb_' + Date.now(),
+                title: input.value.trim().toUpperCase(),
+                notes: []
+            });
+            saveData();
+            renderNotebooks();
+            input.value = '';
+        }
+
+        function deleteNotebook(event, id) {
+            event.stopPropagation();
+            if (confirm("Bu defteri ve içindeki tüm notları silmek istediğinize emin misiniz?")) {
+                notebooksData = notebooksData.filter(nb => nb.id !== id);
+                saveData();
+                renderNotebooks();
+            }
+        }
+
+        function openNotebook(id) {
+            activeNotebookId = id;
+            const nb = notebooksData.find(n => n.id === id);
+            if (!nb) return;
+
+            document.getElementById('notebooksMainView').style.display = 'none';
+            document.getElementById('notebookDetailView').style.display = 'block';
+            document.getElementById('currentNotebookTitle').textContent = `📓 DEFTER: ${nb.title}`;
+            renderNotes();
+        }
+
+        function closeNotebook() {
+            activeNotebookId = null;
+            document.getElementById('notebookDetailView').style.display = 'none';
+            document.getElementById('notebooksMainView').style.display = 'block';
+            renderNotebooks();
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notesContainer');
+            container.innerHTML = '';
+
+            const nb = notebooksData.find(n => n.id === activeNotebookId);
+            if (!nb || !nb.notes || nb.notes.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ BU DEFTERDE HENÜZ NOT YOK ]</p>';
+                return;
+            }
+
+            nb.notes.forEach((note, index) => {
+                const card = document.createElement('div');
+                card.className = 'habit-card';
+                card.innerHTML = `
+                    <div class="habit-header">
+                        <span class="habit-title" style="font-size:13px;">${note.title}</span>
+                        <button class="delete-btn" onclick="deleteNote(${index})">×</button>
+                    </div>
+                    <p style="font-size:12px; white-space: pre-wrap; color: var(--text-color); margin-top: 6px; font-weight: normal;">${note.content}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addNote() {
+            const titleInput = document.getElementById('noteTitleInput');
+            const contentInput = document.getElementById('noteContentInput');
+            
+            if (titleInput.value.trim() === '' && contentInput.value.trim() === '') return;
+
+            const nb = notebooksData.find(n => n.id === activeNotebookId);
+            if (!nb) return;
+
+            nb.notes.unshift({
+                id: Date.now(),
+                title: titleInput.value.trim().toUpperCase() || 'BAŞLIKSIZ NOT',
+                content: contentInput.value.trim()
+            });
+
+            saveData();
+            renderNotes();
+            titleInput.value = '';
+            contentInput.value = '';
+        }
+
+        function deleteNote(index) {
+            const nb = notebooksData.find(n => n.id === activeNotebookId);
+            if (!nb) return;
+
+            nb.notes.splice(index, 1);
+            saveData();
+            renderNotes();
+        }
+        // =============================================================
 
         function changeMonth(offset) {
             displayedMonthDate.setMonth(displayedMonthDate.getMonth() + offset);
@@ -564,39 +848,35 @@
         }
 
         function renderGoals() {
-            document.getElementById('currentMonthLabel').textContent = getMonthLabel(displayedMonthDate);
+            const year = displayedMonthDate.getFullYear();
+            const month = displayedMonthDate.getMonth();
+            document.getElementById('currentMonthLabel').textContent = monthNames[month] + " " + year;
+            
+            const monthKey = getMonthKey(displayedMonthDate);
             const container = document.getElementById('goalsContainer');
             container.innerHTML = '';
 
-            const monthKey = getMonthKey(displayedMonthDate);
-            const currentMonthGoals = goalsData[monthKey] || [];
+            const items = goalsData[monthKey] || [];
 
-            if (currentMonthGoals.length === 0) {
+            if (items.length === 0) {
                 container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ HEDEF TANIMLANMADI ]</p>';
                 return;
             }
 
-            currentMonthGoals.forEach((goal, index) => {
-                if (typeof goal === 'string') {
-                    goal = { text: goal, done: false, priority: 'normal' };
-                    goalsData[monthKey][index] = goal;
-                    saveData();
-                }
-
-                const isHigh = goal.priority === 'high';
-                const item = document.createElement('div');
-                item.className = `list-item ${goal.done ? 'done-bg' : ''} ${isHigh ? 'priority-high' : ''}`;
-                item.innerHTML = `
-                    <div class="list-content" onclick="toggleGoal(${index})">
-                        <div class="check-circle ${goal.done ? 'checked' : ''}">${goal.done ? 'X' : ''}</div>
-                        <span class="text-content ${goal.done ? 'crossed' : ''}">
-                            ${isHigh ? '<span class="badge-priority">Kritik</span>' : ''}
-                            ${goal.text}
+            items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `list-item ${item.done ? 'done-bg' : ''} ${item.priority === 'high' ? 'priority-high' : ''}`;
+                div.innerHTML = `
+                    <div class="list-content" onclick="toggleGoalItem(${index})">
+                        <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
+                        <span class="text-content ${item.done ? 'crossed' : ''}">
+                            ${item.priority === 'high' ? '<span class="badge-priority">KRİTİK</span>' : ''}
+                            ${item.text}
                         </span>
                     </div>
-                    <button class="delete-btn" onclick="deleteGoal(${index})">×</button>
+                    <button class="delete-btn" onclick="deleteGoalItem(${index})">×</button>
                 `;
-                container.appendChild(item);
+                container.appendChild(div);
             });
         }
 
@@ -604,26 +884,27 @@
             const input = document.getElementById('goalInput');
             const priority = document.getElementById('goalPriority').value;
             if (input.value.trim() === '') return;
-            
+
             const monthKey = getMonthKey(displayedMonthDate);
             if (!goalsData[monthKey]) goalsData[monthKey] = [];
-            
-            goalsData[monthKey].push({ text: input.value, done: false, priority: priority });
+
+            goalsData[monthKey].push({ text: input.value.trim(), done: false, priority: priority });
             saveData();
             renderGoals();
             input.value = '';
         }
 
-        function toggleGoal(index) {
+        function toggleGoalItem(index) {
             const monthKey = getMonthKey(displayedMonthDate);
             goalsData[monthKey][index].done = !goalsData[monthKey][index].done;
             saveData();
             renderGoals();
         }
 
-        function deleteGoal(index) {
+        function deleteGoalItem(index) {
             const monthKey = getMonthKey(displayedMonthDate);
             goalsData[monthKey].splice(index, 1);
+            if (goalsData[monthKey].length === 0) delete goalsData[monthKey];
             saveData();
             renderGoals();
         }
@@ -631,9 +912,9 @@
         function renderHabits() {
             const container = document.getElementById('habitsContainer');
             container.innerHTML = '';
-            
+
             if (habits.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ AKTİF ZİNCİR YOK ]</p>';
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px; text-transform:uppercase;">[ ALIŞKANLIK TANIMLANMADI ]</p>';
                 return;
             }
 
@@ -648,7 +929,7 @@
                 const header = document.createElement('div');
                 header.className = 'habit-header';
                 header.innerHTML = `
-                    <div class="habit-title">${habit.title}</div>
+                    <span class="habit-title">${habit.title}</span>
                     <button class="delete-btn" onclick="deleteHabit(${habit.id})">×</button>
                 `;
                 card.appendChild(header);
@@ -716,7 +997,7 @@
         }
 
         function exportData() {
-            const backup = { habits, goalsData, agendaData, mediaData };
+            const backup = { habits, goalsData, agendaData, mediaData, weeklyData, notebooksData };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
@@ -738,12 +1019,15 @@
                             goalsData = parsed.goalsData;
                             agendaData = parsed.agendaData;
                             mediaData = parsed.mediaData || [];
+                            weeklyData = parsed.weeklyData || {};
+                            notebooksData = parsed.notebooksData || [];
                             saveData();
                             renderAgenda();
                             renderHabits();
                             renderGoals();
                             renderMedia();
                             renderCalendar();
+                            renderNotebooks();
                             alert("SİSTEM YEDEĞİ BAŞARIYLA YÜKLENDİ.");
                         } else {
                             alert("GEÇERSİZ YEDEK DOSYASI FORMATI!");
@@ -760,6 +1044,7 @@
         renderGoals();
         renderMedia();
         renderCalendar();
+        renderNotebooks();
 
         function setMediaFilter(filter, btn) {
             currentMediaFilter = filter;
@@ -787,7 +1072,6 @@
             }
 
             filtered.forEach((item, index) => {
-                // Find actual index in mediaData
                 const realIndex = mediaData.findIndex(m => m.id === item.id);
                 const typeLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ' };
                 const badgeClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series' };
