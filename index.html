@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<!-- saved from url=(0031)https://cbxdaws4.vibedrop.site/ -->
 <html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kişisel Asistanım</title>
     
-    <!-- iOS Web App (PWA) Ayarları - Tam Ekran Görünüm İçin -->
+    <!-- iOS Web App (PWA) Ayarları -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Asistanım">
     
-    <!-- iOS ve Tarayıcı İçin Özel Uygulama İkonu -->
+    <!-- İkon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23ffcc00'/%3E%3Crect x='48' y='48' width='416' height='416' fill='none' stroke='%231a1a1a' stroke-width='40'/%3E%3Cpath d='M150 180 L250 256 L150 332' fill='none' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square' stroke-linejoin='miter'/%3E%3Cline x1='280' y1='340' x2='380' y2='340' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23ffcc00'/%3E%3Crect x='48' y='48' width='416' height='416' fill='none' stroke='%231a1a1a' stroke-width='40'/%3E%3Cpath d='M150 180 L250 256 L150 332' fill='none' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square' stroke-linejoin='miter'/%3E%3Cline x1='280' y1='340' x2='380' y2='340' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square'/%3E%3C/svg%3E">
 
@@ -30,11 +29,7 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding-bottom: 90px;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 90px; }
 
         .page { display: none; padding: 20px; animation: fadeIn 0.15s ease-in-out; }
         .page.active { display: block; }
@@ -43,10 +38,8 @@
         h1 { font-size: 22px; margin-bottom: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; border-bottom: 3px solid var(--border-color); padding-bottom: 8px; }
 
         .home-card {
-            background: var(--card-bg); padding: 15px; border-radius: 0px;
-            margin-bottom: 15px; text-align: left;
-            box-shadow: 4px 4px 0px var(--border-color);
-            border: 3px solid var(--border-color); transition: 0.1s; cursor: pointer;
+            background: var(--card-bg); padding: 15px; border-radius: 0px; margin-bottom: 15px; text-align: left;
+            box-shadow: 4px 4px 0px var(--border-color); border: 3px solid var(--border-color); transition: 0.1s; cursor: pointer;
             display: flex; flex-direction: column; justify-content: center;
         }
         .home-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--border-color); }
@@ -55,22 +48,17 @@
 
         .input-group { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
         .input-group input, .input-group select, .input-group textarea {
-            flex: 1; padding: 12px; border: 3px solid var(--border-color);
-            border-radius: 0px; outline: none; font-size: 13px; background: white;
-            box-shadow: 3px 3px 0px var(--border-color);
+            flex: 1; padding: 12px; border: 3px solid var(--border-color); border-radius: 0px; outline: none; font-size: 13px; background: white; box-shadow: 3px 3px 0px var(--border-color);
         }
         .input-group select { flex: 0 0 160px; font-weight: 900; cursor: pointer; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { background-color: var(--primary-light); }
         .input-group button {
-            padding: 0 20px; background: var(--primary-color); color: var(--border-color);
-            border: 3px solid var(--border-color); border-radius: 0px; font-weight: 900; font-size: 13px; cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-color); text-transform: uppercase; transition: 0.1s;
+            padding: 0 20px; background: var(--primary-color); color: var(--border-color); border: 3px solid var(--border-color); border-radius: 0px; font-weight: 900; font-size: 13px; cursor: pointer; box-shadow: 3px 3px 0px var(--border-color); text-transform: uppercase; transition: 0.1s;
         }
         .input-group button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--border-color); }
 
         .habit-card {
-            background: var(--card-bg); padding: 15px; border: 3px solid var(--border-color); 
-            margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color); position: relative;
+            background: var(--card-bg); padding: 15px; border: 3px solid var(--border-color); margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color); position: relative;
         }
         .habit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .habit-title { font-size: 14px; font-weight: 900; text-transform: uppercase; }
@@ -79,17 +67,13 @@
         .delete-btn { background: none; border: 2px solid var(--border-color); color: var(--danger-color); font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; background: #fff;}
         .delete-btn:active { background: var(--danger-color); color: white; }
         
-        /* Yeni Zincir Takvimi CSS */
-        .days-container-infinite {
-            display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; scroll-behavior: smooth;
-        }
+        /* Zincir Takvimi CSS */
+        .days-container-infinite { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; scroll-behavior: smooth; }
         .days-container-infinite::-webkit-scrollbar { height: 8px; }
         .days-container-infinite::-webkit-scrollbar-track { background: #f0f0f0; border: 1px solid var(--border-color); }
         .days-container-infinite::-webkit-scrollbar-thumb { background: var(--border-color); }
-        
         .calendar-day-box {
-            min-width: 48px; height: 55px; background-color: white; border: 2px solid var(--border-color); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-width: 48px; height: 55px; background-color: white; border: 2px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: var(--text-color); cursor: pointer; flex-shrink: 0; line-height: 1.2; box-shadow: 2px 2px 0px var(--border-color); transition: 0.1s;
         }
         .calendar-day-box:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--border-color); }
@@ -97,48 +81,32 @@
         .calendar-day-box.today { border: 3px solid var(--danger-color); }
 
         .time-nav {
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--card-bg); padding: 10px 15px; border: 3px solid var(--border-color); 
-            margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color);
+            display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border: 3px solid var(--border-color); margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color);
         }
-        .time-nav button {
-            background: white; border: 2px solid var(--border-color); font-size: 16px; color: var(--text-color);
-            cursor: pointer; padding: 4px 10px; font-weight: 900; box-shadow: 2px 2px 0px var(--border-color);
-        }
+        .time-nav button { background: white; border: 2px solid var(--border-color); font-size: 16px; color: var(--text-color); cursor: pointer; padding: 4px 10px; font-weight: 900; box-shadow: 2px 2px 0px var(--border-color); }
         .time-nav button:active { transform: translate(1px, 1px); box-shadow: none; }
         .time-nav h2 { margin: 0; font-size: 14px; font-weight: 900; text-transform: uppercase; }
 
         .calendar-grid {
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;
-            background: var(--card-bg); padding: 8px; border: 3px solid var(--border-color);
-            box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px;
-            max-width: 380px; margin-left: auto; margin-right: auto;
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; background: var(--card-bg); padding: 8px; border: 3px solid var(--border-color);
+            box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px; max-width: 380px; margin-left: auto; margin-right: auto;
         }
         .cal-header-cell { text-align: center; font-size: 10px; font-weight: 900; padding: 4px 0; color: var(--dark-gray); }
         .cal-day-cell {
-            height: 34px; background: white; border: 1.5px solid var(--border-color);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 900; cursor: pointer; position: relative;
+            height: 34px; background: white; border: 1.5px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; cursor: pointer; position: relative;
         }
         .cal-day-cell:hover { background-color: var(--primary-light); }
         .cal-day-cell.selected { background-color: var(--primary-color); border: 2px solid var(--border-color); }
         .cal-day-cell.has-tasks::after { content: ''; width: 4px; height: 4px; background-color: var(--danger-color); border-radius: 50%; position: absolute; bottom: 2px; }
         .cal-day-cell.other-month { opacity: 0.25; background: #f0f0f0; }
 
-        .list-item {
-            background: var(--card-bg); padding: 12px 15px; border: 3px solid var(--border-color); 
-            margin-bottom: 10px; box-shadow: 4px 4px 0px var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 13px;
-        }
+        .list-item { background: var(--card-bg); padding: 12px 15px; border: 3px solid var(--border-color); margin-bottom: 10px; box-shadow: 4px 4px 0px var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
         .list-item.done-bg { background-color: var(--primary-light); }
         .list-item.priority-high { border-left: 8px solid var(--danger-color); }
-        
         .list-content { display: flex; align-items: center; gap: 12px; flex: 1; cursor: pointer; }
         
         .check-circle {
-            width: 22px; height: 22px; min-width: 22px;
-            border: 2px solid var(--border-color); border-radius: 0px; background: white;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--border-color); font-size: 12px; font-weight: 900;
+            width: 22px; height: 22px; min-width: 22px; border: 2px solid var(--border-color); border-radius: 0px; background: white; display: flex; align-items: center; justify-content: center; color: var(--border-color); font-size: 12px; font-weight: 900;
         }
         .check-circle.checked { background-color: var(--primary-color); }
         
@@ -146,48 +114,39 @@
         .text-content.crossed { text-decoration: line-through; color: var(--dark-gray); }
         .badge-priority { font-size: 9px; padding: 1px 4px; border: 1.5px solid var(--border-color); background: var(--danger-color); color: white; font-weight: 900; text-transform: uppercase; }
 
-        .chat-container {
-            background: var(--card-bg); border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);
-            padding: 15px; display: flex; flex-direction: column; height: 380px; margin-bottom: 15px;
-        }
+        .chat-container { background: var(--card-bg); border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; display: flex; flex-direction: column; height: 380px; margin-bottom: 15px; }
         .chat-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px; margin-bottom: 10px; }
-        .chat-bubble {
-            padding: 10px 12px; font-size: 12px; border: 2px solid var(--border-color); max-width: 85%; line-height: 1.4; word-break: break-word; font-weight: bold;
-        }
+        .chat-bubble { padding: 10px 12px; font-size: 12px; border: 2px solid var(--border-color); max-width: 85%; line-height: 1.4; word-break: break-word; font-weight: bold; }
         .chat-bubble.user { background: var(--primary-light); align-self: flex-end; box-shadow: 2px 2px 0px var(--border-color); }
         .chat-bubble.ai { background: white; align-self: flex-start; box-shadow: 2px 2px 0px var(--border-color); }
 
-        .backup-section {
-            background: var(--card-bg); border: 3px solid var(--border-color); padding: 15px;
-            box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px;
-        }
+        .backup-section { background: var(--card-bg); border: 3px solid var(--border-color); padding: 15px; box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px; }
         .backup-section h3 { font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
         .backup-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-        .backup-btns button {
-            flex: 1; padding: 10px; background: white; border: 2px solid var(--border-color);
-            font-weight: 900; font-size: 11px; cursor: pointer; text-transform: uppercase; box-shadow: 2px 2px 0px var(--border-color);
-        }
+        .backup-btns button { flex: 1; padding: 10px; background: white; border: 2px solid var(--border-color); font-weight: 900; font-size: 11px; cursor: pointer; text-transform: uppercase; box-shadow: 2px 2px 0px var(--border-color); }
 
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background-color: var(--nav-bg);
-            display: flex; justify-content: space-around; padding: 12px 0;
-            border-top: 3px solid var(--border-color); z-index: 1000;
-        }
-        .nav-item {
-            background: none; border: none; font-size: 8px; color: var(--dark-gray);
-            display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase;
-        }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: var(--nav-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 3px solid var(--border-color); z-index: 1000; }
+        .nav-item { background: none; border: none; font-size: 8px; color: var(--dark-gray); display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .nav-item.active { color: var(--text-color); }
         .nav-icon { font-size: 16px; }
 
         .badge-book { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ff99cc; color: var(--border-color); }
         .badge-movie { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #66ccff; color: var(--border-color); }
         .badge-series { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ffcc00; color: var(--border-color); }
+
+        /* Mikrofon Animasyonu */
+        @keyframes pulseMic { 0% { background-color: var(--danger-color); color: white; } 50% { background-color: white; color: var(--danger-color); } 100% { background-color: var(--danger-color); color: white; } }
+        .mic-active { animation: pulseMic 1s infinite !important; border-color: var(--danger-color) !important; }
+        
+        /* Finans Kartları */
+        .finance-stat-box { flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center; }
+        .finance-val { font-size: 18px; font-weight: 900; }
+        .finance-label { font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
-    <!-- ANA SAYFA VE ÖZET (DASHBOARD) MODÜLÜ -->
+    <!-- ANA SAYFA VE ÖZET -->
     <div id="page-home" class="page active">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border-color); margin-bottom: 20px; padding-bottom: 8px;">
             <h1 style="border: none; margin: 0; padding: 0;">[ ÖZET & MENÜ ]</h1>
@@ -202,6 +161,10 @@
             <div class="home-card" onclick="switchPage('page-ai', 'nav-ai')" style="background: var(--primary-light);">
                 <h2>🤖 // Y.ZEKA</h2>
                 <p>AKILLI KOÇ VE ASİSTAN</p>
+            </div>
+            <div class="home-card" onclick="switchPage('page-finance', 'nav-finance')" style="background: #e6ffed;">
+                <h2>💰 // FİNANS</h2>
+                <p>KUR & PORTFÖY</p>
             </div>
             <div class="home-card" onclick="switchPage('page-agenda', 'nav-agenda')">
                 <h2>📅 // AJANDA</h2>
@@ -219,7 +182,7 @@
                 <h2>🎯 // HEDEF</h2>
                 <p>AYLIK CHALLENGER</p>
             </div>
-            <div class="home-card" onclick="switchPage('page-media', 'nav-media')">
+            <div class="home-card" onclick="switchPage('page-media', '')">
                 <h2>📚 // MEDYA</h2>
                 <p>KİTAP & FİLM LİSTESİ</p>
             </div>
@@ -232,24 +195,12 @@
             <button onclick="switchPage('page-home', 'nav-home')" style="background:none; border:none; font-size: 20px; cursor: pointer; margin-right: 10px;">←</button>
             <h1 style="border: none; margin: 0; padding: 0;">[ AYARLAR & SİSTEM ]</h1>
         </div>
-
         <div class="backup-section">
             <h3>YAPAY ZEKA API AYARLARI</h3>
             <div class="backup-btns" style="margin-bottom: 10px;">
                 <button onclick="setGeminiApiKey()" style="background: var(--primary-color); width: 100%;">GEMİNİ API KEY GİR / DEĞİŞTİR</button>
             </div>
         </div>
-
-        <div class="backup-section">
-            <h3>BULUT SENKRONİZASYONU</h3>
-            <div class="backup-btns" style="margin-bottom: 10px;">
-                <button onclick="setWebhookUrl()">WEBHOOK URL AYARLA</button>
-            </div>
-            <div class="backup-btns" style="margin-bottom: 10px;">
-                <button onclick="syncWithCloud()" style="background: var(--sync-color); color: white;">BULUTTAN VERİ ÇEK (EŞİTLE)</button>
-            </div>
-        </div>
-
         <div class="backup-section">
             <h3>LOKAL YEDEKLEME</h3>
             <div class="backup-btns">
@@ -274,15 +225,58 @@
         </div>
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
-                <div class="chat-bubble ai">SELAM! BEN SİSTEMİN YAPAY ZEKA ASİSTANIYIM. Bana komut verebilir veya sohbet edebilirsin.</div>
+                <div class="chat-bubble ai">SELAM! BEN SİSTEMİN YAPAY ZEKA ASİSTANIYIM. Bana komut verebilir veya sohbet edebilirsin. Finans durumunu bile sorabilirsin!</div>
             </div>
             <div class="input-group" style="margin-bottom: 0;">
+                <button id="micBtnAi" onclick="startDictation('aiChatInput', 'micBtnAi')" style="flex: 0 0 45px; padding:0; font-size:18px; background:white; color:var(--text-color);" title="Sesli Yazdır">🎤</button>
                 <input type="text" id="aiChatInput" placeholder="Yapay zekaya komut ver..." onkeypress="handleEnter(event, sendAiMessage)">
                 <button onclick="sendAiMessage()">GÖNDER</button>
             </div>
         </div>
         <div style="text-align: center;">
             <button onclick="askAiForDailySummary()" style="padding: 10px 15px; background: var(--primary-color); border: 3px solid var(--border-color); font-weight: 900; font-size: 11px; cursor: pointer; box-shadow: 3px 3px 0px var(--border-color); text-transform: uppercase;">✨ GÜNLÜK DURUMUMU ANALİZ ET &amp; ÖNERİ VER</button>
+        </div>
+    </div>
+
+    <!-- FİNANS MODÜLÜ (YENİ) -->
+    <div id="page-finance" class="page">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border-color); margin-bottom: 20px; padding-bottom: 8px;">
+            <h1 style="border: none; margin: 0; padding: 0;">💰 FİNANS & PORTFÖY</h1>
+            <button onclick="fetchFinanceRates()" style="background:white; border:2px solid var(--border-color); padding:4px 8px; font-weight:bold; cursor:pointer; font-size:12px; box-shadow: 2px 2px 0px var(--border-color);">🔄 YENİLE</button>
+        </div>
+
+        <div style="background: var(--card-bg); border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; margin-bottom: 20px; text-align: center; background: var(--primary-color);">
+            <p style="font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px;">Tahmini Toplam Varlık (TRY)</p>
+            <h2 id="totalPortfolioValue" style="font-size: 28px; font-weight: 900; margin: 0;">₺0.00</h2>
+        </div>
+
+        <h3 style="font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; color: var(--dark-gray);">Canlı Kurlar</h3>
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <div class="finance-stat-box">
+                <p class="finance-label">USD / TRY</p>
+                <p class="finance-val" id="liveUsdRate">Yükleniyor...</p>
+            </div>
+            <div class="finance-stat-box">
+                <p class="finance-label">GRAM ALTIN (TRY)</p>
+                <p class="finance-val" id="liveGoldRate">Yükleniyor...</p>
+            </div>
+        </div>
+
+        <h3 style="font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; color: var(--dark-gray);">Portföyüm</h3>
+        <div class="habit-card" style="padding: 15px;">
+            <div class="input-group" style="margin-bottom: 10px;">
+                <label style="flex: 0 0 100px; font-size:12px; font-weight:bold; display:flex; align-items:center;">Nakit (TL):</label>
+                <input type="number" id="portTry" value="0" onchange="updatePortfolio()">
+            </div>
+            <div class="input-group" style="margin-bottom: 10px;">
+                <label style="flex: 0 0 100px; font-size:12px; font-weight:bold; display:flex; align-items:center;">Dolar (USD):</label>
+                <input type="number" id="portUsd" value="0" onchange="updatePortfolio()">
+            </div>
+            <div class="input-group" style="margin-bottom: 10px;">
+                <label style="flex: 0 0 100px; font-size:12px; font-weight:bold; display:flex; align-items:center;">Altın (Gram):</label>
+                <input type="number" id="portGold" value="0" step="0.01" onchange="updatePortfolio()">
+            </div>
+            <button onclick="updatePortfolio()" style="width: 100%; padding: 10px; background: var(--text-color); color: white; border: 2px solid var(--border-color); font-weight: 900; cursor: pointer; box-shadow: 2px 2px 0px var(--border-color);">KAYDET VE HESAPLA</button>
         </div>
     </div>
 
@@ -307,10 +301,11 @@
                 <button onclick="changeDay(1)" style="background: white;">→</button>
             </div>
             <div class="input-group">
+                <button id="micBtnAgenda" onclick="startDictation('agendaInput', 'micBtnAgenda')" style="flex: 0 0 40px; padding:0; font-size:16px; background:white;" title="Sesli Yazdır">🎤</button>
                 <input type="text" id="agendaInput" placeholder="YENİ GÖREV / NOT EKLE..." onkeypress="handleEnter(event, addAgendaItem)">
-                <select id="agendaPriority">
+                <select id="agendaPriority" style="flex: 0 0 100px;">
                     <option value="normal">NORMAL</option>
-                    <option value="high">KRİTİK (!)</option>
+                    <option value="high">KRİTİK</option>
                 </select>
                 <button onclick="addAgendaItem()">EKLE</button>
             </div>
@@ -331,10 +326,9 @@
         </div>
     </div>
 
-    <!-- NOTLAR & DEFTERLER MODÜLÜ (DÜZENLEME DESTEKLİ) -->
+    <!-- NOTLAR & DEFTERLER MODÜLÜ -->
     <div id="page-notebooks" class="page">
         <h1>NOTLAR &amp; DEFTERLER</h1>
-        
         <div id="notebooksMainView">
             <div class="input-group">
                 <input type="text" id="newNotebookInput" placeholder="YENİ DEFTER ADI (Ör: Yazılım)..." onkeypress="handleEnter(event, addNotebook)">
@@ -350,56 +344,52 @@
             <h2 id="currentNotebookTitle" style="font-size: 16px; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; background: var(--primary-color); padding: 10px; border: 3px solid var(--border-color); box-shadow: 3px 3px 0px var(--border-color);">DEFTER</h2>
             
             <div class="input-group" style="flex-direction: column; gap: 8px;">
-                <input type="text" id="noteTitleInput" placeholder="NOT BAŞLIĞI..." onkeypress="handleEnter(event, addOrUpdateNote)">
+                <div style="display:flex; gap:8px;">
+                    <button id="micBtnNote" onclick="startDictation('noteContentInput', 'micBtnNote')" style="flex: 0 0 40px; padding:0; font-size:16px; background:white;" title="İçeriğe Sesli Yazdır">🎤</button>
+                    <input type="text" id="noteTitleInput" placeholder="NOT BAŞLIĞI..." onkeypress="handleEnter(event, addOrUpdateNote)">
+                </div>
                 <textarea id="noteContentInput" rows="4" placeholder="NOT İÇERİĞİ..." style="resize: vertical;"></textarea>
                 <div style="display:flex; gap:8px;">
                     <button id="addNoteBtn" onclick="addOrUpdateNote()" style="flex:1;">NOT EKLE</button>
                     <button id="cancelEditBtn" onclick="cancelNoteEdit()" style="display:none; background:white; color:var(--text-color); flex:0.4;">İPTAL</button>
                 </div>
             </div>
-
             <div id="notesContainer"></div>
         </div>
     </div>
 
-    <!-- ZİNCİRİ KIRMA (SONSUZ TAKVİM) MODÜLÜ -->
+    <!-- ZİNCİRİ KIRMA -->
     <div id="page-habit" class="page">
         <h1>ZİNCİRİ KIRMA</h1>
-        
         <div class="input-group">
             <input type="text" id="habitInput" placeholder="YENİ ALIŞKANLIK (Ör: Kitap Oku)..." onkeypress="handleEnter(event, addHabit)">
             <button onclick="addHabit()">EKLE</button>
         </div>
-
         <div id="habitsContainer"></div>
     </div>
 
-    <!-- CHALLENGER MODÜLÜ -->
+    <!-- CHALLENGER -->
     <div id="page-challenge" class="page">
         <h1>CHALLENGER</h1>
-        
         <div class="time-nav">
             <button onclick="changeMonth(-1)">←</button>
             <h2 id="currentMonthLabel">Ağustos 2026</h2>
             <button onclick="changeMonth(1)">→</button>
         </div>
-
         <div class="input-group">
             <input type="text" id="goalInput" placeholder="AYLIK HEDEF TANIMLA..." onkeypress="handleEnter(event, addGoal)">
-            <select id="goalPriority">
+            <select id="goalPriority" style="flex: 0 0 100px;">
                 <option value="normal">NORMAL</option>
-                <option value="high">KRİTİK (!)</option>
+                <option value="high">KRİTİK</option>
             </select>
             <button onclick="addGoal()">EKLE</button>
         </div>
-        
         <div id="goalsContainer"></div>
     </div>
 
-    <!-- MEDYA MODÜLÜ -->
+    <!-- MEDYA -->
     <div id="page-media" class="page">
         <h1>KİTAP &amp; MEDYA LİSTESİ</h1>
-        
         <div class="input-group">
             <input type="text" id="mediaInput" placeholder="KİTAP, DİZİ VEYA FİLM ADI..." onkeypress="handleEnter(event, addMediaItem)">
             <select id="mediaType">
@@ -409,14 +399,12 @@
             </select>
             <button onclick="addMediaItem()">EKLE</button>
         </div>
-
         <div style="display: flex; gap: 6px; margin-bottom: 15px; flex-wrap: wrap;">
             <button class="filter-btn active" onclick="setMediaFilter('all', this)" style="flex:1; padding:8px; background:var(--primary-color); border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">TÜMÜ</button>
             <button class="filter-btn" onclick="setMediaFilter('book', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">KİTAPLAR</button>
             <button class="filter-btn" onclick="setMediaFilter('movie', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">FİLMLER</button>
             <button class="filter-btn" onclick="setMediaFilter('series', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">DİZİLER</button>
         </div>
-
         <div id="mediaContainer"></div>
     </div>
 
@@ -427,6 +415,9 @@
         </button>
         <button id="nav-ai" class="nav-item" onclick="switchPage('page-ai', 'nav-ai')">
             <span class="nav-icon">🤖</span><span>Y.Z.</span>
+        </button>
+        <button id="nav-finance" class="nav-item" onclick="switchPage('page-finance', 'nav-finance')">
+            <span class="nav-icon">💰</span><span>FİNANS</span>
         </button>
         <button id="nav-agenda" class="nav-item" onclick="switchPage('page-agenda', 'nav-agenda')">
             <span class="nav-icon">📅</span><span>AJANDA</span>
@@ -440,46 +431,125 @@
         <button id="nav-challenge" class="nav-item" onclick="switchPage('page-challenge', 'nav-challenge')">
             <span class="nav-icon">🎯</span><span>HEDEF</span>
         </button>
-        <button id="nav-media" class="nav-item" onclick="switchPage('page-media', 'nav-media')">
-            <span class="nav-icon">📚</span><span>MEDYA</span>
-        </button>
     </nav>
 
     <script>
+        // Sayfa Geçiş
         function switchPage(pageId, navId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            if(navId && document.getElementById(navId)) document.getElementById(navId).classList.add('active');
             
-            if(navId && document.getElementById(navId)) {
-                document.getElementById(navId).classList.add('active');
-            }
-
-            if(pageId === 'page-home') { renderSummary(); }
+            if(pageId === 'page-home') renderSummary();
             if(pageId === 'page-agenda') { renderCalendar(); renderWeeklyNotes(); }
-            if(pageId === 'page-notebooks') { renderNotebooks(); }
-            if(pageId === 'page-habit') { renderHabits(); }
-            if(pageId === 'page-ai') { loadSavedAiModel(); }
+            if(pageId === 'page-notebooks') renderNotebooks();
+            if(pageId === 'page-habit') renderHabits();
+            if(pageId === 'page-finance') loadPortfolioInputs();
+            if(pageId === 'page-ai') loadSavedAiModel();
         }
 
         function handleEnter(event, callback) {
-            if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
-                event.preventDefault();
-                callback();
+            if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') { event.preventDefault(); callback(); }
+        }
+
+        // --- SESLİ DİKTE (WEB SPEECH API) ---
+        function startDictation(inputId, btnId) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Tarayıcınız sesli komut özelliğini desteklemiyor. Lütfen Chrome, Safari veya Edge kullanın.");
+                return;
+            }
+            
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'tr-TR';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const btn = document.getElementById(btnId);
+            const input = document.getElementById(inputId);
+
+            recognition.onstart = function() {
+                btn.classList.add('mic-active');
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                // Mevcut metnin sonuna ekle veya boşsa direkt yaz
+                input.value = input.value ? input.value + " " + transcript : transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Dikte hatası:", event.error);
+                btn.classList.remove('mic-active');
+            };
+
+            recognition.onend = function() {
+                btn.classList.remove('mic-active');
+                input.focus();
+            };
+
+            recognition.start();
+        }
+
+        // --- FİNANS & PORTFÖY MODÜLÜ ---
+        let portfolioData = JSON.parse(localStorage.getItem('portfolioData')) || { try: 0, usd: 0, gold: 0 };
+        let liveRates = { usd: 0, gold: 0 }; // Altın TRY cinsinden tutulacak
+
+        async function fetchFinanceRates() {
+            try {
+                // 1. USD / TRY Kurunu Çek (ExchangeRate-API)
+                const usdRes = await fetch('https://open.er-api.com/v6/latest/USD');
+                const usdData = await usdRes.json();
+                liveRates.usd = parseFloat(usdData.rates.TRY);
+
+                // 2. Gram Altın Hesabı (Binance PAXG/USDT çapraz kuru üzerinden)
+                // PAXG = 1 Ons Altın (USD). 1 Ons = 31.1035 Gram.
+                const paxgRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
+                const paxgData = await paxgRes.json();
+                const ounceUsd = parseFloat(paxgData.price);
+                const gramUsd = ounceUsd / 31.1035;
+                liveRates.gold = gramUsd * liveRates.usd; // Gram Altın (TRY)
+
+                // Arayüzü Güncelle
+                document.getElementById('liveUsdRate').innerHTML = `₺${liveRates.usd.toFixed(2)}`;
+                document.getElementById('liveGoldRate').innerHTML = `₺${liveRates.gold.toFixed(2)}`;
+                
+                updateTotalPortfolioValue();
+            } catch (e) {
+                console.error("Kur verileri çekilemedi:", e);
+                document.getElementById('liveUsdRate').innerHTML = "Hata";
+                document.getElementById('liveGoldRate').innerHTML = "Hata";
             }
         }
 
-        const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-        let displayedMonthDate = new Date(); 
-        let displayedAgendaDate = new Date(); 
-        let displayedCalendarDate = new Date();
-        let displayedWeekDate = new Date();
-        let activeAgendaSubTab = 'daily';
-        
-        let notebooksData = JSON.parse(localStorage.getItem('notebooksData')) || [];
-        let activeNotebookId = null;
-        let editingNoteIndex = null; // Not düzenleme için takip değişkeni
-        
+        function loadPortfolioInputs() {
+            document.getElementById('portTry').value = portfolioData.try;
+            document.getElementById('portUsd').value = portfolioData.usd;
+            document.getElementById('portGold').value = portfolioData.gold;
+            updateTotalPortfolioValue();
+        }
+
+        function updatePortfolio() {
+            portfolioData.try = parseFloat(document.getElementById('portTry').value) || 0;
+            portfolioData.usd = parseFloat(document.getElementById('portUsd').value) || 0;
+            portfolioData.gold = parseFloat(document.getElementById('portGold').value) || 0;
+            
+            localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+            updateTotalPortfolioValue();
+        }
+
+        function updateTotalPortfolioValue() {
+            let total = 0;
+            total += portfolioData.try;
+            total += portfolioData.usd * liveRates.usd;
+            total += portfolioData.gold * liveRates.gold;
+
+            document.getElementById('totalPortfolioValue').innerHTML = `₺${total.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            return total;
+        }
+
+        // --- YAPAY ZEKA ---
         let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
         let selectedAiModel = localStorage.getItem('gemini_model') || 'gemini-3.7-flash';
 
@@ -487,122 +557,76 @@
             const select = document.getElementById('aiModelSelect');
             if (select) select.value = selectedAiModel;
         }
-
-        function saveAiModelChoice() {
-            const select = document.getElementById('aiModelSelect');
-            selectedAiModel = select.value;
-            localStorage.setItem('gemini_model', selectedAiModel);
-        }
-
+        function saveAiModelChoice() { selectedAiModel = document.getElementById('aiModelSelect').value; localStorage.setItem('gemini_model', selectedAiModel); }
         function setGeminiApiKey() {
             const key = prompt("Google Gemini API Key değerini girin:", geminiApiKey);
-            if (key !== null) {
-                geminiApiKey = key.trim();
-                localStorage.setItem('gemini_api_key', geminiApiKey);
-                alert("GEMINI API KEY KAYDEDİLDİ.");
-            }
+            if (key !== null) { geminiApiKey = key.trim(); localStorage.setItem('gemini_api_key', geminiApiKey); alert("API KEY KAYDEDİLDİ."); }
         }
 
         async function callGeminiAI(promptText) {
-            if (!geminiApiKey) {
-                alert("Lütfen önce ayarlar sayfasından API anahtarınızı girin!");
-                return null;
-            }
+            if (!geminiApiKey) { alert("Lütfen ayarlar sayfasından API anahtarınızı girin!"); return null; }
             saveAiModelChoice();
             const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedAiModel}:generateContent?key=${geminiApiKey}`;
             try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: promptText }] }]
-                    })
-                });
+                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] }) });
                 const data = await response.json();
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
-                    return data.candidates[0].content.parts[0].text;
-                } else if (data.error) {
-                    return `SİSTEM HATASI: ${data.error.message}`;
-                } else {
-                    throw new Error("Geçersiz yanıt yapısı");
-                }
-            } catch (err) {
-                console.error(err);
-                return "SİSTEM HATASI: Yapay zekaya bağlanılamadı.";
-            }
+                if (data.candidates && data.candidates[0].content.parts[0].text) return data.candidates[0].content.parts[0].text;
+                else if (data.error) return `SİSTEM HATASI: ${data.error.message}`;
+                else throw new Error("Geçersiz yanıt yapısı");
+            } catch (err) { return "SİSTEM HATASI: Ağa bağlanılamadı."; }
         }
 
         async function sendAiMessage() {
-            const input = document.getElementById('aiChatInput');
-            const msg = input.value.trim();
-            if (!msg) return;
-
+            const input = document.getElementById('aiChatInput'); const msg = input.value.trim(); if (!msg) return;
             const chatContainer = document.getElementById('chatMessages');
             
-            const userBubble = document.createElement('div');
-            userBubble.className = 'chat-bubble user';
-            userBubble.textContent = msg;
-            chatContainer.appendChild(userBubble);
-            input.value = '';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            const userBubble = document.createElement('div'); userBubble.className = 'chat-bubble user'; userBubble.textContent = msg; chatContainer.appendChild(userBubble);
+            input.value = ''; chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            const aiBubble = document.createElement('div');
-            aiBubble.className = 'chat-bubble ai';
-            aiBubble.textContent = 'YAPAY ZEKA DÜŞÜNÜYOR...';
-            chatContainer.appendChild(aiBubble);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            const aiBubble = document.createElement('div'); aiBubble.className = 'chat-bubble ai'; aiBubble.textContent = 'YAPAY ZEKA DÜŞÜNÜYOR...'; chatContainer.appendChild(aiBubble); chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            const contextData = `SİSTEM TALİMATI: Sen kullanıcının üretkenlik asistanısın. Görevin sadece sohbet etmek değil, kullanıcının talebi üzerine uygulamada (ajanda veya notlar) işlem yapmaktır.
-Kullanıcı senden bir görevi veya notu "eklemeni" isterse, bunu gerçekleştirmek için yanıtının en sonuna mutlaka aşağıdaki JSON formatını Markdown kod bloğu içinde ekle. İşlem yapmayacaksan JSON ekleme.
+            const totalPort = (portfolioData.try + (portfolioData.usd * liveRates.usd) + (portfolioData.gold * liveRates.gold)).toFixed(2);
+            const contextData = `SİSTEM TALİMATI: Sen kullanıcının asistanısın. Sohbet et veya görev/not ekle (JSON bloğu ile).
+Finansal Durum: Nakit=${portfolioData.try} TL, USD=${portfolioData.usd} $, Altın=${portfolioData.gold} Gram.
+Kurlar: 1 USD=${liveRates.usd.toFixed(2)} TL, 1 Gr Altın=${liveRates.gold.toFixed(2)} TL. Toplam Portföy=${totalPort} TL.
 
-Örnek Agent JSON Bloğu (Eylem Gerekiyorsa):
+Örnek Eylem JSON (Sadece işlem yaparsan):
 \`\`\`json
 {
   "actions": [
-    {"type": "add_agenda", "text": "Fatura Ödenecek", "date": "2026-08-31", "priority": "high"},
+    {"type": "add_agenda", "text": "Kira Öde", "date": "${getDayKey(new Date())}", "priority": "high"},
     {"type": "add_note", "notebook": "Fikirler", "title": "Uygulama Fikri", "content": "Harika bir proje..."}
   ]
 }
 \`\`\`
-
-Bugünün Tarihi: ${getDayKey(new Date())}
-Kullanıcının Mesajı: ${msg}`;
+Mesaj: ${msg}`;
             
             const aiResponse = await callGeminiAI(contextData);
             if(!aiResponse) { aiBubble.textContent = "Hata oluştu."; return; }
 
             let displayMessage = aiResponse;
-            const actionRegex = /```json\s*([\s\S]*?)\s*```/;
-            const match = displayMessage.match(actionRegex);
+            const match = displayMessage.match(/```json\s*([\s\S]*?)\s*```/);
             
             if(match) {
                 try {
-                    const actionData = JSON.parse(match[1]);
-                    let actionPerformed = false;
-                    
-                    if(actionData.actions && Array.isArray(actionData.actions)) {
+                    const actionData = JSON.parse(match[1]); let actionPerformed = false;
+                    if(actionData.actions) {
                         actionData.actions.forEach(action => {
                             if(action.type === 'add_agenda') {
-                                const dateKey = action.date || getDayKey(new Date());
-                                if(!agendaData[dateKey]) agendaData[dateKey] = [];
-                                agendaData[dateKey].push({ text: action.text, done: false, priority: action.priority || 'normal' });
+                                const dKey = action.date || getDayKey(new Date());
+                                if(!agendaData[dKey]) agendaData[dKey] = [];
+                                agendaData[dKey].push({ text: action.text, done: false, priority: action.priority || 'normal' });
                                 actionPerformed = true;
                             } else if (action.type === 'add_note') {
                                 let nbName = (action.notebook || 'GENEL').toUpperCase();
                                 let nb = notebooksData.find(n => n.title.toUpperCase() === nbName);
-                                if(!nb) {
-                                    nb = { id: 'nb_' + Date.now(), title: nbName, notes: [] };
-                                    notebooksData.push(nb);
-                                }
+                                if(!nb) { nb = { id: 'nb_' + Date.now(), title: nbName, notes: [] }; notebooksData.push(nb); }
                                 nb.notes.unshift({ id: Date.now(), title: action.title || 'Yeni Not', content: action.content });
                                 actionPerformed = true;
                             }
                         });
                     }
-                    if(actionPerformed) {
-                        saveData(); renderAgenda(); renderNotebooks(); renderCalendar(); renderSummary();
-                        displayMessage = displayMessage.replace(match[0], '\n\n**[SİSTEM: İşlemler veri tabanına başarıyla eklendi! ⚡]**');
-                    }
+                    if(actionPerformed) { saveData(); renderAgenda(); renderNotebooks(); renderSummary(); displayMessage = displayMessage.replace(match[0], '\n**[SİSTEM: İşlemler başarıyla kaydedildi! ⚡]**'); }
                 } catch(e) {}
             }
             aiBubble.innerHTML = displayMessage.replace(/\n/g, '<br>');
@@ -611,26 +635,47 @@ Kullanıcının Mesajı: ${msg}`;
 
         async function askAiForDailySummary() {
             const chatContainer = document.getElementById('chatMessages');
-            const aiBubble = document.createElement('div');
-            aiBubble.className = 'chat-bubble ai';
-            aiBubble.textContent = 'GÜNLÜK VERİLERİN ANALİZ EDİLİYOR...';
-            chatContainer.appendChild(aiBubble);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            const promptText = `Kullanıcının ajanda görevlerini ve alışkanlıklarını inceleyerek ona motive edici ve net bir günlük analiz yap:\nAjandalar: ${JSON.stringify(agendaData)}\nAlışkanlıklar: ${JSON.stringify(habits)}`;
+            const aiBubble = document.createElement('div'); aiBubble.className = 'chat-bubble ai'; aiBubble.textContent = 'GÜNLÜK VERİLERİN ANALİZ EDİLİYOR...'; chatContainer.appendChild(aiBubble); chatContainer.scrollTop = chatContainer.scrollHeight;
+            const promptText = `Kullanıcının ajanda görevlerini ve alışkanlıklarını inceleyerek ona motive edici ve net bir analiz yap:\nAjandalar: ${JSON.stringify(agendaData)}\nAlışkanlıklar: ${JSON.stringify(habits)}`;
             const aiResponse = await callGeminiAI(promptText);
-            aiBubble.innerHTML = aiResponse ? aiResponse.replace(/\n/g, '<br>') : "Hata.";
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            aiBubble.innerHTML = aiResponse ? aiResponse.replace(/\n/g, '<br>') : "Hata."; chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // --- GENEL VERİ & TARİH AYARLARI ---
+        const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+        let displayedMonthDate = new Date(); let displayedAgendaDate = new Date(); let displayedCalendarDate = new Date(); let displayedWeekDate = new Date();
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
+        let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
+        let mediaData = JSON.parse(localStorage.getItem('mediaList')) || [];
+        let weeklyData = JSON.parse(localStorage.getItem('weeklyNotes')) || {};
+        let notebooksData = JSON.parse(localStorage.getItem('notebooksData')) || [];
+        
+        function getMonday(d) { const date = new Date(d); const day = date.getDay(); return new Date(date.setDate(date.getDate() - day + (day === 0 ? -6 : 1))); }
+        function getSunday(monday) { const sunday = new Date(monday); sunday.setDate(sunday.getDate() + 6); return sunday; }
+        function getWeekKey(date) { const m = getMonday(date); return m.getFullYear() + "-" + String(m.getMonth() + 1).padStart(2, '0') + "-" + String(m.getDate()).padStart(2, '0'); }
+        function getWeekLabel(date) { const m = getMonday(date); const s = getSunday(m); return m.getDate() + " " + monthNames[m.getMonth()] + " - " + s.getDate() + " " + monthNames[s.getMonth()] + " " + s.getFullYear(); }
+        function getMonthKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0'); }
+        function getDayKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0'); }
+        function getDayLabel(date) {
+            const today = new Date(); if (date.toDateString() === today.toDateString()) return "BUGÜN";
+            const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1); if (date.toDateString() === tomorrow.toDateString()) return "YARIN";
+            const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1); if (date.toDateString() === yesterday.toDateString()) return "DÜN";
+            return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+        }
+
+        function saveData() {
+            localStorage.setItem('habits', JSON.stringify(habits));
+            localStorage.setItem('goals', JSON.stringify(goalsData));
+            localStorage.setItem('agenda', JSON.stringify(agendaData));
+            localStorage.setItem('mediaList', JSON.stringify(mediaData));
+            localStorage.setItem('weeklyNotes', JSON.stringify(weeklyData));
+            localStorage.setItem('notebooksData', JSON.stringify(notebooksData));
         }
 
         function renderSummary() {
-            const container = document.getElementById('summaryContainer');
-            if (!container) return;
-            const todayKey = getDayKey(new Date());
-            const todayTasks = agendaData[todayKey] || [];
-            const pendingTasks = todayTasks.filter(t => !t.done).length;
-            const activeHabits = habits.length;
-
+            const container = document.getElementById('summaryContainer'); if (!container) return;
+            const todayTasks = agendaData[getDayKey(new Date())] || []; const pendingTasks = todayTasks.filter(t => !t.done).length;
             container.innerHTML = `
                 <div class="habit-card" style="background: var(--primary-light); margin-bottom: 20px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -644,104 +689,33 @@ Kullanıcının Mesajı: ${msg}`;
                         </div>
                         <div style="flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center;">
                             <p style="font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom:4px;">AKTİF ZİNCİR</p>
-                            <p style="font-size: 24px; font-weight: 900;">${activeHabits}</p>
+                            <p style="font-size: 24px; font-weight: 900;">${habits.length}</p>
                         </div>
                     </div>
                 </div>
             `;
         }
 
+        // --- AJANDA FONKSİYONLARI ---
         function switchAgendaSubTab(tab) {
-            activeAgendaSubTab = tab;
-            const btnDaily = document.getElementById('agendaTabDaily');
-            const btnWeekly = document.getElementById('agendaTabWeekly');
-            const secDaily = document.getElementById('agendaDailySection');
-            const secWeekly = document.getElementById('agendaWeeklySection');
-
-            if (tab === 'daily') {
-                btnDaily.style.background = 'var(--primary-color)'; btnWeekly.style.background = 'white';
-                secDaily.style.display = 'block'; secWeekly.style.display = 'none';
-            } else {
-                btnWeekly.style.background = 'var(--primary-color)'; btnDaily.style.background = 'white';
-                secDaily.style.display = 'none'; secWeekly.style.display = 'block';
-                renderWeeklyNotes();
-            }
+            const btnDaily = document.getElementById('agendaTabDaily'); const btnWeekly = document.getElementById('agendaTabWeekly');
+            const secDaily = document.getElementById('agendaDailySection'); const secWeekly = document.getElementById('agendaWeeklySection');
+            if (tab === 'daily') { btnDaily.style.background = 'var(--primary-color)'; btnWeekly.style.background = 'white'; secDaily.style.display = 'block'; secWeekly.style.display = 'none'; } 
+            else { btnWeekly.style.background = 'var(--primary-color)'; btnDaily.style.background = 'white'; secDaily.style.display = 'none'; secWeekly.style.display = 'block'; renderWeeklyNotes(); }
         }
-
-        function getMonday(d) { const date = new Date(d); const day = date.getDay(); return new Date(date.setDate(date.getDate() - day + (day === 0 ? -6 : 1))); }
-        function getSunday(monday) { const sunday = new Date(monday); sunday.setDate(sunday.getDate() + 6); return sunday; }
-        function getWeekKey(date) { const monday = getMonday(date); return monday.getFullYear() + "-" + String(monday.getMonth() + 1).padStart(2, '0') + "-" + String(monday.getDate()).padStart(2, '0'); }
-        function getWeekLabel(date) { const monday = getMonday(date); const sunday = getSunday(monday); return monday.getDate() + " " + monthNames[monday.getMonth()] + " - " + sunday.getDate() + " " + monthNames[sunday.getMonth()] + " " + sunday.getFullYear(); }
-        function getMonthKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0'); }
-        function getDayKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0'); }
-        function getDayLabel(date) {
-            const today = new Date();
-            if (date.toDateString() === today.toDateString()) return "BUGÜN";
-            const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
-            if (date.toDateString() === tomorrow.toDateString()) return "YARIN";
-            const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
-            if (date.toDateString() === yesterday.toDateString()) return "DÜN";
-            return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
-        }
-
-        let habits = JSON.parse(localStorage.getItem('habits')) || [];
-        let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
-        let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
-        let mediaData = JSON.parse(localStorage.getItem('mediaList')) || [];
-        let weeklyData = JSON.parse(localStorage.getItem('weeklyNotes')) || {};
-        let currentMediaFilter = 'all';
-        let webhookUrl = localStorage.getItem('sheet_webhook') || '';
-
-        function saveData() {
-            localStorage.setItem('habits', JSON.stringify(habits));
-            localStorage.setItem('goals', JSON.stringify(goalsData));
-            localStorage.setItem('agenda', JSON.stringify(agendaData));
-            localStorage.setItem('mediaList', JSON.stringify(mediaData));
-            localStorage.setItem('weeklyNotes', JSON.stringify(weeklyData));
-            localStorage.setItem('notebooksData', JSON.stringify(notebooksData));
-            if (webhookUrl) syncToCloudQuiet();
-        }
-
-        function setWebhookUrl() {
-            const url = prompt("Google Apps Script Web App URL adresini girin:", webhookUrl);
-            if (url !== null) { webhookUrl = url.trim(); localStorage.setItem('sheet_webhook', webhookUrl); alert("WEBHOOK URL KAYDEDİLDİ."); syncWithCloud(); }
-        }
-
-        async function syncWithCloud() {
-            if (!webhookUrl) return alert("Lütfen önce Google E-Tablo webhook adresinizi girin!");
-            try {
-                const res = await fetch(webhookUrl); const cloudData = await res.json();
-                if (cloudData && (cloudData.habits || cloudData.notebooksData)) {
-                    habits = cloudData.habits || []; goalsData = cloudData.goalsData || {}; agendaData = cloudData.agendaData || {};
-                    mediaData = cloudData.mediaData || []; weeklyData = cloudData.weeklyData || {}; notebooksData = cloudData.notebooksData || [];
-                    saveData();
-                    renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); renderSummary();
-                    alert("BULUTTAN VERİLER BAŞARIYLA ÇEKİLDİ!");
-                } else { await syncToCloudQuiet(); alert("BULUT TABLOSU İLK KEZ SENKRONİZE EDİLDİ."); }
-            } catch (err) { alert("BAĞLANTI HATASI."); }
-        }
-        async function syncToCloudQuiet() {
-            if (!webhookUrl) return;
-            try { await fetch(webhookUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ habits, goalsData, agendaData, mediaData, weeklyData, notebooksData }) }); } catch (e) {}
-        }
-
-        // --- AJANDA KODLARI ---
         function changeCalendarMonth(offset) { displayedCalendarDate.setMonth(displayedCalendarDate.getMonth() + offset); renderCalendar(); }
         function renderCalendar() {
             const grid = document.getElementById('calendarGrid'); grid.innerHTML = '';
             const year = displayedCalendarDate.getFullYear(); const month = displayedCalendarDate.getMonth();
             document.getElementById('calendarMonthLabel').textContent = monthNames[month] + " " + year;
-            ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"].forEach(d => {
-                const cell = document.createElement('div'); cell.className = 'cal-header-cell'; cell.textContent = d; grid.appendChild(cell);
-            });
+            ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"].forEach(d => { const cell = document.createElement('div'); cell.className = 'cal-header-cell'; cell.textContent = d; grid.appendChild(cell); });
             const firstDayIndex = new Date(year, month, 1).getDay(); const adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
             const totalDays = new Date(year, month + 1, 0).getDate(); const prevTotalDays = new Date(year, month, 0).getDate();
             for (let i = adjustedFirstDay - 1; i >= 0; i--) { const cell = document.createElement('div'); cell.className = 'cal-day-cell other-month'; cell.textContent = prevTotalDays - i; grid.appendChild(cell); }
-            const selectedKey = getDayKey(displayedAgendaDate);
             for (let i = 1; i <= totalDays; i++) {
                 const cell = document.createElement('div'); cell.className = 'cal-day-cell'; cell.textContent = i;
                 const cellKey = getDayKey(new Date(year, month, i));
-                if (cellKey === selectedKey) cell.classList.add('selected');
+                if (cellKey === getDayKey(displayedAgendaDate)) cell.classList.add('selected');
                 if (agendaData[cellKey] && agendaData[cellKey].length > 0) cell.classList.add('has-tasks');
                 cell.onclick = () => { displayedAgendaDate = new Date(year, month, i); renderAgenda(); renderCalendar(); };
                 grid.appendChild(cell);
@@ -749,386 +723,180 @@ Kullanıcının Mesajı: ${msg}`;
             const totalCellsSoFar = adjustedFirstDay + totalDays; const nextMonthDays = totalCellsSoFar % 7 === 0 ? 0 : 7 - (totalCellsSoFar % 7);
             for (let i = 1; i <= nextMonthDays; i++) { const cell = document.createElement('div'); cell.className = 'cal-day-cell other-month'; cell.textContent = i; grid.appendChild(cell); }
         }
-
         function changeDay(offset) { displayedAgendaDate.setDate(displayedAgendaDate.getDate() + offset); displayedCalendarDate = new Date(displayedAgendaDate); renderAgenda(); renderCalendar(); }
         function renderAgenda() {
             document.getElementById('currentDayLabel').textContent = getDayLabel(displayedAgendaDate);
             const container = document.getElementById('agendaContainer'); container.innerHTML = '';
-            const dayKey = getDayKey(displayedAgendaDate); const items = agendaData[dayKey] || [];
+            const items = agendaData[getDayKey(displayedAgendaDate)] || [];
             if (items.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ GÖREV YOK ]</p>'; return; }
             items.forEach((item, index) => {
                 const div = document.createElement('div'); div.className = `list-item ${item.done ? 'done-bg' : ''} ${item.priority === 'high' ? 'priority-high' : ''}`;
-                div.innerHTML = `
-                    <div class="list-content" onclick="toggleAgendaItem(${index})">
-                        <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
-                        <span class="text-content ${item.done ? 'crossed' : ''}">
-                            ${item.priority === 'high' ? '<span class="badge-priority">KRİTİK</span>' : ''} ${item.text}
-                        </span>
-                    </div>
-                    <button class="delete-btn" onclick="deleteAgendaItem(${index})">×</button>
-                `;
+                div.innerHTML = `<div class="list-content" onclick="toggleAgendaItem(${index})"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
+                <span class="text-content ${item.done ? 'crossed' : ''}">${item.priority === 'high' ? '<span class="badge-priority">KRİTİK</span>' : ''} ${item.text}</span></div><button class="delete-btn" onclick="deleteAgendaItem(${index})">×</button>`;
                 container.appendChild(div);
             });
         }
         function addAgendaItem() {
-            const input = document.getElementById('agendaInput'); const priority = document.getElementById('agendaPriority').value;
-            if (input.value.trim() === '') return;
-            const dayKey = getDayKey(displayedAgendaDate);
-            if (!agendaData[dayKey]) agendaData[dayKey] = [];
-            agendaData[dayKey].push({ text: input.value.trim(), done: false, priority: priority });
-            saveData(); renderAgenda(); renderCalendar(); renderSummary(); input.value = '';
+            const input = document.getElementById('agendaInput'); const pri = document.getElementById('agendaPriority').value; if (input.value.trim() === '') return;
+            const dKey = getDayKey(displayedAgendaDate); if (!agendaData[dKey]) agendaData[dKey] = [];
+            agendaData[dKey].push({ text: input.value.trim(), done: false, priority: pri }); saveData(); renderAgenda(); renderCalendar(); renderSummary(); input.value = '';
         }
-        function toggleAgendaItem(index) { const dayKey = getDayKey(displayedAgendaDate); agendaData[dayKey][index].done = !agendaData[dayKey][index].done; saveData(); renderAgenda(); renderSummary(); }
-        function deleteAgendaItem(index) { const dayKey = getDayKey(displayedAgendaDate); agendaData[dayKey].splice(index, 1); if (agendaData[dayKey].length === 0) delete agendaData[dayKey]; saveData(); renderAgenda(); renderCalendar(); renderSummary(); }
-
+        function toggleAgendaItem(index) { agendaData[getDayKey(displayedAgendaDate)][index].done = !agendaData[getDayKey(displayedAgendaDate)][index].done; saveData(); renderAgenda(); renderSummary(); }
+        function deleteAgendaItem(index) { const k = getDayKey(displayedAgendaDate); agendaData[k].splice(index, 1); if(agendaData[k].length===0) delete agendaData[k]; saveData(); renderAgenda(); renderCalendar(); renderSummary(); }
         function changeWeek(offset) { displayedWeekDate.setDate(displayedWeekDate.getDate() + (offset * 7)); renderWeeklyNotes(); }
-        function renderWeeklyNotes() {
-            document.getElementById('currentWeekLabel').textContent = getWeekLabel(displayedWeekDate);
-            document.getElementById('weeklyNoteInput').value = weeklyData[getWeekKey(displayedWeekDate)] || '';
-            document.getElementById('weeklyNoteStatus').textContent = "";
-        }
-        function saveWeeklyNote() {
-            weeklyData[getWeekKey(displayedWeekDate)] = document.getElementById('weeklyNoteInput').value;
-            saveData();
-            document.getElementById('weeklyNoteStatus').textContent = "✓ KAYDEDİLDİ.";
-            setTimeout(() => { document.getElementById('weeklyNoteStatus').textContent = ""; }, 2000);
-        }
+        function renderWeeklyNotes() { document.getElementById('currentWeekLabel').textContent = getWeekLabel(displayedWeekDate); document.getElementById('weeklyNoteInput').value = weeklyData[getWeekKey(displayedWeekDate)] || ''; }
+        function saveWeeklyNote() { weeklyData[getWeekKey(displayedWeekDate)] = document.getElementById('weeklyNoteInput').value; saveData(); document.getElementById('weeklyNoteStatus').textContent = "✓ KAYDEDİLDİ."; setTimeout(() => document.getElementById('weeklyNoteStatus').textContent = "", 2000); }
 
-        // --- NOTLAR VE DEFTERLER ---
+        // --- NOTLAR FONKSİYONLARI ---
+        let activeNotebookId = null; let editingNoteIndex = null;
         function renderNotebooks() {
             const container = document.getElementById('notebooksContainer'); container.innerHTML = '';
             if (notebooksData.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ DEFTER YOK ]</p>'; return; }
-            notebooksData.forEach((nb) => {
-                const noteCount = nb.notes ? nb.notes.length : 0;
-                const card = document.createElement('div'); card.className = 'home-card';
-                card.style.display = 'flex'; card.style.flexDirection = 'row'; card.style.justifyContent = 'space-between'; card.style.alignItems = 'center';
-                card.innerHTML = `
-                    <div style="flex: 1; cursor: pointer;" onclick="openNotebook('${nb.id}')">
-                        <h2 style="font-size:14px; margin-bottom:0;">📓 // ${nb.title}</h2>
-                        <p style="margin-top:5px;">${noteCount} ADET NOT</p>
-                    </div>
-                    <button class="delete-btn" onclick="deleteNotebook(event, '${nb.id}')">×</button>
-                `;
+            notebooksData.forEach(nb => {
+                const card = document.createElement('div'); card.className = 'home-card'; card.style.display = 'flex'; card.style.flexDirection = 'row'; card.style.justifyContent = 'space-between'; card.style.alignItems = 'center';
+                card.innerHTML = `<div style="flex: 1; cursor: pointer;" onclick="openNotebook('${nb.id}')"><h2 style="font-size:14px; margin-bottom:0;">📓 // ${nb.title}</h2><p style="margin-top:5px;">${nb.notes?nb.notes.length:0} ADET NOT</p></div><button class="delete-btn" onclick="deleteNotebook(event, '${nb.id}')">×</button>`;
                 container.appendChild(card);
             });
         }
-        function addNotebook() {
-            const input = document.getElementById('newNotebookInput'); if (input.value.trim() === '') return;
-            notebooksData.push({ id: 'nb_' + Date.now(), title: input.value.trim().toUpperCase(), notes: [] });
-            saveData(); renderNotebooks(); input.value = '';
-        }
-        function deleteNotebook(event, id) {
-            event.stopPropagation();
-            if (confirm("Defteri silmek istediğinize emin misiniz?")) { notebooksData = notebooksData.filter(nb => nb.id !== id); saveData(); renderNotebooks(); }
-        }
-        function openNotebook(id) {
-            activeNotebookId = id; const nb = notebooksData.find(n => n.id === id); if (!nb) return;
-            document.getElementById('notebooksMainView').style.display = 'none';
-            document.getElementById('notebookDetailView').style.display = 'block';
-            document.getElementById('currentNotebookTitle').textContent = `📓 DEFTER: ${nb.title}`;
-            cancelNoteEdit(); // Formu sıfırla
-            renderNotes();
-        }
+        function addNotebook() { const input = document.getElementById('newNotebookInput'); if (input.value.trim() === '') return; notebooksData.push({ id: 'nb_' + Date.now(), title: input.value.trim().toUpperCase(), notes: [] }); saveData(); renderNotebooks(); input.value = ''; }
+        function deleteNotebook(event, id) { event.stopPropagation(); if (confirm("Defteri sileyim mi?")) { notebooksData = notebooksData.filter(nb => nb.id !== id); saveData(); renderNotebooks(); } }
+        function openNotebook(id) { activeNotebookId = id; document.getElementById('notebooksMainView').style.display = 'none'; document.getElementById('notebookDetailView').style.display = 'block'; document.getElementById('currentNotebookTitle').textContent = `📓 DEFTER: ${notebooksData.find(n => n.id === id).title}`; cancelNoteEdit(); renderNotes(); }
         function closeNotebook() { activeNotebookId = null; document.getElementById('notebookDetailView').style.display = 'none'; document.getElementById('notebooksMainView').style.display = 'block'; renderNotebooks(); }
-
         function renderNotes() {
-            const container = document.getElementById('notesContainer'); container.innerHTML = '';
-            const nb = notebooksData.find(n => n.id === activeNotebookId);
+            const container = document.getElementById('notesContainer'); container.innerHTML = ''; const nb = notebooksData.find(n => n.id === activeNotebookId);
             if (!nb || !nb.notes || nb.notes.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ NOT YOK ]</p>'; return; }
             nb.notes.forEach((note, index) => {
                 const card = document.createElement('div'); card.className = 'habit-card';
-                card.innerHTML = `
-                    <div class="habit-header">
-                        <span class="habit-title" style="font-size:13px;">${note.title}</span>
-                        <div style="display:flex; gap:6px;">
-                            <button class="delete-btn" style="color:var(--text-color); border-color:var(--border-color); font-size:16px;" onclick="editNote(${index})">✎</button>
-                            <button class="delete-btn" onclick="deleteNote(${index})">×</button>
-                        </div>
-                    </div>
-                    <p style="font-size:12px; white-space: pre-wrap; color: var(--text-color); margin-top: 6px; font-weight: normal;">${note.content}</p>
-                `;
+                card.innerHTML = `<div class="habit-header"><span class="habit-title" style="font-size:13px;">${note.title}</span><div style="display:flex; gap:6px;"><button class="delete-btn" style="color:var(--text-color); border-color:var(--border-color); font-size:16px;" onclick="editNote(${index})">✎</button><button class="delete-btn" onclick="deleteNote(${index})">×</button></div></div><p style="font-size:12px; white-space: pre-wrap; color: var(--text-color); margin-top: 6px; font-weight: normal;">${note.content}</p>`;
                 container.appendChild(card);
             });
         }
-        
         function addOrUpdateNote() {
-            const titleInput = document.getElementById('noteTitleInput');
-            const contentInput = document.getElementById('noteContentInput');
+            const titleInput = document.getElementById('noteTitleInput'); const contentInput = document.getElementById('noteContentInput');
             if (titleInput.value.trim() === '' && contentInput.value.trim() === '') return;
-
             const nb = notebooksData.find(n => n.id === activeNotebookId);
-            if (!nb) return;
-
-            if (editingNoteIndex !== null) {
-                // Mevcut Notu Güncelle
-                nb.notes[editingNoteIndex].title = titleInput.value.trim().toUpperCase() || 'BAŞLIKSIZ NOT';
-                nb.notes[editingNoteIndex].content = contentInput.value.trim();
-            } else {
-                // Yeni Not Ekle
-                nb.notes.unshift({ id: Date.now(), title: titleInput.value.trim().toUpperCase() || 'BAŞLIKSIZ NOT', content: contentInput.value.trim() });
-            }
-            saveData();
-            cancelNoteEdit(); // Modu sıfırla ve yeniden renderla
+            if (editingNoteIndex !== null) { nb.notes[editingNoteIndex].title = titleInput.value.trim().toUpperCase() || 'BAŞLIKSIZ NOT'; nb.notes[editingNoteIndex].content = contentInput.value.trim(); } 
+            else { nb.notes.unshift({ id: Date.now(), title: titleInput.value.trim().toUpperCase() || 'BAŞLIKSIZ NOT', content: contentInput.value.trim() }); }
+            saveData(); cancelNoteEdit();
         }
-
         function editNote(index) {
-            const nb = notebooksData.find(n => n.id === activeNotebookId);
-            const note = nb.notes[index];
-            
-            document.getElementById('noteTitleInput').value = note.title;
-            document.getElementById('noteContentInput').value = note.content;
-            editingNoteIndex = index;
-            
-            const btn = document.getElementById('addNoteBtn');
-            btn.textContent = 'GÜNCELLE';
-            btn.style.background = 'var(--sync-color)';
-            btn.style.color = 'white';
-            
-            document.getElementById('cancelEditBtn').style.display = 'block';
-            document.getElementById('notebookDetailView').scrollIntoView({behavior: 'smooth'});
+            const note = notebooksData.find(n => n.id === activeNotebookId).notes[index];
+            document.getElementById('noteTitleInput').value = note.title; document.getElementById('noteContentInput').value = note.content; editingNoteIndex = index;
+            const btn = document.getElementById('addNoteBtn'); btn.textContent = 'GÜNCELLE'; btn.style.background = 'var(--sync-color)'; btn.style.color = 'white';
+            document.getElementById('cancelEditBtn').style.display = 'block'; document.getElementById('notebookDetailView').scrollIntoView({behavior: 'smooth'});
         }
-
         function cancelNoteEdit() {
-            document.getElementById('noteTitleInput').value = '';
-            document.getElementById('noteContentInput').value = '';
-            editingNoteIndex = null;
-            
-            const btn = document.getElementById('addNoteBtn');
-            btn.textContent = 'NOT EKLE';
-            btn.style.background = 'var(--primary-color)';
-            btn.style.color = 'var(--border-color)';
-            
-            document.getElementById('cancelEditBtn').style.display = 'none';
-            renderNotes();
+            document.getElementById('noteTitleInput').value = ''; document.getElementById('noteContentInput').value = ''; editingNoteIndex = null;
+            const btn = document.getElementById('addNoteBtn'); btn.textContent = 'NOT EKLE'; btn.style.background = 'var(--primary-color)'; btn.style.color = 'var(--border-color)';
+            document.getElementById('cancelEditBtn').style.display = 'none'; renderNotes();
         }
+        function deleteNote(index) { notebooksData.find(n => n.id === activeNotebookId).notes.splice(index, 1); saveData(); renderNotes(); }
 
-        function deleteNote(index) {
-            const nb = notebooksData.find(n => n.id === activeNotebookId);
-            if (!nb) return;
-            nb.notes.splice(index, 1);
-            saveData(); renderNotes();
-        }
-
-
-        // --- ZİNCİR (SONSUZ TAKVİM) MODÜLÜ ---
-        
+        // --- ZİNCİR FONKSİYONLARI ---
         function calculateStreak(doneDates) {
             if(!doneDates || doneDates.length === 0) return 0;
-            let streak = 0;
-            let checkD = new Date();
-            let todayKey = getDayKey(checkD);
-            
-            // Eğer bugün işaretli değilse, dünü kontrol et
-            if(!doneDates.includes(todayKey)) {
-                checkD.setDate(checkD.getDate() - 1);
-                if(!doneDates.includes(getDayKey(checkD))) return 0; // Seri bozulmuş
-            }
-            
-            // Geriye dönük aralıksız kontrol et
-            while(true) {
-                if(doneDates.includes(getDayKey(checkD))) {
-                    streak++;
-                    checkD.setDate(checkD.getDate() - 1);
-                } else {
-                    break;
-                }
-            }
+            let streak = 0; let checkD = new Date(); let todayKey = getDayKey(checkD);
+            if(!doneDates.includes(todayKey)) { checkD.setDate(checkD.getDate() - 1); if(!doneDates.includes(getDayKey(checkD))) return 0; }
+            while(doneDates.includes(getDayKey(checkD))) { streak++; checkD.setDate(checkD.getDate() - 1); }
             return streak;
         }
-
         function generateDateBoxes(habit, container, trackerDate, daysToAdd) {
             for(let i = 0; i < daysToAdd; i++) {
-                let d = new Date(trackerDate);
-                let dKey = getDayKey(d);
-                
-                let box = document.createElement('div');
-                box.className = 'calendar-day-box';
+                let d = new Date(trackerDate); let dKey = getDayKey(d);
+                let box = document.createElement('div'); box.className = 'calendar-day-box';
                 if(habit.doneDates.includes(dKey)) box.classList.add('done');
                 if(dKey === getDayKey(new Date())) box.classList.add('today');
-                
                 box.innerHTML = `<span style="font-size:16px; font-weight:900;">${d.getDate()}</span><br><span style="font-size:9px;">${monthNames[d.getMonth()].substring(0,3).toUpperCase()}</span>`;
-                
                 box.onclick = () => {
-                    // Tıklama ile durumu anında değiştir (sayfa yenilemeden)
-                    if(habit.doneDates.includes(dKey)) {
-                        habit.doneDates = habit.doneDates.filter(x => x !== dKey);
-                        box.classList.remove('done');
-                    } else {
-                        habit.doneDates.push(dKey);
-                        box.classList.add('done');
-                    }
+                    if(habit.doneDates.includes(dKey)) { habit.doneDates = habit.doneDates.filter(x => x !== dKey); box.classList.remove('done'); } 
+                    else { habit.doneDates.push(dKey); box.classList.add('done'); }
                     saveData();
-                    
-                    // Skoru canlı güncelle
-                    const card = box.closest('.habit-card');
-                    const statsDiv = card.querySelector('.habit-stats');
+                    const statsDiv = box.closest('.habit-card').querySelector('.habit-stats');
                     statsDiv.innerHTML = `TOPLAM: <b>${habit.doneDates.length} GÜN</b> &nbsp;|&nbsp; ZİNCİR: <b>${calculateStreak(habit.doneDates)} GÜN 🔥</b>`;
                 };
-                
-                container.appendChild(box);
-                trackerDate.setDate(trackerDate.getDate() + 1);
+                container.appendChild(box); trackerDate.setDate(trackerDate.getDate() + 1);
             }
         }
-
         function renderHabits() {
-            const container = document.getElementById('habitsContainer');
-            container.innerHTML = '';
-
-            if (habits.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ ALIŞKANLIK YOK ]</p>';
-                return;
-            }
-
+            const container = document.getElementById('habitsContainer'); container.innerHTML = '';
+            if (habits.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ ALIŞKANLIK YOK ]</p>'; return; }
             habits.forEach(habit => {
-                if(!habit.doneDates) habit.doneDates = []; // Eski verileri yeni modele geçir
-
-                const card = document.createElement('div');
-                card.className = 'habit-card';
-
-                const header = document.createElement('div');
-                header.className = 'habit-header';
-                header.innerHTML = `
-                    <span class="habit-title">${habit.title}</span>
-                    <button class="delete-btn" onclick="deleteHabit(${habit.id})">×</button>
-                `;
-                card.appendChild(header);
-
-                const stats = document.createElement('div');
-                stats.className = 'habit-stats';
-                stats.innerHTML = `TOPLAM: <b>${habit.doneDates.length} GÜN</b> &nbsp;|&nbsp; ZİNCİR: <b>${calculateStreak(habit.doneDates)} GÜN 🔥</b>`;
-                card.appendChild(stats);
-
-                const daysContainer = document.createElement('div');
-                daysContainer.className = 'days-container-infinite';
-                
-                // Takvimi 15 gün önceden başlat
-                let today = new Date();
-                let startD = new Date(today);
-                startD.setDate(startD.getDate() - 15);
-                let currentEnd = new Date(startD);
-
-                // İlk aşamada 45 günlük takvim yükle (15 gün geçmiş + bugün + 29 gün gelecek)
+                if(!habit.doneDates) habit.doneDates = [];
+                const card = document.createElement('div'); card.className = 'habit-card';
+                card.innerHTML = `<div class="habit-header"><span class="habit-title">${habit.title}</span><button class="delete-btn" onclick="deleteHabit(${habit.id})">×</button></div>
+                <div class="habit-stats">TOPLAM: <b>${habit.doneDates.length} GÜN</b> &nbsp;|&nbsp; ZİNCİR: <b>${calculateStreak(habit.doneDates)} GÜN 🔥</b></div>`;
+                const daysContainer = document.createElement('div'); daysContainer.className = 'days-container-infinite';
+                let startD = new Date(); startD.setDate(startD.getDate() - 15); let currentEnd = new Date(startD);
                 generateDateBoxes(habit, daysContainer, currentEnd, 45);
-
-                // Sonsuz Kaydırma Mantığı: Sağ sona gelince yeni günler ekle
-                daysContainer.onscroll = function() {
-                    // Kullanıcı sağ tarafa yaklaştığında (10px kala) 30 gün daha ekle
-                    if (this.scrollLeft + this.clientWidth >= this.scrollWidth - 10) {
-                        generateDateBoxes(habit, this, currentEnd, 30);
-                    }
-                };
-
-                card.appendChild(daysContainer);
-                container.appendChild(card);
-
-                // Ekrana yerleştikten sonra "BUGÜN" kutusunu otomatik merkeze al
-                setTimeout(() => {
-                    let todayBox = daysContainer.querySelector('.today');
-                    if(todayBox) {
-                        daysContainer.scrollLeft = todayBox.offsetLeft - (daysContainer.clientWidth / 2) + (todayBox.clientWidth / 2);
-                    }
-                }, 50);
+                daysContainer.onscroll = function() { if (this.scrollLeft + this.clientWidth >= this.scrollWidth - 10) generateDateBoxes(habit, this, currentEnd, 30); };
+                card.appendChild(daysContainer); container.appendChild(card);
+                setTimeout(() => { let tBox = daysContainer.querySelector('.today'); if(tBox) daysContainer.scrollLeft = tBox.offsetLeft - (daysContainer.clientWidth / 2) + (tBox.clientWidth / 2); }, 50);
             });
         }
-
-        function addHabit() {
-            const input = document.getElementById('habitInput');
-            if (input.value.trim() === '') return;
-            habits.push({ id: Date.now(), title: input.value, doneDates: [] });
-            saveData(); renderHabits(); renderSummary(); input.value = '';
-        }
-
-        function deleteHabit(id) {
-            habits = habits.filter(h => h.id !== id);
-            saveData(); renderHabits(); renderSummary();
-        }
+        function addHabit() { const input = document.getElementById('habitInput'); if (input.value.trim() === '') return; habits.push({ id: Date.now(), title: input.value, doneDates: [] }); saveData(); renderHabits(); renderSummary(); input.value = ''; }
+        function deleteHabit(id) { habits = habits.filter(h => h.id !== id); saveData(); renderHabits(); renderSummary(); }
 
         // --- CHALLENGER, MEDYA VE DİĞER ---
         function changeMonth(offset) { displayedMonthDate.setMonth(displayedMonthDate.getMonth() + offset); renderGoals(); }
         function renderGoals() {
-            const container = document.getElementById('goalsContainer'); container.innerHTML = '';
-            const year = displayedMonthDate.getFullYear(); const month = displayedMonthDate.getMonth();
-            document.getElementById('currentMonthLabel').textContent = monthNames[month] + " " + year;
-            const items = goalsData[getMonthKey(displayedMonthDate)] || [];
+            const container = document.getElementById('goalsContainer'); container.innerHTML = ''; const mk = getMonthKey(displayedMonthDate);
+            document.getElementById('currentMonthLabel').textContent = monthNames[displayedMonthDate.getMonth()] + " " + displayedMonthDate.getFullYear();
+            const items = goalsData[mk] || [];
             if (items.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ HEDEF YOK ]</p>'; return; }
             items.forEach((item, index) => {
                 const div = document.createElement('div'); div.className = `list-item ${item.done ? 'done-bg' : ''} ${item.priority === 'high' ? 'priority-high' : ''}`;
-                div.innerHTML = `
-                    <div class="list-content" onclick="toggleGoalItem(${index})">
-                        <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
-                        <span class="text-content ${item.done ? 'crossed' : ''}"> ${item.priority === 'high' ? '<span class="badge-priority">KRİTİK</span>' : ''} ${item.text} </span>
-                    </div>
-                    <button class="delete-btn" onclick="deleteGoalItem(${index})">×</button>
-                `;
+                div.innerHTML = `<div class="list-content" onclick="toggleGoalItem(${index})"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div><span class="text-content ${item.done ? 'crossed' : ''}"> ${item.priority === 'high' ? '<span class="badge-priority">KRİTİK</span>' : ''} ${item.text} </span></div><button class="delete-btn" onclick="deleteGoalItem(${index})">×</button>`;
                 container.appendChild(div);
             });
         }
-        function addGoal() {
-            const input = document.getElementById('goalInput'); const priority = document.getElementById('goalPriority').value;
-            if (input.value.trim() === '') return;
-            const mk = getMonthKey(displayedMonthDate); if (!goalsData[mk]) goalsData[mk] = [];
-            goalsData[mk].push({ text: input.value.trim(), done: false, priority: priority });
-            saveData(); renderGoals(); input.value = '';
-        }
+        function addGoal() { const input = document.getElementById('goalInput'); if (input.value.trim() === '') return; const mk = getMonthKey(displayedMonthDate); if (!goalsData[mk]) goalsData[mk] = []; goalsData[mk].push({ text: input.value.trim(), done: false, priority: document.getElementById('goalPriority').value }); saveData(); renderGoals(); input.value = ''; }
         function toggleGoalItem(index) { const mk = getMonthKey(displayedMonthDate); goalsData[mk][index].done = !goalsData[mk][index].done; saveData(); renderGoals(); }
         function deleteGoalItem(index) { const mk = getMonthKey(displayedMonthDate); goalsData[mk].splice(index, 1); if (goalsData[mk].length === 0) delete goalsData[mk]; saveData(); renderGoals(); }
 
-        function exportData() {
-            const backup = { habits, goalsData, agendaData, mediaData, weeklyData, notebooksData };
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr); downloadAnchor.setAttribute("download", `asistan_yedek_${getDayKey(new Date())}.json`);
-            document.body.appendChild(downloadAnchor); downloadAnchor.click(); downloadAnchor.remove();
-        }
-        function importData(event) {
-            const fileReader = new FileReader();
-            if (event.target.files[0]) {
-                fileReader.readAsText(event.target.files[0], "UTF-8");
-                fileReader.onload = (e) => {
-                    try {
-                        const parsed = JSON.parse(e.target.result);
-                        if (parsed.habits && parsed.goalsData) {
-                            habits = parsed.habits; goalsData = parsed.goalsData; agendaData = parsed.agendaData;
-                            mediaData = parsed.mediaData || []; weeklyData = parsed.weeklyData || {}; notebooksData = parsed.notebooksData || [];
-                            saveData(); renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); renderSummary();
-                            alert("SİSTEM YEDEĞİ YÜKLENDİ.");
-                        }
-                    } catch (err) { alert("DOSYA OKUNAMADI!"); }
-                };
-            }
-        }
-        function setMediaFilter(filter, btn) {
-            currentMediaFilter = filter; document.querySelectorAll('.filter-btn').forEach(b => { b.style.background = 'white'; b.classList.remove('active'); });
-            btn.style.background = 'var(--primary-color)'; btn.classList.add('active'); renderMedia();
-        }
+        let currentMediaFilter = 'all';
+        function setMediaFilter(filter, btn) { currentMediaFilter = filter; document.querySelectorAll('.filter-btn').forEach(b => { b.style.background = 'white'; b.classList.remove('active'); }); btn.style.background = 'var(--primary-color)'; btn.classList.add('active'); renderMedia(); }
         function renderMedia() {
             const container = document.getElementById('mediaContainer'); container.innerHTML = '';
             const filtered = mediaData.filter(item => currentMediaFilter === 'all' || item.type === currentMediaFilter);
             if (filtered.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ BOŞ ]</p>'; return; }
             filtered.forEach((item) => {
                 const realIndex = mediaData.findIndex(m => m.id === item.id);
-                const typeLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ' };
-                const badgeClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series' };
+                const tLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ' }; const tClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series' };
                 const div = document.createElement('div'); div.className = `list-item ${item.done ? 'done-bg' : ''}`;
-                div.innerHTML = `
-                    <div class="list-content" onclick="toggleMediaItem(${realIndex})">
-                        <div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div>
-                        <span class="text-content ${item.done ? 'crossed' : ''}"> <span class="${badgeClasses[item.type]}">${typeLabels[item.type]}</span> ${item.text} </span>
-                    </div>
-                    <button class="delete-btn" onclick="deleteMediaItem(${realIndex})">×</button>
-                `;
+                div.innerHTML = `<div class="list-content" onclick="toggleMediaItem(${realIndex})"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div><span class="text-content ${item.done ? 'crossed' : ''}"> <span class="${tClasses[item.type]}">${tLabels[item.type]}</span> ${item.text} </span></div><button class="delete-btn" onclick="deleteMediaItem(${realIndex})">×</button>`;
                 container.appendChild(div);
             });
         }
-        function addMediaItem() {
-            const input = document.getElementById('mediaInput'); const type = document.getElementById('mediaType').value;
-            if (input.value.trim() === '') return;
-            mediaData.unshift({ id: Date.now() + Math.random(), text: input.value.trim(), type: type, done: false });
-            saveData(); renderMedia(); input.value = '';
-        }
+        function addMediaItem() { const input = document.getElementById('mediaInput'); if (input.value.trim() === '') return; mediaData.unshift({ id: Date.now(), text: input.value.trim(), type: document.getElementById('mediaType').value, done: false }); saveData(); renderMedia(); input.value = ''; }
         function toggleMediaItem(index) { mediaData[index].done = !mediaData[index].done; saveData(); renderMedia(); }
         function deleteMediaItem(index) { mediaData.splice(index, 1); saveData(); renderMedia(); }
 
-        window.onload = () => { renderSummary(); renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); loadSavedAiModel(); }
+        function exportData() {
+            const backup = { habits, goalsData, agendaData, mediaData, weeklyData, notebooksData, portfolioData };
+            const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2)); a.download = `asistan_yedek_${getDayKey(new Date())}.json`; document.body.appendChild(a); a.click(); a.remove();
+        }
+        function importData(event) {
+            const fr = new FileReader();
+            if (event.target.files[0]) {
+                fr.readAsText(event.target.files[0], "UTF-8");
+                fr.onload = (e) => {
+                    try {
+                        const p = JSON.parse(e.target.result);
+                        if (p.habits && p.agendaData) {
+                            habits = p.habits; goalsData = p.goalsData; agendaData = p.agendaData; mediaData = p.mediaData || []; weeklyData = p.weeklyData || {}; notebooksData = p.notebooksData || []; portfolioData = p.portfolioData || {try:0, usd:0, gold:0};
+                            saveData(); localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+                            renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); renderSummary(); loadPortfolioInputs();
+                            alert("YEDEK YÜKLENDİ.");
+                        }
+                    } catch (err) { alert("DOSYA OKUNAMADI!"); }
+                };
+            }
+        }
+
+        // --- İLK AÇILIŞ ---
+        window.onload = () => { 
+            fetchFinanceRates(); // Arka planda kurları hemen çekmeye başla
+            renderSummary(); renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); loadSavedAiModel(); 
+        }
     </script>
 </body></html>
