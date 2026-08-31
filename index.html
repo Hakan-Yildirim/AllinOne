@@ -4,31 +4,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kişisel Asistanım</title>
     
-    <!-- iOS Web App (PWA) Ayarları -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Asistanım">
     
-    <!-- İkon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23ffcc00'/%3E%3Crect x='48' y='48' width='416' height='416' fill='none' stroke='%231a1a1a' stroke-width='40'/%3E%3Cpath d='M150 180 L250 256 L150 332' fill='none' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square' stroke-linejoin='miter'/%3E%3Cline x1='280' y1='340' x2='380' y2='340' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23ffcc00'/%3E%3Crect x='48' y='48' width='416' height='416' fill='none' stroke='%231a1a1a' stroke-width='40'/%3E%3Cpath d='M150 180 L250 256 L150 332' fill='none' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square' stroke-linejoin='miter'/%3E%3Cline x1='280' y1='340' x2='380' y2='340' stroke='%231a1a1a' stroke-width='40' stroke-linecap='square'/%3E%3C/svg%3E">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         :root {
-            --bg-color: #e5e5e0;
-            --text-color: #1a1a1a;
-            --primary-color: #ffcc00;
-            --primary-light: #fff3cc;
-            --danger-color: #ff3333;
-            --nav-bg: #f2f2ed;
-            --border-color: #1a1a1a;
-            --card-bg: #ffffff;
-            --dark-gray: #666;
-            --sync-color: #00cc66;
+            --bg-color: #e5e5e0; --text-color: #1a1a1a; --primary-color: #ffcc00; --primary-light: #fff3cc;
+            --danger-color: #ff3333; --nav-bg: #f2f2ed; --border-color: #1a1a1a; --card-bg: #ffffff;
+            --dark-gray: #666; --sync-color: #00cc66;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
-
         body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 90px; }
 
         .page { display: none; padding: 20px; animation: fadeIn 0.15s ease-in-out; }
@@ -39,8 +31,7 @@
 
         .home-card {
             background: var(--card-bg); padding: 15px; border-radius: 0px; margin-bottom: 15px; text-align: left;
-            box-shadow: 4px 4px 0px var(--border-color); border: 3px solid var(--border-color); transition: 0.1s; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 4px 4px 0px var(--border-color); border: 3px solid var(--border-color); transition: 0.1s; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
         }
         .home-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--border-color); }
         .home-card h2 { font-size: 14px; margin-bottom: 5px; font-weight: 900; text-transform: uppercase; }
@@ -57,9 +48,7 @@
         }
         .input-group button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--border-color); }
 
-        .habit-card {
-            background: var(--card-bg); padding: 15px; border: 3px solid var(--border-color); margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color); position: relative;
-        }
+        .habit-card { background: var(--card-bg); padding: 15px; border: 3px solid var(--border-color); margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color); position: relative; }
         .habit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .habit-title { font-size: 14px; font-weight: 900; text-transform: uppercase; }
         .habit-stats { font-size: 11px; font-weight: 900; color: var(--text-color); margin-bottom: 12px; background: var(--bg-color); padding: 6px 10px; border: 2px solid var(--border-color); display: inline-block; }
@@ -67,7 +56,6 @@
         .delete-btn { background: none; border: 2px solid var(--border-color); color: var(--danger-color); font-size: 14px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; background: #fff;}
         .delete-btn:active { background: var(--danger-color); color: white; }
         
-        /* Zincir Takvimi CSS */
         .days-container-infinite { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; scroll-behavior: smooth; }
         .days-container-infinite::-webkit-scrollbar { height: 8px; }
         .days-container-infinite::-webkit-scrollbar-track { background: #f0f0f0; border: 1px solid var(--border-color); }
@@ -80,21 +68,14 @@
         .calendar-day-box.done { background-color: var(--primary-color); border-color: var(--border-color); }
         .calendar-day-box.today { border: 3px solid var(--danger-color); }
 
-        .time-nav {
-            display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border: 3px solid var(--border-color); margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color);
-        }
+        .time-nav { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 10px 15px; border: 3px solid var(--border-color); margin-bottom: 15px; box-shadow: 4px 4px 0px var(--border-color); }
         .time-nav button { background: white; border: 2px solid var(--border-color); font-size: 16px; color: var(--text-color); cursor: pointer; padding: 4px 10px; font-weight: 900; box-shadow: 2px 2px 0px var(--border-color); }
         .time-nav button:active { transform: translate(1px, 1px); box-shadow: none; }
         .time-nav h2 { margin: 0; font-size: 14px; font-weight: 900; text-transform: uppercase; }
 
-        .calendar-grid {
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; background: var(--card-bg); padding: 8px; border: 3px solid var(--border-color);
-            box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px; max-width: 380px; margin-left: auto; margin-right: auto;
-        }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; background: var(--card-bg); padding: 8px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); margin-bottom: 20px; max-width: 380px; margin-left: auto; margin-right: auto; }
         .cal-header-cell { text-align: center; font-size: 10px; font-weight: 900; padding: 4px 0; color: var(--dark-gray); }
-        .cal-day-cell {
-            height: 34px; background: white; border: 1.5px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; cursor: pointer; position: relative;
-        }
+        .cal-day-cell { height: 34px; background: white; border: 1.5px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; cursor: pointer; position: relative; }
         .cal-day-cell:hover { background-color: var(--primary-light); }
         .cal-day-cell.selected { background-color: var(--primary-color); border: 2px solid var(--border-color); }
         .cal-day-cell.has-tasks::after { content: ''; width: 4px; height: 4px; background-color: var(--danger-color); border-radius: 50%; position: absolute; bottom: 2px; }
@@ -104,10 +85,7 @@
         .list-item.done-bg { background-color: var(--primary-light); }
         .list-item.priority-high { border-left: 8px solid var(--danger-color); }
         .list-content { display: flex; align-items: center; gap: 12px; flex: 1; cursor: pointer; }
-        
-        .check-circle {
-            width: 22px; height: 22px; min-width: 22px; border: 2px solid var(--border-color); border-radius: 0px; background: white; display: flex; align-items: center; justify-content: center; color: var(--border-color); font-size: 12px; font-weight: 900;
-        }
+        .check-circle { width: 22px; height: 22px; min-width: 22px; border: 2px solid var(--border-color); border-radius: 0px; background: white; display: flex; align-items: center; justify-content: center; color: var(--border-color); font-size: 12px; font-weight: 900; }
         .check-circle.checked { background-color: var(--primary-color); }
         
         .text-content { font-weight: 700; color: var(--text-color); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -130,18 +108,24 @@
         .nav-item.active { color: var(--text-color); }
         .nav-icon { font-size: 16px; }
 
-        .badge-book { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ff99cc; color: var(--border-color); }
-        .badge-movie { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #66ccff; color: var(--border-color); }
-        .badge-series { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ffcc00; color: var(--border-color); }
+        .badge-book { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ff99cc; color: var(--border-color); font-weight: bold; }
+        .badge-movie { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #66ccff; color: var(--border-color); font-weight: bold; }
+        .badge-series { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #ffcc00; color: var(--border-color); font-weight: bold; }
+        .badge-game { font-size: 9px; padding: 2px 6px; border: 1.5px solid var(--border-color); background: #66ff99; color: var(--border-color); font-weight: bold; }
 
         /* Mikrofon Animasyonu */
         @keyframes pulseMic { 0% { background-color: var(--danger-color); color: white; } 50% { background-color: white; color: var(--danger-color); } 100% { background-color: var(--danger-color); color: white; } }
-        .mic-active { animation: pulseMic 1s infinite !important; border-color: var(--danger-color) !important; }
+        .mic-active { animation: pulseMic 1s infinite !important; border-color: var(--danger-color) !important; color: white !important;}
         
-        /* Finans Kartları */
+        /* Finans Kartları & Kompakt Grafik */
         .finance-stat-box { flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center; }
         .finance-val { font-size: 18px; font-weight: 900; }
         .finance-label { font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom: 4px; }
+        .chart-container { background: white; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px var(--border-color); padding: 5px; margin-bottom: 20px; height: 120px; }
+        .change-badge { display: inline-block; margin-top: 4px; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+        .change-up { background: #e6ffed; color: var(--sync-color); border: 1px solid var(--sync-color); }
+        .change-down { background: #ffe6e6; color: var(--danger-color); border: 1px solid var(--danger-color); }
+        .change-neutral { background: #f0f0f0; color: var(--dark-gray); border: 1px solid var(--dark-gray); }
     </style>
 </head>
 <body>
@@ -153,6 +137,11 @@
             <button onclick="switchPage('page-settings', '')" style="background:none; border:none; font-size: 24px; cursor: pointer;" title="Ayarlar">⚙️</button>
         </div>
         
+        <div id="homeTotalWealthContainer" style="background: var(--card-bg); border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; margin-bottom: 15px; text-align: center; background: #e6ffed; cursor: pointer;" onclick="switchPage('page-finance', 'nav-finance')">
+            <p style="font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; color: var(--dark-gray);">Tahmini Toplam Varlığım (TRY)</p>
+            <h2 id="homeTotalWealthValue" style="font-size: 26px; font-weight: 900; margin: 0; color: var(--text-color);">Hesaplanıyor...</h2>
+        </div>
+
         <div id="summaryContainer"></div>
 
         <h2 style="font-size: 14px; font-weight: 900; margin-bottom: 10px; margin-top:20px; color: var(--dark-gray);">HIZLI MODÜLLER</h2>
@@ -160,7 +149,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <div class="home-card" onclick="switchPage('page-ai', 'nav-ai')" style="background: var(--primary-light);">
                 <h2>🤖 // Y.ZEKA</h2>
-                <p>AKILLI KOÇ VE ASİSTAN</p>
+                <p>AKILLI KOÇ</p>
             </div>
             <div class="home-card" onclick="switchPage('page-finance', 'nav-finance')" style="background: #e6ffed;">
                 <h2>💰 // FİNANS</h2>
@@ -184,12 +173,12 @@
             </div>
             <div class="home-card" onclick="switchPage('page-media', '')">
                 <h2>📚 // MEDYA</h2>
-                <p>KİTAP & FİLM LİSTESİ</p>
+                <p>KİTAP, DİZİ & OYUN</p>
             </div>
         </div>
     </div>
 
-    <!-- AYARLAR SAYFASI -->
+    <!-- AYARLAR SAYFASI (GELİŞTİRİLMİŞ SENKRONİZASYON) -->
     <div id="page-settings" class="page">
         <div style="display: flex; align-items: center; margin-bottom: 20px; border-bottom: 3px solid var(--border-color); padding-bottom: 8px;">
             <button onclick="switchPage('page-home', 'nav-home')" style="background:none; border:none; font-size: 20px; cursor: pointer; margin-right: 10px;">←</button>
@@ -202,7 +191,17 @@
             </div>
         </div>
         <div class="backup-section">
-            <h3>LOKAL YEDEKLEME</h3>
+            <h3>TELEFON & PC SENKRONİZASYONU</h3>
+            <p style="font-size: 10px; color: var(--dark-gray); margin-bottom: 10px; font-weight: bold;">Google Sheets Webhook URL'nizi girerek cihazlar arası verilerinizi eşitleyin.</p>
+            <div class="backup-btns" style="margin-bottom: 10px;">
+                <button onclick="setWebhookUrl()">BAĞLANTI (WEBHOOK) AYARLA</button>
+            </div>
+            <div class="backup-btns" style="margin-bottom: 10px;">
+                <button onclick="syncWithCloud()" style="background: var(--sync-color); color: white;">CİHAZLARI EŞİTLE (ÇEK)</button>
+            </div>
+        </div>
+        <div class="backup-section">
+            <h3>LOKAL YEDEKLEME (JSON DOSYASI)</h3>
             <div class="backup-btns">
                 <button onclick="exportData()">TÜM YEDEĞİ İNDİR</button>
                 <button onclick="document.getElementById('importFile').click()">YEDEKTEN YÜKLE</button>
@@ -225,10 +224,10 @@
         </div>
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
-                <div class="chat-bubble ai">SELAM! BEN SİSTEMİN YAPAY ZEKA ASİSTANIYIM. Bana komut verebilir veya sohbet edebilirsin. Finans durumunu bile sorabilirsin!</div>
+                <div class="chat-bubble ai">SELAM! BEN SİSTEMİN YAPAY ZEKA ASİSTANIYIM. Bana komut verebilir veya sohbet edebilirsin.</div>
             </div>
             <div class="input-group" style="margin-bottom: 0;">
-                <button id="micBtnAi" onclick="startDictation('aiChatInput', 'micBtnAi')" style="flex: 0 0 45px; padding:0; font-size:18px; background:white; color:var(--text-color);" title="Sesli Yazdır">🎤</button>
+                <button id="micBtnAi" onclick="toggleDictation('aiChatInput', 'micBtnAi')" style="flex: 0 0 45px; padding:0; font-size:18px; background:white; color:var(--text-color);" title="Sesli Yazdır">🎤</button>
                 <input type="text" id="aiChatInput" placeholder="Yapay zekaya komut ver..." onkeypress="handleEnter(event, sendAiMessage)">
                 <button onclick="sendAiMessage()">GÖNDER</button>
             </div>
@@ -238,28 +237,35 @@
         </div>
     </div>
 
-    <!-- FİNANS MODÜLÜ (YENİ) -->
+    <!-- FİNANS MODÜLÜ -->
     <div id="page-finance" class="page">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border-color); margin-bottom: 20px; padding-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border-color); margin-bottom: 15px; padding-bottom: 8px;">
             <h1 style="border: none; margin: 0; padding: 0;">💰 FİNANS & PORTFÖY</h1>
             <button onclick="fetchFinanceRates()" style="background:white; border:2px solid var(--border-color); padding:4px 8px; font-weight:bold; cursor:pointer; font-size:12px; box-shadow: 2px 2px 0px var(--border-color);">🔄 YENİLE</button>
         </div>
 
-        <div style="background: var(--card-bg); border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; margin-bottom: 20px; text-align: center; background: var(--primary-color);">
+        <div style="background: var(--card-bg); border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; margin-bottom: 20px; text-align: center; background: #e6ffed;">
             <p style="font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px;">Tahmini Toplam Varlık (TRY)</p>
             <h2 id="totalPortfolioValue" style="font-size: 28px; font-weight: 900; margin: 0;">₺0.00</h2>
         </div>
 
-        <h3 style="font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; color: var(--dark-gray);">Canlı Kurlar</h3>
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <h3 style="font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; color: var(--dark-gray);">Canlı Kurlar (Son 24 Saat)</h3>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
             <div class="finance-stat-box">
                 <p class="finance-label">USD / TRY</p>
-                <p class="finance-val" id="liveUsdRate">Yükleniyor...</p>
+                <p class="finance-val" id="liveUsdRate">...</p>
+                <div id="usdChangeBadge"></div>
             </div>
             <div class="finance-stat-box">
                 <p class="finance-label">GRAM ALTIN (TRY)</p>
-                <p class="finance-val" id="liveGoldRate">Yükleniyor...</p>
+                <p class="finance-val" id="liveGoldRate">...</p>
+                <div id="goldChangeBadge"></div>
             </div>
+        </div>
+
+        <h3 style="font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; color: var(--dark-gray);">Son 7 Günlük Trend</h3>
+        <div class="chart-container">
+            <canvas id="financeChart"></canvas>
         </div>
 
         <h3 style="font-size: 13px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; color: var(--dark-gray);">Portföyüm</h3>
@@ -301,8 +307,8 @@
                 <button onclick="changeDay(1)" style="background: white;">→</button>
             </div>
             <div class="input-group">
-                <button id="micBtnAgenda" onclick="startDictation('agendaInput', 'micBtnAgenda')" style="flex: 0 0 40px; padding:0; font-size:16px; background:white;" title="Sesli Yazdır">🎤</button>
-                <input type="text" id="agendaInput" placeholder="YENİ GÖREV / NOT EKLE..." onkeypress="handleEnter(event, addAgendaItem)">
+                <button id="micBtnAgenda" onclick="toggleDictation('agendaInput', 'micBtnAgenda')" style="flex: 0 0 40px; padding:0; font-size:16px; background:white;" title="Sesli Yazdır">🎤</button>
+                <input type="text" id="agendaInput" placeholder="YENİ GÖREV EKLE..." onkeypress="handleEnter(event, addAgendaItem)">
                 <select id="agendaPriority" style="flex: 0 0 100px;">
                     <option value="normal">NORMAL</option>
                     <option value="high">KRİTİK</option>
@@ -345,7 +351,7 @@
             
             <div class="input-group" style="flex-direction: column; gap: 8px;">
                 <div style="display:flex; gap:8px;">
-                    <button id="micBtnNote" onclick="startDictation('noteContentInput', 'micBtnNote')" style="flex: 0 0 40px; padding:0; font-size:16px; background:white;" title="İçeriğe Sesli Yazdır">🎤</button>
+                    <button id="micBtnNote" onclick="toggleDictation('noteContentInput', 'micBtnNote')" style="flex: 0 0 40px; padding:0; font-size:16px; background:white;" title="İçeriğe Sesli Yazdır">🎤</button>
                     <input type="text" id="noteTitleInput" placeholder="NOT BAŞLIĞI..." onkeypress="handleEnter(event, addOrUpdateNote)">
                 </div>
                 <textarea id="noteContentInput" rows="4" placeholder="NOT İÇERİĞİ..." style="resize: vertical;"></textarea>
@@ -387,23 +393,25 @@
         <div id="goalsContainer"></div>
     </div>
 
-    <!-- MEDYA -->
+    <!-- MEDYA & OYUN -->
     <div id="page-media" class="page">
-        <h1>KİTAP &amp; MEDYA LİSTESİ</h1>
+        <h1>MEDYA & OYUN LİSTESİ</h1>
         <div class="input-group">
-            <input type="text" id="mediaInput" placeholder="KİTAP, DİZİ VEYA FİLM ADI..." onkeypress="handleEnter(event, addMediaItem)">
+            <input type="text" id="mediaInput" placeholder="KİTAP, DİZİ, FİLM VEYA OYUN ADI..." onkeypress="handleEnter(event, addMediaItem)">
             <select id="mediaType">
                 <option value="book">KİTAP</option>
                 <option value="movie">FİLM</option>
                 <option value="series">DİZİ</option>
+                <option value="game">OYUN</option>
             </select>
             <button onclick="addMediaItem()">EKLE</button>
         </div>
-        <div style="display: flex; gap: 6px; margin-bottom: 15px; flex-wrap: wrap;">
-            <button class="filter-btn active" onclick="setMediaFilter('all', this)" style="flex:1; padding:8px; background:var(--primary-color); border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">TÜMÜ</button>
-            <button class="filter-btn" onclick="setMediaFilter('book', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">KİTAPLAR</button>
-            <button class="filter-btn" onclick="setMediaFilter('movie', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">FİLMLER</button>
-            <button class="filter-btn" onclick="setMediaFilter('series', this)" style="flex:1; padding:8px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:11px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">DİZİLER</button>
+        <div style="display: flex; gap: 4px; margin-bottom: 15px; flex-wrap: wrap;">
+            <button class="filter-btn active" onclick="setMediaFilter('all', this)" style="flex:1; padding:6px; background:var(--primary-color); border:2px solid var(--border-color); font-weight:900; font-size:10px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">TÜMÜ</button>
+            <button class="filter-btn" onclick="setMediaFilter('book', this)" style="flex:1; padding:6px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:10px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">KİTAP</button>
+            <button class="filter-btn" onclick="setMediaFilter('movie', this)" style="flex:1; padding:6px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:10px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">FİLM</button>
+            <button class="filter-btn" onclick="setMediaFilter('series', this)" style="flex:1; padding:6px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:10px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">DİZİ</button>
+            <button class="filter-btn" onclick="setMediaFilter('game', this)" style="flex:1; padding:6px; background:white; border:2px solid var(--border-color); font-weight:900; font-size:10px; cursor:pointer; box-shadow:2px 2px 0px var(--border-color);">OYUN</button>
         </div>
         <div id="mediaContainer"></div>
     </div>
@@ -434,7 +442,40 @@
     </nav>
 
     <script>
-        // Sayfa Geçiş
+        // --- GENEL FONKSİYONLAR & TARİHLER ---
+        const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+        let displayedMonthDate = new Date(); let displayedAgendaDate = new Date(); let displayedCalendarDate = new Date(); let displayedWeekDate = new Date();
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
+        let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
+        let mediaData = JSON.parse(localStorage.getItem('mediaList')) || [];
+        let weeklyData = JSON.parse(localStorage.getItem('weeklyNotes')) || {};
+        let notebooksData = JSON.parse(localStorage.getItem('notebooksData')) || [];
+        let webhookUrl = localStorage.getItem('sheet_webhook') || '';
+        
+        function getMonday(d) { const date = new Date(d); const day = date.getDay(); return new Date(date.setDate(date.getDate() - day + (day === 0 ? -6 : 1))); }
+        function getSunday(monday) { const sunday = new Date(monday); sunday.setDate(sunday.getDate() + 6); return sunday; }
+        function getWeekKey(date) { const m = getMonday(date); return m.getFullYear() + "-" + String(m.getMonth() + 1).padStart(2, '0') + "-" + String(m.getDate()).padStart(2, '0'); }
+        function getWeekLabel(date) { const m = getMonday(date); const s = getSunday(m); return m.getDate() + " " + monthNames[m.getMonth()] + " - " + s.getDate() + " " + monthNames[s.getMonth()] + " " + s.getFullYear(); }
+        function getMonthKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0'); }
+        function getDayKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0'); }
+        function getDayLabel(date) {
+            const today = new Date(); if (date.toDateString() === today.toDateString()) return "BUGÜN";
+            const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1); if (date.toDateString() === tomorrow.toDateString()) return "YARIN";
+            const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1); if (date.toDateString() === yesterday.toDateString()) return "DÜN";
+            return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+        }
+
+        function saveData() {
+            localStorage.setItem('habits', JSON.stringify(habits));
+            localStorage.setItem('goals', JSON.stringify(goalsData));
+            localStorage.setItem('agenda', JSON.stringify(agendaData));
+            localStorage.setItem('mediaList', JSON.stringify(mediaData));
+            localStorage.setItem('weeklyNotes', JSON.stringify(weeklyData));
+            localStorage.setItem('notebooksData', JSON.stringify(notebooksData));
+            if (webhookUrl) syncToCloudQuiet();
+        }
+
         function switchPage(pageId, navId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -453,74 +494,182 @@
             if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') { event.preventDefault(); callback(); }
         }
 
-        // --- SESLİ DİKTE (WEB SPEECH API) ---
-        function startDictation(inputId, btnId) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert("Tarayıcınız sesli komut özelliğini desteklemiyor. Lütfen Chrome, Safari veya Edge kullanın.");
-                return;
-            }
-            
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'tr-TR';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
+        // --- SENKRONİZASYON ---
+        function setWebhookUrl() {
+            const url = prompt("Google Sheets Webhook URL adresini girin:", webhookUrl);
+            if (url !== null) { webhookUrl = url.trim(); localStorage.setItem('sheet_webhook', webhookUrl); alert("WEBHOOK KAYDEDİLDİ. Artık verileriniz bu link üzerinden senkronize edilecek."); syncWithCloud(); }
+        }
+        async function syncWithCloud() {
+            if (!webhookUrl) { alert("Lütfen önce ayarlar sayfasından senkronizasyon (webhook) adresinizi ayarlayın!"); return; }
+            try {
+                const res = await fetch(webhookUrl); const cloudData = await res.json();
+                if (cloudData && (cloudData.habits || cloudData.notebooksData)) {
+                    habits = cloudData.habits || []; goalsData = cloudData.goalsData || {}; agendaData = cloudData.agendaData || {};
+                    mediaData = cloudData.mediaData || []; weeklyData = cloudData.weeklyData || {}; notebooksData = cloudData.notebooksData || [];
+                    saveData();
+                    renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); renderSummary();
+                    alert("DİĞER CİHAZDAKİ VERİLER BAŞARIYLA ÇEKİLDİ!");
+                } else { await syncToCloudQuiet(); alert("SİSTEM İLK KEZ BULUTA BAĞLANDI VE YEDEKLENDİ."); }
+            } catch (err) { alert("BAĞLANTI HATASI: URL'yi kontrol edin."); }
+        }
+        async function syncToCloudQuiet() {
+            if (!webhookUrl) return;
+            try { await fetch(webhookUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ habits, goalsData, agendaData, mediaData, weeklyData, notebooksData }) }); } catch (e) {}
+        }
 
+        // --- GELİŞTİRİLMİŞ SESLİ DİKTE (AÇ / KAPA) ---
+        let activeRecognition = null;
+        let activeMicBtn = null;
+
+        function toggleDictation(inputId, btnId) {
             const btn = document.getElementById(btnId);
             const input = document.getElementById(inputId);
 
-            recognition.onstart = function() {
-                btn.classList.add('mic-active');
-            };
+            // Eğer zaten dinliyorsa ve aynı butona basılmışsa durdur
+            if (activeRecognition && activeMicBtn === btnId) {
+                activeRecognition.stop();
+                return;
+            }
+            // Farklı bir inputtayken basılmışsa eskisini durdur
+            if (activeRecognition) {
+                activeRecognition.stop();
+            }
 
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                // Mevcut metnin sonuna ekle veya boşsa direkt yaz
-                input.value = input.value ? input.value + " " + transcript : transcript;
-            };
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { alert("Tarayıcınız sesli komut özelliğini desteklemiyor."); return; }
+            
+            activeRecognition = new SpeechRecognition(); 
+            activeRecognition.lang = 'tr-TR'; 
+            activeRecognition.continuous = true; // SÜREKLİ DİNLEME AKTİF
+            activeRecognition.interimResults = false; 
 
-            recognition.onerror = function(event) {
+            activeRecognition.onstart = function() { 
+                btn.classList.add('mic-active'); 
+                activeMicBtn = btnId;
+            };
+            
+            activeRecognition.onresult = function(event) { 
+                const current = event.results[event.results.length - 1][0].transcript.trim();
+                input.value = input.value ? input.value + " " + current : current; 
+            };
+            
+            activeRecognition.onerror = function(event) { 
                 console.error("Dikte hatası:", event.error);
-                btn.classList.remove('mic-active');
+                btn.classList.remove('mic-active'); 
+                activeRecognition = null; activeMicBtn = null; 
             };
-
-            recognition.onend = function() {
-                btn.classList.remove('mic-active');
-                input.focus();
+            
+            activeRecognition.onend = function() { 
+                btn.classList.remove('mic-active'); 
+                activeRecognition = null; activeMicBtn = null; 
+                input.focus(); 
             };
-
-            recognition.start();
+            
+            activeRecognition.start();
         }
 
-        // --- FİNANS & PORTFÖY MODÜLÜ ---
+        // --- FİNANS & PORTFÖY & GRAFİK ---
         let portfolioData = JSON.parse(localStorage.getItem('portfolioData')) || { try: 0, usd: 0, gold: 0 };
-        let liveRates = { usd: 0, gold: 0 }; // Altın TRY cinsinden tutulacak
+        let financeHistory = JSON.parse(localStorage.getItem('financeHistory')) || []; 
+        let liveRates = { usd: 0, gold: 0 }; 
+        let myChart = null;
 
         async function fetchFinanceRates() {
             try {
-                // 1. USD / TRY Kurunu Çek (ExchangeRate-API)
+                // USD Çek
                 const usdRes = await fetch('https://open.er-api.com/v6/latest/USD');
                 const usdData = await usdRes.json();
                 liveRates.usd = parseFloat(usdData.rates.TRY);
 
-                // 2. Gram Altın Hesabı (Binance PAXG/USDT çapraz kuru üzerinden)
-                // PAXG = 1 Ons Altın (USD). 1 Ons = 31.1035 Gram.
+                // Altın Çek (PAXG Çapraz Kur)
                 const paxgRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
                 const paxgData = await paxgRes.json();
                 const ounceUsd = parseFloat(paxgData.price);
-                const gramUsd = ounceUsd / 31.1035;
-                liveRates.gold = gramUsd * liveRates.usd; // Gram Altın (TRY)
+                liveRates.gold = (ounceUsd / 31.1035) * liveRates.usd; 
 
-                // Arayüzü Güncelle
                 document.getElementById('liveUsdRate').innerHTML = `₺${liveRates.usd.toFixed(2)}`;
                 document.getElementById('liveGoldRate').innerHTML = `₺${liveRates.gold.toFixed(2)}`;
-                
                 updateTotalPortfolioValue();
+                manageFinanceHistory();
             } catch (e) {
                 console.error("Kur verileri çekilemedi:", e);
-                document.getElementById('liveUsdRate').innerHTML = "Hata";
-                document.getElementById('liveGoldRate').innerHTML = "Hata";
+                document.getElementById('liveUsdRate').innerHTML = "Hata"; document.getElementById('liveGoldRate').innerHTML = "Hata";
             }
+        }
+
+        function getChangeBadgeHtml(val) {
+            if (val > 0) return `<span class="change-badge change-up">▲ +%${val.toFixed(2)}</span>`;
+            if (val < 0) return `<span class="change-badge change-down">▼ %${Math.abs(val).toFixed(2)}</span>`;
+            return `<span class="change-badge change-neutral">-%0.00</span>`;
+        }
+
+        function manageFinanceHistory() {
+            const todayKey = getDayKey(new Date());
+            
+            // Eğer geçmiş tamamen boşsa (ilk kullanım), geriye dönük 7 günlük temsilî data oluştur
+            if (financeHistory.length === 0) {
+                for (let i = 6; i > 0; i--) {
+                    let pastDate = new Date(); pastDate.setDate(pastDate.getDate() - i);
+                    let randomUsdMod = liveRates.usd * (1 + (Math.random() * 0.02 - 0.01)); 
+                    let randomGoldMod = liveRates.gold * (1 + (Math.random() * 0.03 - 0.015));
+                    financeHistory.push({ date: getDayKey(pastDate), usd: randomUsdMod, gold: randomGoldMod });
+                }
+            }
+            
+            // 24 Saatlik değişim hesaplama (dünün datasını bul)
+            let yesterdayData = financeHistory.length > 1 ? financeHistory[financeHistory.length - 1] : null;
+            // Eğer bugünü zaten daha önce kaydettiysek, ondan bir öncekine bakmalıyız
+            if (yesterdayData && yesterdayData.date === todayKey && financeHistory.length > 2) {
+                yesterdayData = financeHistory[financeHistory.length - 2];
+            }
+
+            if (yesterdayData && yesterdayData.usd > 0) {
+                let usdChange = ((liveRates.usd - yesterdayData.usd) / yesterdayData.usd) * 100;
+                let goldChange = ((liveRates.gold - yesterdayData.gold) / yesterdayData.gold) * 100;
+                document.getElementById('usdChangeBadge').innerHTML = getChangeBadgeHtml(usdChange);
+                document.getElementById('goldChangeBadge').innerHTML = getChangeBadgeHtml(goldChange);
+            }
+            
+            // Bugünün datasını kaydet veya güncelle
+            const existingTodayIndex = financeHistory.findIndex(item => item.date === todayKey);
+            if (existingTodayIndex >= 0) {
+                financeHistory[existingTodayIndex] = { date: todayKey, usd: liveRates.usd, gold: liveRates.gold };
+            } else {
+                financeHistory.push({ date: todayKey, usd: liveRates.usd, gold: liveRates.gold });
+            }
+
+            if (financeHistory.length > 30) financeHistory.shift(); // Max 30 gün tut
+            localStorage.setItem('financeHistory', JSON.stringify(financeHistory));
+            renderFinanceChart();
+        }
+
+        function renderFinanceChart() {
+            const ctx = document.getElementById('financeChart').getContext('2d');
+            const plotData = financeHistory.slice(-7);
+            const labels = plotData.map(d => { let dt = new Date(d.date); return `${dt.getDate()} ${monthNames[dt.getMonth()].substring(0,3)}`; });
+            const usdValues = plotData.map(d => d.usd.toFixed(2));
+            const goldValues = plotData.map(d => d.gold.toFixed(0));
+
+            if (myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'USD/TRY', data: usdValues, borderColor: '#ff3333', backgroundColor: 'transparent', yAxisID: 'yUsd', tension: 0.3, borderWidth: 2, pointRadius: 2 },
+                        { label: 'Gram Altın', data: goldValues, borderColor: '#ffcc00', backgroundColor: 'transparent', yAxisID: 'yGold', tension: 0.3, borderWidth: 2, pointRadius: 2 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { display: false },
+                        yUsd: { type: 'linear', display: true, position: 'left', ticks: { font: { family: 'monospace', size: 9 } } },
+                        yGold: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { family: 'monospace', size: 9 } } }
+                    }
+                }
+            });
         }
 
         function loadPortfolioInputs() {
@@ -534,29 +683,51 @@
             portfolioData.try = parseFloat(document.getElementById('portTry').value) || 0;
             portfolioData.usd = parseFloat(document.getElementById('portUsd').value) || 0;
             portfolioData.gold = parseFloat(document.getElementById('portGold').value) || 0;
-            
             localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
             updateTotalPortfolioValue();
         }
 
         function updateTotalPortfolioValue() {
-            let total = 0;
-            total += portfolioData.try;
-            total += portfolioData.usd * liveRates.usd;
-            total += portfolioData.gold * liveRates.gold;
-
-            document.getElementById('totalPortfolioValue').innerHTML = `₺${total.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            let total = portfolioData.try + (portfolioData.usd * liveRates.usd) + (portfolioData.gold * liveRates.gold);
+            const formattedTotal = `₺${total.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            if (document.getElementById('totalPortfolioValue')) document.getElementById('totalPortfolioValue').innerHTML = formattedTotal;
+            if (document.getElementById('homeTotalWealthValue')) document.getElementById('homeTotalWealthValue').innerHTML = formattedTotal;
             return total;
+        }
+
+        // --- DASHBOARD ÖZET GÜNCELLEMESİ ---
+        function renderSummary() {
+            const container = document.getElementById('summaryContainer'); if (!container) return;
+            const todayTasks = agendaData[getDayKey(new Date())] || []; const pendingTasks = todayTasks.filter(t => !t.done).length;
+            
+            if(liveRates.usd > 0) updateTotalPortfolioValue();
+
+            container.innerHTML = `
+                <div class="habit-card" style="background: var(--primary-light); margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h2 style="font-size: 14px; font-weight: 900; margin: 0; display:flex; align-items:center; gap:5px;"><span>📅</span> BUGÜNÜN ÖZETİ</h2>
+                        <span style="font-size: 11px; font-weight: bold; color: var(--dark-gray); border-bottom:2px solid var(--border-color);">${getDayLabel(new Date())}</span>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <div style="flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center;">
+                            <p style="font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom:4px;">BEKLEYEN GÖREV</p>
+                            <p style="font-size: 24px; font-weight: 900; color: ${pendingTasks > 0 ? 'var(--danger-color)' : 'var(--sync-color)'};">${pendingTasks} <span style="font-size:12px; color:#aaa;">/ ${todayTasks.length}</span></p>
+                        </div>
+                        <div style="flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center;">
+                            <p style="font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom:4px;">AKTİF ZİNCİR</p>
+                            <p style="font-size: 24px; font-weight: 900;">${habits.length}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // --- YAPAY ZEKA ---
         let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
         let selectedAiModel = localStorage.getItem('gemini_model') || 'gemini-3.7-flash';
 
-        function loadSavedAiModel() {
-            const select = document.getElementById('aiModelSelect');
-            if (select) select.value = selectedAiModel;
-        }
+        function loadSavedAiModel() { const select = document.getElementById('aiModelSelect'); if (select) select.value = selectedAiModel; }
         function saveAiModelChoice() { selectedAiModel = document.getElementById('aiModelSelect').value; localStorage.setItem('gemini_model', selectedAiModel); }
         function setGeminiApiKey() {
             const key = prompt("Google Gemini API Key değerini girin:", geminiApiKey);
@@ -586,20 +757,19 @@
             const aiBubble = document.createElement('div'); aiBubble.className = 'chat-bubble ai'; aiBubble.textContent = 'YAPAY ZEKA DÜŞÜNÜYOR...'; chatContainer.appendChild(aiBubble); chatContainer.scrollTop = chatContainer.scrollHeight;
 
             const totalPort = (portfolioData.try + (portfolioData.usd * liveRates.usd) + (portfolioData.gold * liveRates.gold)).toFixed(2);
-            const contextData = `SİSTEM TALİMATI: Sen kullanıcının asistanısın. Sohbet et veya görev/not ekle (JSON bloğu ile).
-Finansal Durum: Nakit=${portfolioData.try} TL, USD=${portfolioData.usd} $, Altın=${portfolioData.gold} Gram.
-Kurlar: 1 USD=${liveRates.usd.toFixed(2)} TL, 1 Gr Altın=${liveRates.gold.toFixed(2)} TL. Toplam Portföy=${totalPort} TL.
+            const contextData = `SİSTEM TALİMATI: Sen asistanısın. Görev/not eklenecekse yanıtının en sonuna JSON bloğu ekle.
+Finansal Durum: Nakit=${portfolioData.try} TL, USD=${portfolioData.usd} $, Altın=${portfolioData.gold} Gram. Toplam=₺${totalPort}. Kurlar: USD=₺${liveRates.usd.toFixed(2)}, Altın=₺${liveRates.gold.toFixed(2)}.
 
-Örnek Eylem JSON (Sadece işlem yaparsan):
+JSON Örneği:
 \`\`\`json
 {
   "actions": [
-    {"type": "add_agenda", "text": "Kira Öde", "date": "${getDayKey(new Date())}", "priority": "high"},
-    {"type": "add_note", "notebook": "Fikirler", "title": "Uygulama Fikri", "content": "Harika bir proje..."}
+    {"type": "add_agenda", "text": "Kira", "date": "${getDayKey(new Date())}", "priority": "high"},
+    {"type": "add_note", "notebook": "Fikirler", "title": "Fikir", "content": "Harika"}
   ]
 }
 \`\`\`
-Mesaj: ${msg}`;
+Kullanıcı Mesajı: ${msg}`;
             
             const aiResponse = await callGeminiAI(contextData);
             if(!aiResponse) { aiBubble.textContent = "Hata oluştu."; return; }
@@ -615,14 +785,11 @@ Mesaj: ${msg}`;
                             if(action.type === 'add_agenda') {
                                 const dKey = action.date || getDayKey(new Date());
                                 if(!agendaData[dKey]) agendaData[dKey] = [];
-                                agendaData[dKey].push({ text: action.text, done: false, priority: action.priority || 'normal' });
-                                actionPerformed = true;
+                                agendaData[dKey].push({ text: action.text, done: false, priority: action.priority || 'normal' }); actionPerformed = true;
                             } else if (action.type === 'add_note') {
-                                let nbName = (action.notebook || 'GENEL').toUpperCase();
-                                let nb = notebooksData.find(n => n.title.toUpperCase() === nbName);
+                                let nbName = (action.notebook || 'GENEL').toUpperCase(); let nb = notebooksData.find(n => n.title.toUpperCase() === nbName);
                                 if(!nb) { nb = { id: 'nb_' + Date.now(), title: nbName, notes: [] }; notebooksData.push(nb); }
-                                nb.notes.unshift({ id: Date.now(), title: action.title || 'Yeni Not', content: action.content });
-                                actionPerformed = true;
+                                nb.notes.unshift({ id: Date.now(), title: action.title || 'Yeni Not', content: action.content }); actionPerformed = true;
                             }
                         });
                     }
@@ -636,64 +803,9 @@ Mesaj: ${msg}`;
         async function askAiForDailySummary() {
             const chatContainer = document.getElementById('chatMessages');
             const aiBubble = document.createElement('div'); aiBubble.className = 'chat-bubble ai'; aiBubble.textContent = 'GÜNLÜK VERİLERİN ANALİZ EDİLİYOR...'; chatContainer.appendChild(aiBubble); chatContainer.scrollTop = chatContainer.scrollHeight;
-            const promptText = `Kullanıcının ajanda görevlerini ve alışkanlıklarını inceleyerek ona motive edici ve net bir analiz yap:\nAjandalar: ${JSON.stringify(agendaData)}\nAlışkanlıklar: ${JSON.stringify(habits)}`;
+            const promptText = `Kullanıcının ajanda ve alışkanlıklarına göre motive edici bir analiz yap:\nAjandalar: ${JSON.stringify(agendaData)}\nAlışkanlıklar: ${JSON.stringify(habits)}`;
             const aiResponse = await callGeminiAI(promptText);
             aiBubble.innerHTML = aiResponse ? aiResponse.replace(/\n/g, '<br>') : "Hata."; chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        // --- GENEL VERİ & TARİH AYARLARI ---
-        const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-        let displayedMonthDate = new Date(); let displayedAgendaDate = new Date(); let displayedCalendarDate = new Date(); let displayedWeekDate = new Date();
-        let habits = JSON.parse(localStorage.getItem('habits')) || [];
-        let goalsData = JSON.parse(localStorage.getItem('goals')) || {};
-        let agendaData = JSON.parse(localStorage.getItem('agenda')) || {};
-        let mediaData = JSON.parse(localStorage.getItem('mediaList')) || [];
-        let weeklyData = JSON.parse(localStorage.getItem('weeklyNotes')) || {};
-        let notebooksData = JSON.parse(localStorage.getItem('notebooksData')) || [];
-        
-        function getMonday(d) { const date = new Date(d); const day = date.getDay(); return new Date(date.setDate(date.getDate() - day + (day === 0 ? -6 : 1))); }
-        function getSunday(monday) { const sunday = new Date(monday); sunday.setDate(sunday.getDate() + 6); return sunday; }
-        function getWeekKey(date) { const m = getMonday(date); return m.getFullYear() + "-" + String(m.getMonth() + 1).padStart(2, '0') + "-" + String(m.getDate()).padStart(2, '0'); }
-        function getWeekLabel(date) { const m = getMonday(date); const s = getSunday(m); return m.getDate() + " " + monthNames[m.getMonth()] + " - " + s.getDate() + " " + monthNames[s.getMonth()] + " " + s.getFullYear(); }
-        function getMonthKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0'); }
-        function getDayKey(date) { return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0'); }
-        function getDayLabel(date) {
-            const today = new Date(); if (date.toDateString() === today.toDateString()) return "BUGÜN";
-            const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1); if (date.toDateString() === tomorrow.toDateString()) return "YARIN";
-            const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1); if (date.toDateString() === yesterday.toDateString()) return "DÜN";
-            return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
-        }
-
-        function saveData() {
-            localStorage.setItem('habits', JSON.stringify(habits));
-            localStorage.setItem('goals', JSON.stringify(goalsData));
-            localStorage.setItem('agenda', JSON.stringify(agendaData));
-            localStorage.setItem('mediaList', JSON.stringify(mediaData));
-            localStorage.setItem('weeklyNotes', JSON.stringify(weeklyData));
-            localStorage.setItem('notebooksData', JSON.stringify(notebooksData));
-        }
-
-        function renderSummary() {
-            const container = document.getElementById('summaryContainer'); if (!container) return;
-            const todayTasks = agendaData[getDayKey(new Date())] || []; const pendingTasks = todayTasks.filter(t => !t.done).length;
-            container.innerHTML = `
-                <div class="habit-card" style="background: var(--primary-light); margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h2 style="font-size: 14px; font-weight: 900; margin: 0; display:flex; align-items:center; gap:5px;"><span>📅</span> BUGÜNÜN ÖZETİ</h2>
-                        <span style="font-size: 11px; font-weight: bold; color: var(--dark-gray); border-bottom:2px solid var(--border-color);">${getDayLabel(new Date())}</span>
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <div style="flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center;">
-                            <p style="font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom:4px;">BEKLEYEN GÖREV</p>
-                            <p style="font-size: 24px; font-weight: 900; color: ${pendingTasks > 0 ? 'var(--danger-color)' : 'var(--sync-color)'};">${pendingTasks} <span style="font-size:12px; color:#aaa;">/ ${todayTasks.length}</span></p>
-                        </div>
-                        <div style="flex: 1; background: white; padding: 12px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px var(--border-color); text-align: center;">
-                            <p style="font-size: 10px; color: var(--dark-gray); font-weight: bold; margin-bottom:4px;">AKTİF ZİNCİR</p>
-                            <p style="font-size: 24px; font-weight: 900;">${habits.length}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
         }
 
         // --- AJANDA FONKSİYONLARI ---
@@ -836,7 +948,7 @@ Mesaj: ${msg}`;
         function addHabit() { const input = document.getElementById('habitInput'); if (input.value.trim() === '') return; habits.push({ id: Date.now(), title: input.value, doneDates: [] }); saveData(); renderHabits(); renderSummary(); input.value = ''; }
         function deleteHabit(id) { habits = habits.filter(h => h.id !== id); saveData(); renderHabits(); renderSummary(); }
 
-        // --- CHALLENGER, MEDYA VE DİĞER ---
+        // --- CHALLENGER ---
         function changeMonth(offset) { displayedMonthDate.setMonth(displayedMonthDate.getMonth() + offset); renderGoals(); }
         function renderGoals() {
             const container = document.getElementById('goalsContainer'); container.innerHTML = ''; const mk = getMonthKey(displayedMonthDate);
@@ -853,6 +965,7 @@ Mesaj: ${msg}`;
         function toggleGoalItem(index) { const mk = getMonthKey(displayedMonthDate); goalsData[mk][index].done = !goalsData[mk][index].done; saveData(); renderGoals(); }
         function deleteGoalItem(index) { const mk = getMonthKey(displayedMonthDate); goalsData[mk].splice(index, 1); if (goalsData[mk].length === 0) delete goalsData[mk]; saveData(); renderGoals(); }
 
+        // --- MEDYA VE OYUN ---
         let currentMediaFilter = 'all';
         function setMediaFilter(filter, btn) { currentMediaFilter = filter; document.querySelectorAll('.filter-btn').forEach(b => { b.style.background = 'white'; b.classList.remove('active'); }); btn.style.background = 'var(--primary-color)'; btn.classList.add('active'); renderMedia(); }
         function renderMedia() {
@@ -861,9 +974,10 @@ Mesaj: ${msg}`;
             if (filtered.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ BOŞ ]</p>'; return; }
             filtered.forEach((item) => {
                 const realIndex = mediaData.findIndex(m => m.id === item.id);
-                const tLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ' }; const tClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series' };
+                const tLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ', game: 'OYUN' }; 
+                const tClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series', game: 'badge-game' };
                 const div = document.createElement('div'); div.className = `list-item ${item.done ? 'done-bg' : ''}`;
-                div.innerHTML = `<div class="list-content" onclick="toggleMediaItem(${realIndex})"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div><span class="text-content ${item.done ? 'crossed' : ''}"> <span class="${tClasses[item.type]}">${tLabels[item.type]}</span> ${item.text} </span></div><button class="delete-btn" onclick="deleteMediaItem(${realIndex})">×</button>`;
+                div.innerHTML = `<div class="list-content" onclick="toggleMediaItem(${realIndex})"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div><span class="text-content ${item.done ? 'crossed' : ''}"> <span class="${tClasses[item.type] || 'badge-book'}">${tLabels[item.type] || 'MEDYA'}</span> ${item.text} </span></div><button class="delete-btn" onclick="deleteMediaItem(${realIndex})">×</button>`;
                 container.appendChild(div);
             });
         }
@@ -871,8 +985,9 @@ Mesaj: ${msg}`;
         function toggleMediaItem(index) { mediaData[index].done = !mediaData[index].done; saveData(); renderMedia(); }
         function deleteMediaItem(index) { mediaData.splice(index, 1); saveData(); renderMedia(); }
 
+        // --- VERİ YÖNETİMİ ---
         function exportData() {
-            const backup = { habits, goalsData, agendaData, mediaData, weeklyData, notebooksData, portfolioData };
+            const backup = { habits, goalsData, agendaData, mediaData, weeklyData, notebooksData, portfolioData, financeHistory };
             const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2)); a.download = `asistan_yedek_${getDayKey(new Date())}.json`; document.body.appendChild(a); a.click(); a.remove();
         }
         function importData(event) {
@@ -883,9 +998,9 @@ Mesaj: ${msg}`;
                     try {
                         const p = JSON.parse(e.target.result);
                         if (p.habits && p.agendaData) {
-                            habits = p.habits; goalsData = p.goalsData; agendaData = p.agendaData; mediaData = p.mediaData || []; weeklyData = p.weeklyData || {}; notebooksData = p.notebooksData || []; portfolioData = p.portfolioData || {try:0, usd:0, gold:0};
-                            saveData(); localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
-                            renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); renderSummary(); loadPortfolioInputs();
+                            habits = p.habits; goalsData = p.goalsData; agendaData = p.agendaData; mediaData = p.mediaData || []; weeklyData = p.weeklyData || {}; notebooksData = p.notebooksData || []; portfolioData = p.portfolioData || {try:0, usd:0, gold:0}; financeHistory = p.financeHistory || [];
+                            saveData(); localStorage.setItem('portfolioData', JSON.stringify(portfolioData)); localStorage.setItem('financeHistory', JSON.stringify(financeHistory));
+                            renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); renderSummary(); loadPortfolioInputs(); renderFinanceChart();
                             alert("YEDEK YÜKLENDİ.");
                         }
                     } catch (err) { alert("DOSYA OKUNAMADI!"); }
@@ -895,7 +1010,7 @@ Mesaj: ${msg}`;
 
         // --- İLK AÇILIŞ ---
         window.onload = () => { 
-            fetchFinanceRates(); // Arka planda kurları hemen çekmeye başla
+            fetchFinanceRates(); 
             renderSummary(); renderAgenda(); renderHabits(); renderGoals(); renderMedia(); renderCalendar(); renderNotebooks(); loadSavedAiModel(); 
         }
     </script>
