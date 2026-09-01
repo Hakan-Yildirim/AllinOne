@@ -130,7 +130,6 @@
 </head>
 <body>
 
-    <!-- ANA SAYFA VE ÖZET -->
     <div id="page-home" class="page active">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border-color); margin-bottom: 20px; padding-bottom: 8px;">
             <h1 style="border: none; margin: 0; padding: 0;">[ ÖZET & MENÜ ]</h1>
@@ -178,7 +177,6 @@
         </div>
     </div>
 
-    <!-- AYARLAR SAYFASI (GELİŞTİRİLMİŞ SENKRONİZASYON) -->
     <div id="page-settings" class="page">
         <div style="display: flex; align-items: center; margin-bottom: 20px; border-bottom: 3px solid var(--border-color); padding-bottom: 8px;">
             <button onclick="switchPage('page-home', 'nav-home')" style="background:none; border:none; font-size: 20px; cursor: pointer; margin-right: 10px;">←</button>
@@ -210,7 +208,6 @@
         </div>
     </div>
 
-    <!-- YAPAY ZEKA ASİSTAN SAYFASI -->
     <div id="page-ai" class="page">
         <h1>YAPAY ZEKA ASİSTAN</h1>
         <div class="input-group" style="margin-bottom: 15px;">
@@ -237,7 +234,6 @@
         </div>
     </div>
 
-    <!-- FİNANS MODÜLÜ -->
     <div id="page-finance" class="page">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--border-color); margin-bottom: 15px; padding-bottom: 8px;">
             <h1 style="border: none; margin: 0; padding: 0;">💰 FİNANS & PORTFÖY</h1>
@@ -286,7 +282,6 @@
         </div>
     </div>
 
-    <!-- AJANDA MODÜLÜ -->
     <div id="page-agenda" class="page">
         <h1>AJANDA &amp; TAKVİM</h1>
         <div style="display: flex; gap: 8px; margin-bottom: 15px;">
@@ -332,7 +327,6 @@
         </div>
     </div>
 
-    <!-- NOTLAR & DEFTERLER MODÜLÜ -->
     <div id="page-notebooks" class="page">
         <h1>NOTLAR &amp; DEFTERLER</h1>
         <div id="notebooksMainView">
@@ -364,7 +358,6 @@
         </div>
     </div>
 
-    <!-- ZİNCİRİ KIRMA -->
     <div id="page-habit" class="page">
         <h1>ZİNCİRİ KIRMA</h1>
         <div class="input-group">
@@ -374,7 +367,6 @@
         <div id="habitsContainer"></div>
     </div>
 
-    <!-- CHALLENGER -->
     <div id="page-challenge" class="page">
         <h1>CHALLENGER</h1>
         <div class="time-nav">
@@ -393,7 +385,6 @@
         <div id="goalsContainer"></div>
     </div>
 
-    <!-- MEDYA & OYUN -->
     <div id="page-media" class="page">
         <h1>MEDYA & OYUN LİSTESİ</h1>
         <div class="input-group">
@@ -416,7 +407,6 @@
         <div id="mediaContainer"></div>
     </div>
 
-    <!-- ALT NAVİGASYON -->
     <nav class="bottom-nav">
         <button id="nav-home" class="nav-item active" onclick="switchPage('page-home', 'nav-home')">
             <span class="nav-icon">⬛</span><span>MENÜ</span>
@@ -525,12 +515,10 @@
             const btn = document.getElementById(btnId);
             const input = document.getElementById(inputId);
 
-            // Eğer zaten dinliyorsa ve aynı butona basılmışsa durdur
             if (activeRecognition && activeMicBtn === btnId) {
                 activeRecognition.stop();
                 return;
             }
-            // Farklı bir inputtayken basılmışsa eskisini durdur
             if (activeRecognition) {
                 activeRecognition.stop();
             }
@@ -540,7 +528,7 @@
             
             activeRecognition = new SpeechRecognition(); 
             activeRecognition.lang = 'tr-TR'; 
-            activeRecognition.continuous = true; // SÜREKLİ DİNLEME AKTİF
+            activeRecognition.continuous = true; 
             activeRecognition.interimResults = false; 
 
             activeRecognition.onstart = function() { 
@@ -576,12 +564,10 @@
 
         async function fetchFinanceRates() {
             try {
-                // USD Çek
                 const usdRes = await fetch('https://open.er-api.com/v6/latest/USD');
                 const usdData = await usdRes.json();
                 liveRates.usd = parseFloat(usdData.rates.TRY);
 
-                // Altın Çek (PAXG Çapraz Kur)
                 const paxgRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
                 const paxgData = await paxgRes.json();
                 const ounceUsd = parseFloat(paxgData.price);
@@ -606,7 +592,6 @@
         function manageFinanceHistory() {
             const todayKey = getDayKey(new Date());
             
-            // Eğer geçmiş tamamen boşsa (ilk kullanım), geriye dönük 7 günlük temsilî data oluştur
             if (financeHistory.length === 0) {
                 for (let i = 6; i > 0; i--) {
                     let pastDate = new Date(); pastDate.setDate(pastDate.getDate() - i);
@@ -616,9 +601,7 @@
                 }
             }
             
-            // 24 Saatlik değişim hesaplama (dünün datasını bul)
             let yesterdayData = financeHistory.length > 1 ? financeHistory[financeHistory.length - 1] : null;
-            // Eğer bugünü zaten daha önce kaydettiysek, ondan bir öncekine bakmalıyız
             if (yesterdayData && yesterdayData.date === todayKey && financeHistory.length > 2) {
                 yesterdayData = financeHistory[financeHistory.length - 2];
             }
@@ -630,7 +613,6 @@
                 document.getElementById('goldChangeBadge').innerHTML = getChangeBadgeHtml(goldChange);
             }
             
-            // Bugünün datasını kaydet veya güncelle
             const existingTodayIndex = financeHistory.findIndex(item => item.date === todayKey);
             if (existingTodayIndex >= 0) {
                 financeHistory[existingTodayIndex] = { date: todayKey, usd: liveRates.usd, gold: liveRates.gold };
@@ -638,7 +620,7 @@
                 financeHistory.push({ date: todayKey, usd: liveRates.usd, gold: liveRates.gold });
             }
 
-            if (financeHistory.length > 30) financeHistory.shift(); // Max 30 gün tut
+            if (financeHistory.length > 30) financeHistory.shift();
             localStorage.setItem('financeHistory', JSON.stringify(financeHistory));
             renderFinanceChart();
         }
@@ -794,7 +776,7 @@ Kullanıcı Mesajı: ${msg}`;
                                 nb.notes.unshift({ id: Date.now(), title: action.title || 'Yeni Not', content: action.content }); actionPerformed = true;
                             } else if (action.type === 'add_media') {
                                 const mType = (action.mediaType || 'game').toLowerCase();
-                                mediaData.unshift({ id: Date.now(), text: action.text, type: ['game', 'book', 'movie', 'series'].includes(mType) ? mType : 'game', done: false });
+                                mediaData.unshift({ id: Date.now() + '_' + Math.random().toString(36).slice(2, 7), text: action.text, type: ['game', 'book', 'movie', 'series'].includes(mType) ? mType : 'game', done: false });
                                 actionPerformed = true;
                             }
                         });
@@ -979,17 +961,16 @@ Kullanıcı Mesajı: ${msg}`;
             const filtered = mediaData.filter(item => currentMediaFilter === 'all' || item.type === currentMediaFilter);
             if (filtered.length === 0) { container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; font-weight:900; margin-top:20px;">[ BOŞ ]</p>'; return; }
             filtered.forEach((item) => {
-                const realIndex = mediaData.findIndex(m => m.id === item.id);
                 const tLabels = { book: 'KİTAP', movie: 'FİLM', series: 'DİZİ', game: 'OYUN' }; 
                 const tClasses = { book: 'badge-book', movie: 'badge-movie', series: 'badge-series', game: 'badge-game' };
                 const div = document.createElement('div'); div.className = `list-item ${item.done ? 'done-bg' : ''}`;
-                div.innerHTML = `<div class="list-content" onclick="toggleMediaItem(${realIndex})"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div><span class="text-content ${item.done ? 'crossed' : ''}"> <span class="${tClasses[item.type] || 'badge-book'}">${tLabels[item.type] || 'MEDYA'}</span> ${item.text} </span></div><button class="delete-btn" onclick="deleteMediaItem(${realIndex})">×</button>`;
+                div.innerHTML = `<div class="list-content" onclick="toggleMediaItem('${item.id}')"><div class="check-circle ${item.done ? 'checked' : ''}">${item.done ? 'X' : ''}</div><span class="text-content ${item.done ? 'crossed' : ''}"> <span class="${tClasses[item.type] || 'badge-book'}">${tLabels[item.type] || 'MEDYA'}</span> ${item.text} </span></div><button class="delete-btn" onclick="deleteMediaItem('${item.id}')">×</button>`;
                 container.appendChild(div);
             });
         }
-        function addMediaItem() { const input = document.getElementById('mediaInput'); if (input.value.trim() === '') return; mediaData.unshift({ id: Date.now(), text: input.value.trim(), type: document.getElementById('mediaType').value, done: false }); saveData(); renderMedia(); input.value = ''; }
-        function toggleMediaItem(index) { mediaData[index].done = !mediaData[index].done; saveData(); renderMedia(); }
-        function deleteMediaItem(index) { mediaData.splice(index, 1); saveData(); renderMedia(); }
+        function addMediaItem() { const input = document.getElementById('mediaInput'); if (input.value.trim() === '') return; mediaData.unshift({ id: Date.now() + '_' + Math.random().toString(36).slice(2, 7), text: input.value.trim(), type: document.getElementById('mediaType').value, done: false }); saveData(); renderMedia(); input.value = ''; }
+        function toggleMediaItem(id) { const item = mediaData.find(m => String(m.id) === String(id)); if (item) { item.done = !item.done; saveData(); renderMedia(); } }
+        function deleteMediaItem(id) { mediaData = mediaData.filter(m => String(m.id) !== String(id)); saveData(); renderMedia(); }
 
         // --- VERİ YÖNETİMİ ---
         function exportData() {
