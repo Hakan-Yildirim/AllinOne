@@ -757,7 +757,7 @@
             const aiBubble = document.createElement('div'); aiBubble.className = 'chat-bubble ai'; aiBubble.textContent = 'YAPAY ZEKA DÜŞÜNÜYOR...'; chatContainer.appendChild(aiBubble); chatContainer.scrollTop = chatContainer.scrollHeight;
 
             const totalPort = (portfolioData.try + (portfolioData.usd * liveRates.usd) + (portfolioData.gold * liveRates.gold)).toFixed(2);
-            const contextData = `SİSTEM TALİMATI: Sen asistanısın. Görev/not eklenecekse yanıtının en sonuna JSON bloğu ekle.
+            const contextData = `SİSTEM TALİMATI: Sen asistanısın. Görev/not/medya eklenecekse yanıtının en sonuna JSON bloğu ekle.
 Finansal Durum: Nakit=${portfolioData.try} TL, USD=${portfolioData.usd} $, Altın=${portfolioData.gold} Gram. Toplam=₺${totalPort}. Kurlar: USD=₺${liveRates.usd.toFixed(2)}, Altın=₺${liveRates.gold.toFixed(2)}.
 
 JSON Örneği:
@@ -765,10 +765,12 @@ JSON Örneği:
 {
   "actions": [
     {"type": "add_agenda", "text": "Kira", "date": "${getDayKey(new Date())}", "priority": "high"},
-    {"type": "add_note", "notebook": "Fikirler", "title": "Fikir", "content": "Harika"}
+    {"type": "add_note", "notebook": "Fikirler", "title": "Fikir", "content": "Harika"},
+    {"type": "add_media", "text": "The Witcher 3", "mediaType": "game"}
   ]
 }
 \`\`\`
+Önemli: Medya eklemek için "add_media" kullan (mediaType değerleri: "game" for oyun, "book" for kitap, "movie" for film, "series" for dizi). Kullanıcı oyun listesine ekle derse mediaType mutlaka "game" olsun.
 Kullanıcı Mesajı: ${msg}`;
             
             const aiResponse = await callGeminiAI(contextData);
@@ -790,10 +792,14 @@ Kullanıcı Mesajı: ${msg}`;
                                 let nbName = (action.notebook || 'GENEL').toUpperCase(); let nb = notebooksData.find(n => n.title.toUpperCase() === nbName);
                                 if(!nb) { nb = { id: 'nb_' + Date.now(), title: nbName, notes: [] }; notebooksData.push(nb); }
                                 nb.notes.unshift({ id: Date.now(), title: action.title || 'Yeni Not', content: action.content }); actionPerformed = true;
+                            } else if (action.type === 'add_media') {
+                                const mType = (action.mediaType || 'game').toLowerCase();
+                                mediaData.unshift({ id: Date.now(), text: action.text, type: ['game', 'book', 'movie', 'series'].includes(mType) ? mType : 'game', done: false });
+                                actionPerformed = true;
                             }
                         });
                     }
-                    if(actionPerformed) { saveData(); renderAgenda(); renderNotebooks(); renderSummary(); displayMessage = displayMessage.replace(match[0], '\n**[SİSTEM: İşlemler başarıyla kaydedildi! ⚡]**'); }
+                    if(actionPerformed) { saveData(); renderAgenda(); renderNotebooks(); renderMedia(); renderSummary(); displayMessage = displayMessage.replace(match[0], '\n**[SİSTEM: İşlemler başarıyla kaydedildi! ⚡]**'); }
                 } catch(e) {}
             }
             aiBubble.innerHTML = displayMessage.replace(/\n/g, '<br>');
